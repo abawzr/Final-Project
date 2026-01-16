@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.Burst.Intrinsics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,9 +20,14 @@ public class UIManager : MonoBehaviour
     public GameObject End2Panel;        //7-panel
 
 
+    [Header("Scens Loading")]
+    public bool loadGamePlaySceneOnPlay=false;
+    public string gameplaySceneName = "Gameplay";
+    public string menuSceneName = "UI Scene";
 
     bool isPaused;
     bool GameStarted;
+
     enum SettingsOpenedFrom { Menu, Pause }
     SettingsOpenedFrom settingsFrom = SettingsOpenedFrom.Menu;
     
@@ -29,6 +35,8 @@ public class UIManager : MonoBehaviour
     {
         isPaused=false;
         GameStarted=false;
+        MainMenu();
+
         //Hide all panels before starting
         /*if(MainMenuPanel!=null){MainMenuPanel.SetActive(false);}            //1-panel
         if(SettingsPanel!=null){SettingsPanel.SetActive(false);}            //2-panel
@@ -39,11 +47,6 @@ public class UIManager : MonoBehaviour
         if(End2Panel!=null){End2Panel.SetActive(false);}                    //7-panel
         */
 
-        MainMenu();
-        
-
-
-        
     }
 
     // Update is called once per frame
@@ -61,14 +64,23 @@ public class UIManager : MonoBehaviour
     {   
         isPaused=false;
         GameStarted=true;
-        MainMenuPanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-        InstructionsPanel.SetActive(false);
+
+        if (loadGamePlaySceneOnPlay)
+        {
+            Time.timeScale=1f;
+            SceneManager.LoadScene(gameplaySceneName);
+            return;
+        }
+
+        if (MainMenuPanel)MainMenuPanel.SetActive(false);
+        if(SettingsPanel)SettingsPanel.SetActive(false);
+        if(InstructionsPanel)InstructionsPanel.SetActive(false);
 
         ClosePause();
         CloseEnds();
 
         Time.timeScale=1f;
+        LockCursor();
         
     }
     public void MainMenu()
@@ -76,57 +88,72 @@ public class UIManager : MonoBehaviour
         isPaused=false;
         GameStarted=false;
 
-        MainMenuPanel.SetActive(true);
-        SettingsPanel.SetActive(false);
-        InstructionsPanel.SetActive(false);
-        PausePanel.SetActive(false);
-        FAKEEndPanel.SetActive(false);
-        End1Panel.SetActive(false);
-        End2Panel.SetActive(false);
+        if(MainMenuPanel)MainMenuPanel.SetActive(true);
+        if(SettingsPanel)SettingsPanel.SetActive(false);
+        if(InstructionsPanel)InstructionsPanel.SetActive(false);
+        if(PausePanel)PausePanel.SetActive(false);
+        if(FAKEEndPanel)FAKEEndPanel.SetActive(false);
+        if(End1Panel)End1Panel.SetActive(false);
+        if(End2Panel)End2Panel.SetActive(false);
         
         Time.timeScale=0f;
+        UnlockCursor();
     }
     //2- Settings panel
     public void SettingsUI()
     {
         
-        MainMenuPanel.SetActive(false);
-        SettingsPanel.SetActive(true);
-        InstructionsPanel.SetActive(false);
+        if(MainMenuPanel)MainMenuPanel.SetActive(false);
+        if(InstructionsPanel)InstructionsPanel.SetActive(false);
+        if(PausePanel)PausePanel.SetActive(false);
+        if(SettingsPanel)SettingsPanel.SetActive(true);
+
         Time.timeScale=0f;
+        UnlockCursor();
     }
     public void OpenSettingeFromMenu()
     {
         settingsFrom=SettingsOpenedFrom.Menu;
 
-        MainMenuPanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-        InstructionsPanel.SetActive(true);
+        if(MainMenuPanel)MainMenuPanel.SetActive(false);
+        if(PausePanel)PausePanel.SetActive(false);
+        if(InstructionsPanel)InstructionsPanel.SetActive(false);
+        if(SettingsPanel)SettingsPanel.SetActive(true);
+
+
+        Time.timeScale=0f;
+        UnlockCursor();
 
     }
     public void OpenSettingeFromPause()
     {
         settingsFrom=SettingsOpenedFrom.Pause;
 
-        MainMenuPanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-        InstructionsPanel.SetActive(true);
+        if(MainMenuPanel)MainMenuPanel.SetActive(false);
+        if(InstructionsPanel)InstructionsPanel.SetActive(false);
+        if(PausePanel)PausePanel.SetActive(false);
+        if(SettingsPanel)SettingsPanel.SetActive(true);
 
         Time.timeScale=0f;
+        UnlockCursor();
     }
     public void BackFromSettings()
     {
-        SettingsPanel.SetActive(false);
+        if(SettingsPanel)SettingsPanel.SetActive(false);
 
         if (settingsFrom == SettingsOpenedFrom.Menu)
         {
-            MainMenuPanel.SetActive(true);
+            if(PausePanel)PausePanel.SetActive(false);
+            if(InstructionsPanel)InstructionsPanel.SetActive(false);
+            if(MainMenuPanel)MainMenuPanel.SetActive(true);
             Time.timeScale = 0f;
             UnlockCursor();
         }
         else // from Pause
         {
-            PausePanel.SetActive(true);
+            if(InstructionsPanel)InstructionsPanel.SetActive(false);
+            if(MainMenuPanel)MainMenuPanel.SetActive(false);
+            if(PausePanel)PausePanel.SetActive(true);
             Time.timeScale = 0f;
             UnlockCursor();
             isPaused = true;
@@ -136,14 +163,17 @@ public class UIManager : MonoBehaviour
     public void InstructionsUI()
     {
 
-        MainMenuPanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-        InstructionsPanel.SetActive(true);
+        if(MainMenuPanel)MainMenuPanel.SetActive(false);
+        if(SettingsPanel)SettingsPanel.SetActive(false);
+        if(InstructionsPanel)InstructionsPanel.SetActive(true);
+
+        Time.timeScale=0f;
+        UnlockCursor();
     }
     public void BackFromInstructions()
     {
-        InstructionsPanel.SetActive(false);
-        MainMenuPanel.SetActive(true);
+        if(InstructionsPanel)InstructionsPanel.SetActive(false);
+        if(MainMenuPanel)MainMenuPanel.SetActive(true);
 
         Time.timeScale = 0f;
         UnlockCursor();
@@ -152,7 +182,6 @@ public class UIManager : MonoBehaviour
     public void PauseToggel()
     {
 
-        //if (!GameStarted) return;
         if (isPaused)
         {
             ContinueGame();
@@ -165,9 +194,9 @@ public class UIManager : MonoBehaviour
     public void PauseUI()
     {
         isPaused=true;
-        GameStarted=false;
+        //GameStarted=false;
 
-        PausePanel.SetActive(true);
+        if(PausePanel)PausePanel.SetActive(true);
         Time.timeScale = 0f;
         UnlockCursor();
 
@@ -176,7 +205,10 @@ public class UIManager : MonoBehaviour
     public void ContinueGame()
     {
         isPaused=false;
-        PausePanel.SetActive(false);
+        if(PausePanel)PausePanel.SetActive(false);
+        if(SettingsPanel)SettingsPanel.SetActive(false);
+        if(InstructionsPanel)InstructionsPanel.SetActive(false);
+        if(MainMenuPanel)MainMenuPanel.SetActive(false);
 
         Time.timeScale=1f;
         LockCursor();
@@ -184,8 +216,7 @@ public class UIManager : MonoBehaviour
     void ClosePause()
     {
         isPaused = false;
-        if (PausePanel != null)
-            PausePanel.SetActive(false);
+        if (PausePanel)PausePanel.SetActive(false);
 
         
     }
@@ -193,7 +224,7 @@ public class UIManager : MonoBehaviour
     public void EndUI()
     {
         isPaused=false;
-        FAKEEndPanel.SetActive(true);
+        if(FAKEEndPanel)FAKEEndPanel.SetActive(true);
 
         Time.timeScale=0f;
         UnlockCursor();
@@ -202,7 +233,7 @@ public class UIManager : MonoBehaviour
     //6-End 1 panel
     public void End1UI()
     {
-        End1Panel.SetActive(true);
+        if(End1Panel)End1Panel.SetActive(true);
 
         Time.timeScale=0f;
         UnlockCursor();
@@ -210,16 +241,16 @@ public class UIManager : MonoBehaviour
     //7-End 2 panel
     public void End2UI()
     {
-        End2Panel.SetActive(true);
+        if(End2Panel)End2Panel.SetActive(true);
 
         Time.timeScale=0f;
         UnlockCursor();
     }
     public void CloseEnds()
      {
-        End1Panel.SetActive(false);
-        End2Panel.SetActive(false);
-        FAKEEndPanel.SetActive(false);
+        if(End1Panel)End1Panel.SetActive(false);
+        if(End2Panel)End2Panel.SetActive(false);
+        if(FAKEEndPanel)FAKEEndPanel.SetActive(false);
         
     }
    
