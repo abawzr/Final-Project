@@ -8,6 +8,7 @@ public class Padlock : MonoBehaviour
     [SerializeField] private List<GameObject> interactableObjects;
     [SerializeField] private List<float> correctNumbers;
     [SerializeField] private List<float> currentNumbers;
+    [SerializeField] private Vector3 rotationAround;
 
     private bool _isUnlocked;
 
@@ -27,7 +28,7 @@ public class Padlock : MonoBehaviour
             {
                 int index = interactableObjects.IndexOf(hit.collider.gameObject);
 
-                hit.collider.transform.Rotate(new Vector3(0, 0, 36f));
+                hit.collider.transform.Rotate(rotationAround);
 
                 currentNumbers[index] = Mathf.Round(hit.collider.transform.localEulerAngles.y);
 
