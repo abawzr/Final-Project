@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -15,11 +14,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float lookLimit = 80f;
     [SerializeField] private Transform cameraHolder;
 
+    [Header("Controls")]
+    [SerializeField] private bool controlsEnabled = true;
+
     private CharacterController cc;
     private float velocity;
     private float xRotation = 0f;
-
-    public bool controlsEnabled = true;
 
     private void Awake()
     {
