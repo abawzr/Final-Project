@@ -73,7 +73,8 @@ public class UIManager : MonoBehaviour
 
         
         if(GameManager.Instance)
-            GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);          if(PausePanel)PausePanel.SetActive(false);
+            GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
+        if(PausePanel)PausePanel.SetActive(false);
     }
     //2- Settings Panel
     //Open Settinge From Pause NOT menu
@@ -132,16 +133,14 @@ public class UIManager : MonoBehaviour
     ///////////////////////////////////////
     public void Restart()
     {
-        if(GameManager.Instance)
-            GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
+        //if(GameManager.Instance) GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void BackToMenu() {
         SceneManager.LoadScene(menuSceneName);
 
-        if(GameManager.Instance)
-            GameManager.Instance.SetGameState(GameManager.GameState.MainMenu);
+        //if(GameManager.Instance)GameManager.Instance.SetGameState(GameManager.GameState.MainMenu);
     }
     
     //////////////HIDE ALL////////////////

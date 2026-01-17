@@ -3859,7 +3859,7 @@ MonoBehaviour:
   End1Panel: {fileID: 1293207297}
   End2Panel: {fileID: 328979386}
   loadGamePlaySceneOnPlay: 0
-  menuSceneName: UI Scene
+  menuSceneName: Gameplay Scene
 --- !u!4 &965792064
 Transform:
   m_ObjectHideFlags: 0

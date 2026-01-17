@@ -24,13 +24,16 @@ public class MainMenu : MonoBehaviour
         if(GameManager.Instance)
             GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
     }
-    public void QuitGame()
+    public void QuitGame()//////////
     {
         if(GameManager.Instance)
             GameManager.Instance.QuitGame();
         else
             Application.Quit();
     }
+    
+    ///////////////////Panels//////////////////
+    
     //1- Main Menu Panel
     public void ShowMainMenu()
     {
