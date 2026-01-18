@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU LOST
+  m_text: YOU WON
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
   m_sharedMaterial: {fileID: -8829358321385456979, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU LOST
+  m_text: ///
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
   m_sharedMaterial: {fileID: -8829358321385456979, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
@@ -2416,7 +2416,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU LOST
+  m_text: ////
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
   m_sharedMaterial: {fileID: -8829358321385456979, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
@@ -6950,7 +6950,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU LOST
+  m_text: YOU SCAPED SUCESSFULY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
   m_sharedMaterial: {fileID: -8829358321385456979, guid: 19f20c2d756079545b3237bd7faacd51, type: 2}
