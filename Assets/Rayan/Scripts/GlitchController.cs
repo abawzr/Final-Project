@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// GlitchController - Glitch effect based on monster distance
+/// GlitchController - Glitch effect based on monster distance + death screen effect
 /// 
-/// The closer the monster gets to the player, the stronger the glitch.
-/// You can limit the maximum intensity so the player can always see.
+/// Two modes:
+/// 1. CHASE MODE: Effect based on monster distance (automatic)
+/// 2. DEATH MODE: Strong effect when player is caught (call from your script)
 /// 
 /// SETUP:
 /// 1. Create empty GameObject, add this script
-/// 2. Assign your GlitchMaterial (primary effect)
-/// 3. Assign secondary material if you have one (optional)
-/// 4. Assign Player and Monster transforms
+/// 2. Assign materials and references
+/// 3. Call GlitchController.Instance.StartDeathEffect() from your death script
 /// </summary>
 public class GlitchController : MonoBehaviour
 {
@@ -30,28 +30,45 @@ public class GlitchController : MonoBehaviour
     [Tooltip("Your secondary effect material (optional)")]
     public Material secondaryMaterial;
 
-    [Header("=== Distance Settings ===")]
-    [Tooltip("Distance at which glitch starts (monster far away = no effect)")]
+    [Header("=== Distance Settings (Chase Mode) ===")]
+    [Tooltip("Distance at which glitch starts")]
     public float maxDistance = 20f;
 
-    [Tooltip("Distance at which glitch is maximum (monster very close)")]
+    [Tooltip("Distance at which glitch is maximum")]
     public float minDistance = 2f;
 
-    [Header("=== Intensity Limits ===")]
-    [Tooltip("Maximum intensity the effect can reach (0-1). Lower = player can always see.")]
+    [Header("=== Intensity Limits (Chase Mode) ===")]
+    [Tooltip("Maximum intensity during chase (0-1)")]
     [Range(0f, 1f)]
-    public float maxIntensity = 0.7f;
+    public float maxChaseIntensity = 0.7f;
 
-    [Tooltip("Minimum intensity when monster is in range (subtle constant effect)")]
+    [Tooltip("Minimum intensity when monster is in range")]
     [Range(0f, 0.5f)]
-    public float minIntensity = 0f;
+    public float minChaseIntensity = 0f;
 
-    [Header("=== Effect Strength ===")]
-    [Tooltip("Maximum chromatic aberration")]
+    [Header("=== Death Screen Settings ===")]
+    [Tooltip("Intensity when player dies (death screen)")]
+    [Range(0f, 1f)]
+    public float deathIntensity = 0.9f;
+
+    [Tooltip("How fast the death effect fades in (seconds)")]
+    [Range(0.1f, 2f)]
+    public float deathFadeInTime = 0.3f;
+
+    [Tooltip("Chromatic aberration during death")]
+    [Range(0f, 0.3f)]
+    public float deathChromatic = 0.15f;
+
+    [Tooltip("Noise amount during death")]
+    [Range(0f, 1f)]
+    public float deathNoise = 0.8f;
+
+    [Header("=== Effect Strength (Chase Mode) ===")]
+    [Tooltip("Maximum chromatic aberration during chase")]
     [Range(0.01f, 0.2f)]
     public float maxChromatic = 0.08f;
 
-    [Tooltip("Maximum noise/static")]
+    [Tooltip("Maximum noise during chase")]
     [Range(0f, 1f)]
     public float maxNoise = 0.6f;
 
@@ -59,7 +76,7 @@ public class GlitchController : MonoBehaviour
     [Tooltip("Property name for intensity on secondary material")]
     public string secondaryIntensityProperty = "_Intensity";
 
-    [Tooltip("How much the secondary effect scales with glitch (0-1)")]
+    [Tooltip("How much the secondary effect scales (0-1)")]
     [Range(0f, 1f)]
     public float secondaryEffectScale = 1f;
 
@@ -84,7 +101,8 @@ public class GlitchController : MonoBehaviour
     public float burstMultiplier = 1.5f;
 
     [Header("=== State (Debug) ===")]
-    [SerializeField] private bool isActive = false;
+    [SerializeField] private bool isDeathMode = false;
+    [SerializeField] private bool isChaseActive = false;
     [SerializeField] private float currentDistance = 0f;
     [SerializeField] private float currentIntensity = 0f;
     [SerializeField] private bool isBursting = false;
@@ -92,8 +110,9 @@ public class GlitchController : MonoBehaviour
     // Private variables
     private float burstTimer;
     private float burstTimeLeft;
+    private float deathFadeProgress = 0f;
 
-    // Shader property IDs (cached for performance)
+    // Shader property IDs
     private static readonly int PropIntensity = Shader.PropertyToID("_Intensity");
     private static readonly int PropChromatic = Shader.PropertyToID("_ChromaticSplit");
     private static readonly int PropNoise = Shader.PropertyToID("_NoiseAmount");
@@ -114,6 +133,35 @@ public class GlitchController : MonoBehaviour
 
     void Update()
     {
+        // DEATH MODE - takes priority
+        if (isDeathMode)
+        {
+            UpdateDeathEffect();
+            return;
+        }
+
+        // CHASE MODE - based on monster distance
+        UpdateChaseEffect();
+    }
+
+    void UpdateDeathEffect()
+    {
+        // Fade in the death effect
+        if (deathFadeProgress < 1f)
+        {
+            deathFadeProgress += Time.unscaledDeltaTime / deathFadeInTime;
+            deathFadeProgress = Mathf.Clamp01(deathFadeProgress);
+        }
+
+        float intensity = Mathf.Lerp(0f, deathIntensity, deathFadeProgress);
+        currentIntensity = intensity;
+
+        // Apply death effect values
+        ApplyEffect(intensity, deathChromatic, deathNoise);
+    }
+
+    void UpdateChaseEffect()
+    {
         // Check if we have required references
         if (player == null || monster == null)
         {
@@ -121,26 +169,22 @@ public class GlitchController : MonoBehaviour
             return;
         }
 
-        // Calculate distance between player and monster
+        // Calculate distance
         currentDistance = Vector3.Distance(player.position, monster.position);
 
         // Check if monster is in range
         if (currentDistance > maxDistance)
         {
-            // Monster too far - no effect
-            isActive = false;
+            isChaseActive = false;
             ResetEffect();
             return;
         }
 
-        isActive = true;
+        isChaseActive = true;
 
-        // Calculate base intensity based on distance
-        // Far (maxDistance) = 0, Close (minDistance) = 1
+        // Calculate intensity based on distance
         float distanceRatio = Mathf.InverseLerp(maxDistance, minDistance, currentDistance);
-
-        // Apply min/max intensity limits
-        float baseIntensity = Mathf.Lerp(minIntensity, maxIntensity, distanceRatio);
+        float baseIntensity = Mathf.Lerp(minChaseIntensity, maxChaseIntensity, distanceRatio);
 
         // Handle bursts
         if (enableBursts)
@@ -148,17 +192,19 @@ public class GlitchController : MonoBehaviour
             UpdateBursts();
         }
 
-        // Calculate final intensity with burst
+        // Apply burst multiplier
         float finalIntensity = baseIntensity;
         if (isBursting)
         {
-            finalIntensity = Mathf.Min(baseIntensity * burstMultiplier, maxIntensity);
+            finalIntensity = Mathf.Min(baseIntensity * burstMultiplier, maxChaseIntensity);
         }
 
         currentIntensity = finalIntensity;
 
-        // Apply effects
-        ApplyEffect(finalIntensity);
+        // Apply chase effect values
+        float chromatic = finalIntensity * maxChromatic;
+        float noise = finalIntensity * maxNoise;
+        ApplyEffect(finalIntensity, chromatic, noise);
     }
 
     void UpdateBursts()
@@ -169,8 +215,7 @@ public class GlitchController : MonoBehaviour
             if (burstTimeLeft <= 0f)
             {
                 isBursting = false;
-                // Next burst comes faster when monster is closer
-                float burstSpeed = 1f - (currentIntensity / maxIntensity) * 0.5f;
+                float burstSpeed = 1f - (currentIntensity / maxChaseIntensity) * 0.5f;
                 burstTimer = Random.Range(minBurstInterval, maxBurstInterval) * burstSpeed;
             }
         }
@@ -185,17 +230,15 @@ public class GlitchController : MonoBehaviour
         }
     }
 
-    void ApplyEffect(float intensity)
+    void ApplyEffect(float intensity, float chromatic, float noise)
     {
-        // Apply to primary glitch material
         if (glitchMaterial != null)
         {
             glitchMaterial.SetFloat(PropIntensity, intensity);
-            glitchMaterial.SetFloat(PropChromatic, intensity * maxChromatic);
-            glitchMaterial.SetFloat(PropNoise, intensity * maxNoise);
+            glitchMaterial.SetFloat(PropChromatic, chromatic);
+            glitchMaterial.SetFloat(PropNoise, noise);
         }
 
-        // Apply to secondary material
         if (secondaryMaterial != null)
         {
             float secondaryIntensity = intensity * secondaryEffectScale;
@@ -205,6 +248,8 @@ public class GlitchController : MonoBehaviour
 
     void ResetEffect()
     {
+        currentIntensity = 0f;
+
         if (glitchMaterial != null)
         {
             glitchMaterial.SetFloat(PropIntensity, 0f);
@@ -219,11 +264,51 @@ public class GlitchController : MonoBehaviour
     }
 
     // =========================================================================
-    // PUBLIC METHODS
+    // PUBLIC METHODS - Call these from your other scripts!
     // =========================================================================
 
     /// <summary>
-    /// Manually trigger a glitch burst
+    /// Call this when the monster catches the player.
+    /// Starts the death screen glitch effect.
+    /// </summary>
+    public void StartDeathEffect()
+    {
+        isDeathMode = true;
+        deathFadeProgress = 0f;
+        Debug.Log("Death glitch effect started!");
+    }
+
+    /// <summary>
+    /// Call this when the monster catches the player.
+    /// Allows custom intensity, chromatic, and noise values.
+    /// </summary>
+    /// <param name="intensity">Effect intensity (0-1)</param>
+    /// <param name="chromatic">Chromatic aberration amount</param>
+    /// <param name="noise">Noise amount (0-1)</param>
+    public void StartDeathEffect(float intensity, float chromatic, float noise)
+    {
+        isDeathMode = true;
+        deathFadeProgress = 0f;
+        deathIntensity = intensity;
+        deathChromatic = chromatic;
+        deathNoise = noise;
+        Debug.Log("Death glitch effect started with custom values!");
+    }
+
+    /// <summary>
+    /// Call this when player clicks Restart or Resume.
+    /// Stops the death effect and resets.
+    /// </summary>
+    public void StopDeathEffect()
+    {
+        isDeathMode = false;
+        deathFadeProgress = 0f;
+        ResetEffect();
+        Debug.Log("Death glitch effect stopped!");
+    }
+
+    /// <summary>
+    /// Manually trigger a glitch burst.
     /// </summary>
     public void TriggerBurst()
     {
@@ -232,7 +317,7 @@ public class GlitchController : MonoBehaviour
     }
 
     /// <summary>
-    /// Set a new monster reference (if monster changes)
+    /// Set a new monster reference.
     /// </summary>
     public void SetMonster(Transform newMonster)
     {
@@ -240,11 +325,19 @@ public class GlitchController : MonoBehaviour
     }
 
     /// <summary>
-    /// Temporarily override intensity (for cutscenes, etc.)
+    /// Check if death mode is active.
     /// </summary>
-    public void SetIntensityOverride(float intensity)
+    public bool IsDeathModeActive()
     {
-        ApplyEffect(Mathf.Clamp(intensity, 0f, maxIntensity));
+        return isDeathMode;
+    }
+
+    /// <summary>
+    /// Get current effect intensity.
+    /// </summary>
+    public float GetCurrentIntensity()
+    {
+        return currentIntensity;
     }
 
     void OnDisable()
@@ -259,16 +352,13 @@ public class GlitchController : MonoBehaviour
             Instance = null;
     }
 
-    // Visualize distances in Scene view
     void OnDrawGizmosSelected()
     {
         if (player != null)
         {
-            // Max distance (where effect starts)
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(player.position, maxDistance);
 
-            // Min distance (where effect is maximum)
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(player.position, minDistance);
         }
