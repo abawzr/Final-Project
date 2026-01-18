@@ -1,18 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private List<Transform> patrolPoints;
-    [SerializeField] private float walkingSpeed;
-    [SerializeField] private float runningSpeed;
+    [SerializeField] private float normalSpeed;
+    [SerializeField] private float stunSpeed;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private float viewAngle = 60f;
-    [SerializeField] private float viewDistance = 10f;
-    [SerializeField] private LayerMask excludeEnemyLayer;
     [SerializeField] private float triggerJumpscareDistance;
     [SerializeField] private AudioClip jumpscareClip;
     [SerializeField] private AudioClip chasingScreamClip;
@@ -22,47 +17,17 @@ public class Enemy : MonoBehaviour
 
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
-    private AudioSource _audioSource;
-    private int _currentPatrolPoint;
-    private Vector3 _eyePosition;
-    private Vector3 _directionToPlayer;
     private float _stepTimer;
     private bool _isJumpscareOccurred;
     private float _screamTimer = 10f;
-
-    public static bool CanMove { get; set; }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, viewDistance);
-
-        Vector3 rightLimit = Quaternion.Euler(0, viewAngle, 0) * transform.forward;
-        Vector3 leftLimit = Quaternion.Euler(0, -viewAngle, 0) * transform.forward;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + transform.up * 0.5f, transform.position + rightLimit * viewDistance);
-        Gizmos.DrawLine(transform.position + transform.up * 0.5f, transform.position + leftLimit * viewDistance);
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(_eyePosition, _directionToPlayer * viewDistance);
-    }
 
     private void Awake()
     {
         // Get Nav Mesh Agent and Animator components from same game object this script attached to
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
 
-        CanMove = true;
-    }
-
-    private void Start()
-    {
-        // In the start pick a random patrol point and set enemy destination to it
-        int randomIndex = Random.Range(0, patrolPoints.Count);
-        _navMeshAgent.SetDestination(patrolPoints[randomIndex].position);
+        _navMeshAgent.speed = normalSpeed;
     }
 
     private void Update()
@@ -72,99 +37,45 @@ public class Enemy : MonoBehaviour
 
         if (!_isJumpscareOccurred)
         {
+            _navMeshAgent.SetDestination(playerTransform.position);
+
             _screamTimer -= Time.deltaTime;
 
-            // Check if enemy can see player
-            if (CanSeePlayer())
+            if (_screamTimer <= 0)
             {
-                if (_screamTimer <= 0)
+                if (AudioManager.Instance != null)
                 {
-                    if (AudioManager.Instance != null)
-                    {
-                        AudioManager.Instance.Play2DSFX(chasingScreamClip);
-                    }
-                    _screamTimer = 10f;
+                    AudioManager.Instance.Play2DSFX(chasingScreamClip);
                 }
-
-                if (_animator != null)
-                {
-                    _animator.SetBool("IsChasing", true);
-                }
-
-                // Speed up the enemy and make it follow player
-                _navMeshAgent.speed = runningSpeed;
-                _navMeshAgent.SetDestination(playerTransform.position);
-
-                if (Vector3.Distance(transform.position, playerTransform.position) <= triggerJumpscareDistance)
-                {
-                    StartCoroutine(TriggerJumpscare());
-                }
+                _screamTimer = 10f;
             }
 
-            else
+            if (_animator != null)
             {
-                if (_animator != null)
-                {
-                    _animator.SetBool("IsChasing", false);
-                }
+                _animator.SetBool("IsChasing", true);
+            }
 
-                // Slow down the enemy and make him patrolling
-                _navMeshAgent.speed = walkingSpeed;
-                if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance < 0.2f)
-                {
-                    NextPoint();
-                }
+            if (Vector3.Distance(transform.position, playerTransform.position) <= triggerJumpscareDistance)
+            {
+                StartCoroutine(TriggerJumpscare());
             }
 
             PlayFootstep();
         }
     }
 
-    private bool CanSeePlayer()
+    private void OnTriggerEnter(Collider other)
     {
-        if (playerTransform == null) return false;
+        if (!other.CompareTag("Obstacle")) return;
 
-        // Check distance between enemy and player
-        float distance = Vector3.Distance(transform.position, playerTransform.position);
-        if (distance > viewDistance) return false;
-
-        // Check field of view
-        _eyePosition = transform.position + transform.up * 1.8f;
-        _directionToPlayer = (playerTransform.position + playerTransform.up * 0.25f - _eyePosition).normalized;
-        float angle = Vector3.Angle(transform.forward, _directionToPlayer);
-        if (angle > viewAngle) return false;
-
-        // Raycast to check if wall is blocking
-        if (Physics.Raycast(_eyePosition, _directionToPlayer, out RaycastHit hitInfo, viewDistance, excludeEnemyLayer))
-        {
-            if (hitInfo.collider.tag == "Player")
-            {
-                return true;
-            }
-
-            return false; // Player is not visible
-        }
-
-        return true; // Player is visible
+        _navMeshAgent.speed = stunSpeed;
     }
 
-    private void NextPoint()
+    private void OnTriggerExit(Collider other)
     {
-        if (patrolPoints.Count == 0) return;
+        if (!other.CompareTag("Obstacle")) return;
 
-        // Don't stop the loop till next point found
-        while (true)
-        {
-            int tempIndex = Random.Range(0, patrolPoints.Count);
-
-            if (tempIndex != _currentPatrolPoint)
-            {
-                _currentPatrolPoint = tempIndex;
-                break;
-            }
-        }
-
-        _navMeshAgent.SetDestination(patrolPoints[_currentPatrolPoint].position);
+        _navMeshAgent.speed = normalSpeed;
     }
 
     private IEnumerator TriggerJumpscare()
@@ -194,9 +105,15 @@ public class Enemy : MonoBehaviour
         // Snap camera to look at enemy face
         StartCoroutine(SnapCameraToEnemy(enemyFacePosition));
 
-        _animator.SetBool("IsJumpscare", true);
+        if (_animator != null)
+        {
+            _animator.SetBool("IsJumpscare", true);
+        }
 
-        _audioSource.PlayOneShot(jumpscareClip);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play2DSFX(jumpscareClip);
+        }
 
         _isJumpscareOccurred = true;
 
@@ -261,5 +178,11 @@ public class Enemy : MonoBehaviour
             }
             _stepTimer = 0;
         }
+    }
+
+    public void Respawn(Vector3 respawnPoint)
+    {
+        transform.position = respawnPoint;
+        enabled = true;
     }
 }
