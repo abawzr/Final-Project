@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Look")]
     [SerializeField] private float mouseSensitivity = 1f;
-    [SerializeField] private float lookLimit = 80f;
+    [SerializeField] private float lookLimit = 90f;
     [SerializeField] private Transform cameraHolder;
 
     [Header("Controls")]
@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -lookLimit, lookLimit);
         cameraHolder.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        transform.Rotate(transform.up * mouseX);
+        transform.Rotate(Vector3.up * mouseX);
     }
 
     private void Move()
