@@ -1,16 +1,15 @@
 using UnityEngine;
 
 /// <summary>
-/// GlitchController - Glitch effect based on monster distance + death screen effect
+/// GlitchController - Glitch effect with chase, jumpscare, and death UI modes
 /// 
-/// Two modes:
+/// MODES:
 /// 1. CHASE MODE: Effect based on monster distance (automatic)
-/// 2. DEATH MODE: Strong effect when player is caught (call from your script)
+/// 2. PAUSED: No effect (for jumpscares/cutscenes)
+/// 3. DEATH UI MODE: Strong effect during game over UI
 /// 
-/// SETUP:
-/// 1. Create empty GameObject, add this script
-/// 2. Assign materials and references
-/// 3. Call GlitchController.Instance.StartDeathEffect() from your death script
+/// FLOW:
+/// Chase (auto) => StopChaseEffect() => Jumpscare => StartDeathEffect() => UI => StopDeathEffect() => Resume
 /// </summary>
 public class GlitchController : MonoBehaviour
 {
@@ -46,8 +45,8 @@ public class GlitchController : MonoBehaviour
     [Range(0f, 0.5f)]
     public float minChaseIntensity = 0f;
 
-    [Header("=== Death Screen Settings ===")]
-    [Tooltip("Intensity when player dies (death screen)")]
+    [Header("=== Death UI Settings ===")]
+    [Tooltip("Intensity during death UI screen")]
     [Range(0f, 1f)]
     public float deathIntensity = 0.9f;
 
@@ -55,11 +54,11 @@ public class GlitchController : MonoBehaviour
     [Range(0.1f, 2f)]
     public float deathFadeInTime = 0.3f;
 
-    [Tooltip("Chromatic aberration during death")]
+    [Tooltip("Chromatic aberration during death UI")]
     [Range(0f, 0.3f)]
     public float deathChromatic = 0.15f;
 
-    [Tooltip("Noise amount during death")]
+    [Tooltip("Noise amount during death UI")]
     [Range(0f, 1f)]
     public float deathNoise = 0.8f;
 
@@ -101,11 +100,17 @@ public class GlitchController : MonoBehaviour
     public float burstMultiplier = 1.5f;
 
     [Header("=== State (Debug) ===")]
-    [SerializeField] private bool isDeathMode = false;
-    [SerializeField] private bool isChaseActive = false;
+    [SerializeField] private EffectMode currentMode = EffectMode.Chase;
     [SerializeField] private float currentDistance = 0f;
     [SerializeField] private float currentIntensity = 0f;
     [SerializeField] private bool isBursting = false;
+
+    public enum EffectMode
+    {
+        Chase,      // Normal gameplay - effect based on monster distance
+        Paused,     // No effect - for jumpscares/cutscenes
+        DeathUI     // Death screen - strong glitch effect
+    }
 
     // Private variables
     private float burstTimer;
@@ -133,31 +138,20 @@ public class GlitchController : MonoBehaviour
 
     void Update()
     {
-        // DEATH MODE - takes priority
-        if (isDeathMode)
+        switch (currentMode)
         {
-            UpdateDeathEffect();
-            return;
+            case EffectMode.Chase:
+                UpdateChaseEffect();
+                break;
+
+            case EffectMode.Paused:
+                // Do nothing - effect stays off
+                break;
+
+            case EffectMode.DeathUI:
+                UpdateDeathEffect();
+                break;
         }
-
-        // CHASE MODE - based on monster distance
-        UpdateChaseEffect();
-    }
-
-    void UpdateDeathEffect()
-    {
-        // Fade in the death effect
-        if (deathFadeProgress < 1f)
-        {
-            deathFadeProgress += Time.unscaledDeltaTime / deathFadeInTime;
-            deathFadeProgress = Mathf.Clamp01(deathFadeProgress);
-        }
-
-        float intensity = Mathf.Lerp(0f, deathIntensity, deathFadeProgress);
-        currentIntensity = intensity;
-
-        // Apply death effect values
-        ApplyEffect(intensity, deathChromatic, deathNoise);
     }
 
     void UpdateChaseEffect()
@@ -175,12 +169,9 @@ public class GlitchController : MonoBehaviour
         // Check if monster is in range
         if (currentDistance > maxDistance)
         {
-            isChaseActive = false;
             ResetEffect();
             return;
         }
-
-        isChaseActive = true;
 
         // Calculate intensity based on distance
         float distanceRatio = Mathf.InverseLerp(maxDistance, minDistance, currentDistance);
@@ -201,10 +192,25 @@ public class GlitchController : MonoBehaviour
 
         currentIntensity = finalIntensity;
 
-        // Apply chase effect values
+        // Apply effect
         float chromatic = finalIntensity * maxChromatic;
         float noise = finalIntensity * maxNoise;
         ApplyEffect(finalIntensity, chromatic, noise);
+    }
+
+    void UpdateDeathEffect()
+    {
+        // Fade in the death effect
+        if (deathFadeProgress < 1f)
+        {
+            deathFadeProgress += Time.unscaledDeltaTime / deathFadeInTime;
+            deathFadeProgress = Mathf.Clamp01(deathFadeProgress);
+        }
+
+        float intensity = Mathf.Lerp(0f, deathIntensity, deathFadeProgress);
+        currentIntensity = intensity;
+
+        ApplyEffect(intensity, deathChromatic, deathNoise);
     }
 
     void UpdateBursts()
@@ -264,47 +270,54 @@ public class GlitchController : MonoBehaviour
     }
 
     // =========================================================================
-    // PUBLIC METHODS - Call these from your other scripts!
+    // PUBLIC METHODS - Call these from your scripts!
     // =========================================================================
 
     /// <summary>
-    /// Call this when the monster catches the player.
-    /// Starts the death screen glitch effect.
+    /// STEP 1: Call this when monster catches player.
+    /// Stops the glitch so jumpscare/cutscene is visible.
+    /// </summary>
+    public void StopChaseEffect()
+    {
+        currentMode = EffectMode.Paused;
+        ResetEffect();
+        Debug.Log("Glitch STOPPED for jumpscare/cutscene");
+    }
+
+    /// <summary>
+    /// STEP 2: Call this after jumpscare/cutscene, when death UI appears.
+    /// Starts the glitch effect on the UI screen.
     /// </summary>
     public void StartDeathEffect()
     {
-        isDeathMode = true;
+        currentMode = EffectMode.DeathUI;
         deathFadeProgress = 0f;
-        Debug.Log("Death glitch effect started!");
+        Debug.Log("Glitch STARTED for death UI");
     }
 
     /// <summary>
-    /// Call this when the monster catches the player.
-    /// Allows custom intensity, chromatic, and noise values.
+    /// STEP 2 (Alternative): Start death effect with custom values.
     /// </summary>
-    /// <param name="intensity">Effect intensity (0-1)</param>
-    /// <param name="chromatic">Chromatic aberration amount</param>
-    /// <param name="noise">Noise amount (0-1)</param>
     public void StartDeathEffect(float intensity, float chromatic, float noise)
     {
-        isDeathMode = true;
-        deathFadeProgress = 0f;
         deathIntensity = intensity;
         deathChromatic = chromatic;
         deathNoise = noise;
-        Debug.Log("Death glitch effect started with custom values!");
+        currentMode = EffectMode.DeathUI;
+        deathFadeProgress = 0f;
+        Debug.Log("Glitch STARTED for death UI (custom values)");
     }
 
     /// <summary>
-    /// Call this when player clicks Restart or Resume.
-    /// Stops the death effect and resets.
+    /// STEP 3: Call this when player clicks Restart or Resume.
+    /// Stops death effect and returns to normal chase mode.
     /// </summary>
     public void StopDeathEffect()
     {
-        isDeathMode = false;
+        currentMode = EffectMode.Chase;
         deathFadeProgress = 0f;
         ResetEffect();
-        Debug.Log("Death glitch effect stopped!");
+        Debug.Log("Glitch STOPPED, returning to chase mode");
     }
 
     /// <summary>
@@ -325,15 +338,15 @@ public class GlitchController : MonoBehaviour
     }
 
     /// <summary>
-    /// Check if death mode is active.
+    /// Get current mode.
     /// </summary>
-    public bool IsDeathModeActive()
+    public EffectMode GetCurrentMode()
     {
-        return isDeathMode;
+        return currentMode;
     }
 
     /// <summary>
-    /// Get current effect intensity.
+    /// Get current intensity.
     /// </summary>
     public float GetCurrentIntensity()
     {
