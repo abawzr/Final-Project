@@ -32161,24 +32161,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1435185765931329579, guid: 90f00ae43ffa2994fa18ebd0f52ecfdc, type: 3}
-      propertyPath: speed
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 8732879764332149170, guid: 90f00ae43ffa2994fa18ebd0f52ecfdc, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8732879764332149170, guid: 90f00ae43ffa2994fa18ebd0f52ecfdc, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8732879764332149170, guid: 90f00ae43ffa2994fa18ebd0f52ecfdc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8732879764332149170, guid: 90f00ae43ffa2994fa18ebd0f52ecfdc, type: 3}
-      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
