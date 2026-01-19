@@ -43,7 +43,7 @@ public class PlayerInteraction : MonoBehaviour
                         interactionTMP.text = interactionText;
 
                     // else if (interactableObject is PickableItem)
-                    interactionTMP.text = pickupText;
+                    // interactionTMP.text = pickupText;
                 }
 
                 if (Input.GetButtonDown("Interact"))
