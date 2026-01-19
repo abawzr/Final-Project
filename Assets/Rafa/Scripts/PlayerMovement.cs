@@ -14,21 +14,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float lookLimit = 90f;
     [SerializeField] private Transform cameraHolder;
 
-    [Header("Controls")]
-    [SerializeField] private bool controlsEnabled = true;
-
     private CharacterController cc;
     private float velocity;
     private float xRotation = 0f;
 
+    public static bool IsControlsEnabled { get; set; }
+
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
+
+        IsControlsEnabled = true;
+
+        velocity = 0;
+        xRotation = 0;
     }
 
     private void Update()
     {
-        if (!controlsEnabled) return;
+        if (!IsControlsEnabled) return;
 
         Move();
         Jump();
@@ -37,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!controlsEnabled) return;
+        if (!IsControlsEnabled) return;
 
         Look();
     }
@@ -67,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         //Single Jump
-        if (cc.isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (cc.isGrounded && Input.GetButtonDown("Jump"))
         {
             velocity = SinglejumpHeight;
         }
