@@ -6,11 +6,17 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CinemachineCamera puzzleCamera;
 
+    [Header("Padlock")]
+    [SerializeField] private GameObject padlock;
+
+    public bool CanInteract = true;
+
     private bool _isPuzzleEnabled;
 
     private void Awake()
     {
         _isPuzzleEnabled = false;
+        CanInteract = true;
     }
 
     private void Update()
@@ -35,8 +41,10 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
         mainCamera.cullingMask = ~0;
     }
 
-    public void Interact()
+    public void Interact(PlayerInventory playerInventory)
     {
+        if (!CanInteract) return;
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetGameState(GameManager.GameState.Puzzle);
@@ -47,5 +55,11 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
         PlayerInteraction.CanInteract = false;
         puzzleCamera.Priority = 10;
         mainCamera.cullingMask = ~LayerMask.GetMask("Player");
+    }
+
+    public void DestoryPadlock()
+    {
+        DisablePuzzle();
+        Destroy(padlock);
     }
 }

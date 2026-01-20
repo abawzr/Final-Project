@@ -9,12 +9,12 @@ public class Padlock : MonoBehaviour
     [SerializeField] private List<float> correctNumbers;
     [SerializeField] private List<float> currentNumbers;
     [SerializeField] private Vector3 rotationAround;
+    [SerializeField] private Animator chestAnimator;
+    [SerializeField] private PuzzlePerspective chestPuzzle;
 
     private bool _isUnlocked;
 
     public bool IsUnlocked => _isUnlocked;
-
-    public event Action OnPadlockUnlocked;
 
     private void Update()
     {
@@ -35,7 +35,8 @@ public class Padlock : MonoBehaviour
                 if (currentNumbers.SequenceEqual(correctNumbers))
                 {
                     _isUnlocked = true;
-                    OnPadlockUnlocked?.Invoke();
+                    chestPuzzle.CanInteract = false;
+                    chestAnimator.SetTrigger("Open");
                 }
             }
         }
