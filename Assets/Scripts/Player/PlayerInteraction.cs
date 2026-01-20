@@ -12,6 +12,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private string exitText;
 
     private IInteractable _currentTarget;
+    private PlayerInventory _playerInventory;
 
     public static bool CanInteract { get; set; }
 
@@ -23,6 +24,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
+        _playerInventory = GetComponent<PlayerInventory>();
+
         _currentTarget = null;
         CanInteract = true;
     }
@@ -39,20 +42,20 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     _currentTarget = interactableObject;
 
-                    if (interactableObject is PuzzlePerspective)
+                    if (interactableObject is PuzzlePerspective && hitInfo.collider.GetComponent<PuzzlePerspective>().CanInteract)
                         interactionTMP.text = interactionText;
 
-                    // else if (interactableObject is PickableItem)
-                    interactionTMP.text = pickupText;
+                    else if (interactableObject is PickableItem)
+                        interactionTMP.text = pickupText;
                 }
 
-                if (Input.GetButtonDown("Interact"))
+                if (Input.GetButtonDown("Interact") && hitInfo.collider.GetComponent<PuzzlePerspective>().CanInteract)
                 {
                     SetCurrentTargetNull();
 
                     interactionTMP.text = exitText;
 
-                    interactableObject.Interact();
+                    interactableObject.Interact(_playerInventory);
                 }
             }
             else
