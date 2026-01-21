@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AbdullahScene.unity
+    path: Assets/Scenes/yasirwork.unity
     guid: 0bf0a730871a42049ad3a396fe65f453
   - enabled: 1
     path: Assets/Rafa/Scene/MainMenu Scene.unity
