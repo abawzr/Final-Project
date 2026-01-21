@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 
 public class Padlock : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Padlock : MonoBehaviour
     [SerializeField] private Vector3 rotationAround;
     [SerializeField] private Animator chestAnimator;
     [SerializeField] private PuzzlePerspective puzzle;
+    [SerializeField] private float timeBeforeDisablingPuzzle;
 
     private bool _isUnlocked;
 
@@ -40,8 +42,17 @@ public class Padlock : MonoBehaviour
 
                     if (chestAnimator != null)
                         chestAnimator.SetTrigger("Open");
+
+                    StartCoroutine(PuzzleDone());
                 }
             }
         }
+    }
+
+    private IEnumerator PuzzleDone()
+    {
+        yield return new WaitForSecondsRealtime(timeBeforeDisablingPuzzle);
+
+        puzzle.DestoryPadlock();
     }
 }
