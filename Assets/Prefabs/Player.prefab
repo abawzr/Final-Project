@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2315613760555849482}
   - component: {fileID: 8146758342243412349}
   - component: {fileID: 3565389254020351936}
+  - component: {fileID: 9220917863409743540}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -130,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649a34181f2313f439067542583afda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 8
+  speed: 4
   gravity: -9.81
   SinglejumpHeight: 4
   mouseSensitivity: 1
@@ -157,6 +158,18 @@ MonoBehaviour:
   interactionText: Press E to Interact
   pickupText: Press E to Pick Up
   exitText: Press Q to Exit
+--- !u!114 &9220917863409743540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548385241251046886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 716328b7f9a58ac4c82358a7ca6b0269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
 --- !u!1 &7650033885841516784
 GameObject:
   m_ObjectHideFlags: 0
