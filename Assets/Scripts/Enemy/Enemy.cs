@@ -14,9 +14,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip footstepClip;
     [SerializeField] private float walkStepInterval;
     [SerializeField] private float runStepInterval;
+    [SerializeField] private Material glitchMaterial;
 
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
+    private Material originalObstacleMaterial;
     private float _stepTimer;
     private bool _isJumpscareOccurred;
     private float _screamTimer = 10f;
@@ -50,11 +52,6 @@ public class Enemy : MonoBehaviour
                 _screamTimer = 10f;
             }
 
-            if (_animator != null)
-            {
-                _animator.SetBool("IsChasing", true);
-            }
-
             if (Vector3.Distance(transform.position, playerTransform.position) <= triggerJumpscareDistance)
             {
                 StartCoroutine(TriggerJumpscare());
@@ -69,6 +66,21 @@ public class Enemy : MonoBehaviour
         if (!other.CompareTag("Obstacle")) return;
 
         _navMeshAgent.speed = stunSpeed;
+
+        MeshRenderer meshRenderer;
+
+        if (other.TryGetComponent(out meshRenderer))
+        {
+            originalObstacleMaterial = meshRenderer.material;
+            meshRenderer.material = glitchMaterial;
+        }
+        else
+        {
+            meshRenderer = other.GetComponentInChildren<MeshRenderer>(includeInactive: true);
+
+            originalObstacleMaterial = meshRenderer.material;
+            meshRenderer.material = glitchMaterial;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -76,6 +88,19 @@ public class Enemy : MonoBehaviour
         if (!other.CompareTag("Obstacle")) return;
 
         _navMeshAgent.speed = normalSpeed;
+
+        MeshRenderer meshRenderer;
+
+        if (other.TryGetComponent(out meshRenderer))
+        {
+            meshRenderer.material = originalObstacleMaterial;
+        }
+        else
+        {
+            meshRenderer = other.GetComponentInChildren<MeshRenderer>(includeInactive: true);
+
+            meshRenderer.material = originalObstacleMaterial;
+        }
     }
 
     private IEnumerator TriggerJumpscare()

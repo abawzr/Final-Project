@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -14,7 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float lookLimit = 90f;
     [SerializeField] private Transform cameraHolder;
 
+    [Header("Audio")]
+    [SerializeField] private Transform footstepTransform;
+    [SerializeField] private AudioClip footstepClip;
+    [SerializeField] private float footstepInterval;
+
     private CharacterController cc;
+    private Vector3 move;
     private float velocity;
     private float xRotation = 0f;
 
@@ -28,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
         velocity = 0;
         xRotation = 0;
+
+        StartCoroutine(PlayFootstepSound());
     }
 
     private void Update()
@@ -62,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        move = transform.right * moveX + transform.forward * moveZ;
         move = Vector3.ClampMagnitude(move, 1f) * speed;
         move.y = velocity;
         cc.Move(move * Time.deltaTime);
@@ -88,4 +97,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayFootstepSound()
+    {
+        while (true)
+        {
+            if (cc.isGrounded && move.x != 0 && move.z != 0)
+            {
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.Play3DSFX(footstepClip, footstepTransform.position);
+                }
+
+                yield return new WaitForSeconds(footstepInterval);
+            }
+            yield return null;
+        }
+    }
 }

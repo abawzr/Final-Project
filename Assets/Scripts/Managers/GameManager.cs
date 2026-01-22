@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Puzzle:
-                Time.timeScale = 0f;
+                Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
                 break;
 

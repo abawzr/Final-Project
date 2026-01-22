@@ -36,6 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8836108809980820598}
+  - {fileID: 4691257622306703127}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2048479599013125609
@@ -131,12 +132,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649a34181f2313f439067542583afda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 4
+  speed: 5.5
   gravity: -9.81
   SinglejumpHeight: 4
   mouseSensitivity: 1
   lookLimit: 80
   cameraHolder: {fileID: 8836108809980820598}
+  footstepTransform: {fileID: 4691257622306703127}
+  footstepClip: {fileID: 8300000, guid: c41fb169b2991c247a5466e00faa6639, type: 3}
+  footstepInterval: 0.5
 --- !u!114 &3565389254020351936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,3 +249,34 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!1 &8788700902465328921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4691257622306703127}
+  m_Layer: 3
+  m_Name: FootstepPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4691257622306703127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788700902465328921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2480778602661596831}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 3195563134365158285}
   - component: {fileID: 7445926073273829009}
   m_Layer: 5
-  m_Name: InteractionText
+  m_Name: InteractionTMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1344,7 +1344,7 @@ GameObject:
   - component: {fileID: 240183333233260127}
   - component: {fileID: 5449375442172934244}
   m_Layer: 5
-  m_Name: ObstacleInteractionText
+  m_Name: ObstacleInteractionTMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
