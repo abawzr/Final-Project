@@ -11,7 +11,7 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
     [Header("Padlock")]
     [SerializeField] private GameObject padlock;
 
-    public bool CanInteract = true;
+    public bool CanInteract { get; set; }
 
     private bool _isPuzzleEnabled;
 

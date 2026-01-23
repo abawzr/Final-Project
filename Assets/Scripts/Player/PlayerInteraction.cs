@@ -42,18 +42,19 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     _currentTarget = interactableObject;
 
-                    if (interactableObject is PuzzlePerspective && hitInfo.collider.GetComponent<PuzzlePerspective>().CanInteract)
+                    if ((interactableObject is PuzzlePerspective || interactableObject is Door) && interactableObject.CanInteract)
                         interactionTMP.text = interactionText;
 
                     else if (interactableObject is PickableItem)
                         interactionTMP.text = pickupText;
                 }
 
-                if (Input.GetButtonDown("Interact") && hitInfo.collider.GetComponent<PuzzlePerspective>().CanInteract)
+                if (Input.GetButtonDown("Interact") && interactableObject.CanInteract)
                 {
                     SetCurrentTargetNull();
 
-                    interactionTMP.text = exitText;
+                    if (interactableObject is PuzzlePerspective)
+                        interactionTMP.text = exitText;
 
                     interactableObject.Interact(_playerInventory);
                 }

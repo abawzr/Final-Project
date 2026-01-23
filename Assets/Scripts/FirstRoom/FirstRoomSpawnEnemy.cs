@@ -1,23 +1,24 @@
 using UnityEngine;
 
-public class BadPath : MonoBehaviour
+public class FirstRoomSpawnEnemy : MonoBehaviour
 {
     [SerializeField] private GameObject enemy;
     [SerializeField] private Transform enemyRespawnPoint;
 
-    private bool _isActive = false;
+    private bool _isTriggered = false;
 
     private void Awake()
     {
-        _isActive = false;
+        _isTriggered = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        if (_isActive) return;
+        if (_isTriggered) return;
 
-        _isActive = true;
+        _isTriggered = true;
+
         enemy.SetActive(true);
         enemy.GetComponent<Enemy>().Respawn(enemyRespawnPoint.position);
     }
