@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -144,7 +145,10 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        Cursor.lockState = CursorLockMode.Confined;
+        if (TriggerFirstRoom.IsTriggered)
+        {
+            SceneManager.LoadScene("yasirwork 1");
+        }
     }
 
     private IEnumerator SnapCameraToEnemy(Vector3 targetPosition)
