@@ -47,6 +47,7 @@ public class BadPath : MonoBehaviour
             GameManager.Instance.SetGameState(GameManager.GameState.Cutscene);
         }
 
-        endingAnimator.SetTrigger("End");
+        Application.Quit();
+        // endingAnimator.SetTrigger("End");
     }
 }
