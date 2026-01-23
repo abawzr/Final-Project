@@ -2,85 +2,101 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float normalSpeed;
     [SerializeField] private float stunSpeed;
+
+    [Header("Player References")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Transform cameraTransform;
+
+    [Header("Jumpscare")]
     [SerializeField] private float triggerJumpscareDistance;
     [SerializeField] private AudioClip jumpscareClip;
-    [SerializeField] private AudioClip chasingScreamClip;
+
+    [Header("Footstep")]
     [SerializeField] private AudioClip footstepClip;
     [SerializeField] private float walkStepInterval;
     [SerializeField] private float runStepInterval;
-    [SerializeField] private Material glitchMaterial;
 
-    private NavMeshAgent _navMeshAgent;
+    [Header("Obstacle Glitch")]
+    [SerializeField] private Material obstacleGlitchMaterial;
+
+    [Header("Glitch Death (SPECIAL ONLY)")]
+    [SerializeField] private RawImage glitchImage;
+    [SerializeField] private CanvasGroup deathCanvas;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private string afterFirstDeathSceneName;
+
+    private NavMeshAgent _agent;
     private Animator _animator;
-    private Material originalObstacleMaterial;
+    private Material _originalObstacleMaterial;
     private float _stepTimer;
     private bool _isJumpscareOccurred;
-    private float _screamTimer = 10f;
+
+    // first death only
+    private int _restartPressCount;
+    private float _glitchIntensity = 0.2f;
 
     private void Awake()
     {
         // Get Nav Mesh Agent and Animator components from same game object this script attached to
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
 
-        _navMeshAgent.speed = normalSpeed;
+        _agent.speed = normalSpeed;
+
+        if (glitchImage != null)
+            glitchImage.enabled = false;
+
+        if (deathCanvas != null)
+        {
+            deathCanvas.alpha = 0;
+            deathCanvas.interactable = false;
+            deathCanvas.blocksRaycasts = false;
+        }
     }
 
     private void Update()
     {
         if (_animator != null)
-            _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
+            _animator.SetFloat("Speed", _agent.velocity.magnitude);
 
-        if (!_isJumpscareOccurred)
+        if (_isJumpscareOccurred) return;
+
+        _agent.SetDestination(playerTransform.position);
+
+        if (Vector3.Distance(transform.position, playerTransform.position) <= triggerJumpscareDistance)
         {
-            _navMeshAgent.SetDestination(playerTransform.position);
-
-            _screamTimer -= Time.deltaTime;
-
-            if (_screamTimer <= 0)
-            {
-                if (AudioManager.Instance != null)
-                {
-                    AudioManager.Instance.Play2DSFX(chasingScreamClip);
-                }
-                _screamTimer = 10f;
-            }
-
-            if (Vector3.Distance(transform.position, playerTransform.position) <= triggerJumpscareDistance)
-            {
-                StartCoroutine(TriggerJumpscare());
-            }
-
-            PlayFootstep();
+            StartCoroutine(TriggerJumpscare());
         }
+
+        PlayFootstep();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Obstacle")) return;
 
-        _navMeshAgent.speed = stunSpeed;
+        _agent.speed = stunSpeed;
 
         MeshRenderer meshRenderer;
 
         if (other.TryGetComponent(out meshRenderer))
         {
-            originalObstacleMaterial = meshRenderer.material;
-            meshRenderer.material = glitchMaterial;
+            _originalObstacleMaterial = meshRenderer.material;
+            meshRenderer.material = obstacleGlitchMaterial;
         }
         else
         {
             meshRenderer = other.GetComponentInChildren<MeshRenderer>(includeInactive: true);
 
-            originalObstacleMaterial = meshRenderer.material;
-            meshRenderer.material = glitchMaterial;
+            _originalObstacleMaterial = meshRenderer.material;
+            meshRenderer.material = obstacleGlitchMaterial;
         }
     }
 
@@ -88,30 +104,29 @@ public class Enemy : MonoBehaviour
     {
         if (!other.CompareTag("Obstacle")) return;
 
-        _navMeshAgent.speed = normalSpeed;
+        _agent.speed = normalSpeed;
 
         MeshRenderer meshRenderer;
 
         if (other.TryGetComponent(out meshRenderer))
         {
-            meshRenderer.material = originalObstacleMaterial;
+            meshRenderer.material = _originalObstacleMaterial;
         }
         else
         {
             meshRenderer = other.GetComponentInChildren<MeshRenderer>(includeInactive: true);
 
-            meshRenderer.material = originalObstacleMaterial;
+            meshRenderer.material = _originalObstacleMaterial;
         }
     }
 
     private IEnumerator TriggerJumpscare()
     {
-        // PlayerMovement.IsMovementInputOn = false;
-        // PlayerCamera.IsCameraInputOn = false;
+        PlayerMovement.IsControlsEnabled = false;
 
-        _navMeshAgent.speed = 0f;
-        _navMeshAgent.acceleration = 0f;
-        _navMeshAgent.velocity = Vector3.zero;
+        _agent.speed = 0f;
+        _agent.acceleration = 0f;
+        _agent.velocity = Vector3.zero;
 
         // Jumpscare here
         // Get horizontal direction from camera (no vertical component)
@@ -121,7 +136,7 @@ public class Enemy : MonoBehaviour
         Vector3 closePosition = cameraTransform.position + horizontalForward * 0.4f; // Adjust distance
         closePosition.y = transform.position.y; // Keep enemy at its current ground level
 
-        _navMeshAgent.enabled = false; // Disable to allow teleport
+        _agent.enabled = false; // Disable to allow teleport
         transform.position = closePosition;
         transform.LookAt(new Vector3(cameraTransform.position.x, transform.position.y, cameraTransform.position.z)); // Face camera
 
@@ -145,9 +160,18 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        if (TriggerFirstRoom.IsTriggered)
+        if (ForcedDeathState.UseGlitchDeath)
         {
-            SceneManager.LoadScene("yasirwork 1");
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.SetGameState(GameManager.GameState.FirstDeath);
+            }
+
+            StartCoroutine(GlitchDeathSequence());
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -186,7 +210,7 @@ public class Enemy : MonoBehaviour
     {
         if (footstepClip == null) return;
 
-        float speed = _navMeshAgent.velocity.magnitude;
+        float speed = _agent.velocity.magnitude;
 
         // Enemy is not moving
         if (speed < 0.01f)
@@ -213,5 +237,47 @@ public class Enemy : MonoBehaviour
     {
         transform.position = respawnPoint;
         enabled = true;
+    }
+
+    // ===== SPECIAL GLITCH DEATH ONLY =====
+
+    private IEnumerator GlitchDeathSequence()
+    {
+        ForcedDeathState.UseGlitchDeath = false;
+
+        glitchImage.enabled = true;
+        glitchImage.material.SetFloat("_Intensity", _glitchIntensity);
+        glitchImage.material.SetFloat("_ChromaticSplit", 0.3f);
+        glitchImage.material.SetFloat("_NoiseAmount", 0.3f);
+
+        deathCanvas.alpha = 1;
+        deathCanvas.interactable = true;
+        deathCanvas.blocksRaycasts = true;
+
+        restartButton.onClick.RemoveAllListeners();
+        restartButton.onClick.AddListener(OnGlitchRestartPressed);
+
+        yield return null;
+    }
+
+    private void OnGlitchRestartPressed()
+    {
+        _restartPressCount++;
+
+        _glitchIntensity += 0.25f;
+
+        glitchImage.material.SetFloat("_Intensity", _glitchIntensity);
+        glitchImage.material.SetFloat("_ChromaticSplit", 0.3f + 0.1f * _restartPressCount);
+        glitchImage.material.SetFloat("_NoiseAmount", 0.3f + 0.1f * _restartPressCount);
+
+        if (_restartPressCount >= 3)
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
+            }
+
+            SceneManager.LoadScene(afterFirstDeathSceneName);
+        }
     }
 }

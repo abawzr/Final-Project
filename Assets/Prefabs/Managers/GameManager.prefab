@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   framerate: 120
+  glitchMaterial: {fileID: 2100000, guid: 8b265804a5489424f99ccf17a9e9fad1, type: 2}
