@@ -7,7 +7,7 @@ public class Laser : MonoBehaviour
     [SerializeField] private Transform oragin;
     private float LaserLength = 100f;
     [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private int maxReflections = 5;
+    [SerializeField] private int maxReflections = 10;
 
 
     // Update is called once per frame
