@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int framerate = 120;
+    [SerializeField] private Material glitchMaterial;
 
     public static GameManager Instance;
 
@@ -14,8 +16,19 @@ public class GameManager : MonoBehaviour
         Pause,
         Gameplay,
         Puzzle,
+        FirstDeath,
         Cutscene,
         Credits
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += ResetGlitchMaterial;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= ResetGlitchMaterial;
     }
 
     private void Awake()
@@ -40,6 +53,13 @@ public class GameManager : MonoBehaviour
         // SetGameState(GameState.MainMenu);
     }
 
+    private void ResetGlitchMaterial(Scene scene, LoadSceneMode sceneMode)
+    {
+        glitchMaterial.SetFloat("_Intensity", 0);
+        glitchMaterial.SetFloat("_ChromaticSplit", 0);
+        glitchMaterial.SetFloat("_NoiseAmount", 0);
+    }
+
     public void SetGameState(GameState newState)
     {
         switch (newState)
@@ -57,6 +77,11 @@ public class GameManager : MonoBehaviour
             case GameState.Gameplay:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Locked;
+                break;
+
+            case GameState.FirstDeath:
+                Time.timeScale = 1f;
+                Cursor.lockState = CursorLockMode.Confined;
                 break;
 
             case GameState.Puzzle:
@@ -81,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        // SceneManager.LoadScene("Game");
+        SceneManager.LoadSceneAsync("GameScene");
         SetGameState(GameState.Gameplay);
     }
 

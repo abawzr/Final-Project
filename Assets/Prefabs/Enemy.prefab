@@ -2214,11 +2214,14 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   triggerJumpscareDistance: 2.5
   jumpscareClip: {fileID: 0}
-  chasingScreamClip: {fileID: 0}
   footstepClip: {fileID: 8300000, guid: ec4bd5988d7de0c41ab2d9959705dd8b, type: 3}
   walkStepInterval: 0.8
   runStepInterval: 0.5
-  glitchMaterial: {fileID: 2100000, guid: 669bc1bba95733a46bea45da321ded6c, type: 2}
+  obstacleGlitchMaterial: {fileID: 2100000, guid: 669bc1bba95733a46bea45da321ded6c, type: 2}
+  glitchImage: {fileID: 0}
+  deathCanvas: {fileID: 0}
+  restartButton: {fileID: 0}
+  afterFirstDeathSceneName: GameScene
 --- !u!1 &8561675239990946638
 GameObject:
   m_ObjectHideFlags: 0

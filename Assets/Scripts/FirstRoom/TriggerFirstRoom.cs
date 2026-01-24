@@ -17,6 +17,7 @@ public class TriggerFirstRoom : MonoBehaviour
         if (IsTriggered) return;
 
         IsTriggered = true;
+        ForcedDeathState.UseGlitchDeath = true;
 
         doorAnimator.SetTrigger("Close");
     }
