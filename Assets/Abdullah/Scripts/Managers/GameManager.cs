@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         Gameplay,
         Puzzle,
         FirstDeath,
+        Choice,
         Cutscene,
         Credits
     }
@@ -81,6 +82,11 @@ public class GameManager : MonoBehaviour
 
             case GameState.FirstDeath:
                 Time.timeScale = 1f;
+                Cursor.lockState = CursorLockMode.Confined;
+                break;
+
+            case GameState.Choice:
+                Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Confined;
                 break;
 
