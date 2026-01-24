@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int framerate = 120;
     [SerializeField] private Material glitchMaterial;
 
+    private GameState _currentState;
+
     public static GameManager Instance;
 
     public enum GameState
@@ -50,8 +52,8 @@ public class GameManager : MonoBehaviour
 
         Application.targetFrameRate = framerate;
 
-        // NOTE: Remove this comment after creating main menu scene
-        // SetGameState(GameState.MainMenu);
+        SetGameState(GameState.MainMenu);
+        _currentState = GameState.MainMenu;
     }
 
     private void ResetGlitchMaterial(Scene scene, LoadSceneMode sceneMode)
@@ -63,46 +65,55 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState newState)
     {
+        _currentState = newState;
         switch (newState)
         {
             case GameState.MainMenu:
-                Time.timeScale = 0f;
+                Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
+                PlayerMovement.IsControlsEnabled = false;
                 break;
 
             case GameState.Pause:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Confined;
+                PlayerMovement.IsControlsEnabled = false;
                 break;
 
             case GameState.Gameplay:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Locked;
+                PlayerMovement.IsControlsEnabled = true;
                 break;
 
             case GameState.FirstDeath:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
+                PlayerMovement.IsControlsEnabled = false;
                 break;
 
             case GameState.Choice:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Confined;
+                PlayerMovement.IsControlsEnabled = false;
                 break;
 
             case GameState.Puzzle:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
+                PlayerMovement.IsControlsEnabled = false;
                 break;
 
             case GameState.Cutscene:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Locked;
+                PlayerMovement.IsControlsEnabled = false;
                 break;
 
             case GameState.Credits:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Locked;
+                PlayerMovement.IsControlsEnabled = false;
                 break;
 
             default:
@@ -112,8 +123,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadSceneAsync("GameScene");
         SetGameState(GameState.Gameplay);
+        SceneManager.LoadSceneAsync("StartScene");
     }
 
     public void QuitGame()

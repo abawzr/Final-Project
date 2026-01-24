@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BadPath : MonoBehaviour
 {
@@ -41,13 +43,26 @@ public class BadPath : MonoBehaviour
     private void TriggerBadEnding()
     {
         _endingTriggered = true;
+        StartCoroutine(EndSequence());
+    }
+
+    private IEnumerator EndSequence()
+    {
+        endingAnimator.SetTrigger("End");
+
+        yield return new WaitForSecondsRealtime(3f);
 
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetGameState(GameManager.GameState.Cutscene);
         }
 
-        Application.Quit();
-        // endingAnimator.SetTrigger("End");
+        yield return new WaitForSecondsRealtime(27f);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetGameState(GameManager.GameState.MainMenu);
+            SceneManager.LoadSceneAsync("MainMenuScene");
+        }
     }
 }

@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class TriggerFirstRoom : MonoBehaviour
 {
+    [SerializeField] private Transform door;
     [SerializeField] private Animator doorAnimator;
+    [SerializeField] private AudioClip doorClip;
 
     public static bool IsTriggered = false;
 
@@ -20,5 +22,10 @@ public class TriggerFirstRoom : MonoBehaviour
         ForcedDeathState.UseGlitchDeath = true;
 
         doorAnimator.SetTrigger("Close");
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play3DSFX(doorClip, door.position);
+        }
     }
 }

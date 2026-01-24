@@ -2090,9 +2090,76 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1400450254671038826, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1777780337032122071, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887636766110420897, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_text
+      value: 'The Fourth Door
+
+
+        Developers:
+
+        Abdullah
+
+        Rafa
+
+        Rayan
+
+
+        3D
+        Artists:
+
+        Hatem
+
+        Maha
+
+        Yasir'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887636766110420897, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e549f2548511325419c7165b7e10d862, type: 2}
+    - target: {fileID: 1887636766110420897, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8495686856340818443, guid: e549f2548511325419c7165b7e10d862, type: 2}
+    - target: {fileID: 1887636766110420897, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887636766110420897, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2129716334226951724, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
       propertyPath: m_Name
       value: Canvas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4995340816675736092, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581641401577408027, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581641401577408027, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8495686856340818443, guid: e549f2548511325419c7165b7e10d862, type: 2}
+    - target: {fileID: 6581641401577408027, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581641401577408027, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8001047554781516840, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2118,6 +2185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!95 &540048440 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4714507350194750749, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+  m_PrefabInstance: {fileID: 540048438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &544669744
 GameObject:
   m_ObjectHideFlags: 0
@@ -7211,6 +7283,10 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 910931250}
+    - target: {fileID: 5939776581035369694, guid: 8c2f93c8a38b45c45af717a2f2008d1e, type: 3}
+      propertyPath: endingAnimator
+      value: 
+      objectReference: {fileID: 540048440}
     - target: {fileID: 6824765267231520699, guid: 8c2f93c8a38b45c45af717a2f2008d1e, type: 3}
       propertyPath: mainCamera
       value: 

@@ -92,6 +92,7 @@ public class Padlock : MonoBehaviour
     private void Unlock()
     {
         puzzle.CanInteract = false;
+        _isUnlocked = true;
 
         if (animator != null)
         {
@@ -114,8 +115,6 @@ public class Padlock : MonoBehaviour
         }
 
         yield return new WaitForSecondsRealtime(timeBeforeDisablingPuzzle);
-
-        _isUnlocked = true;
 
         puzzle.DestoryPadlock();
     }

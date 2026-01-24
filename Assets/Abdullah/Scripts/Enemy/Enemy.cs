@@ -277,7 +277,7 @@ public class Enemy : MonoBehaviour
                 GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
             }
 
-            SceneManager.LoadScene(afterFirstDeathSceneName);
+            SceneManager.LoadSceneAsync(afterFirstDeathSceneName);
         }
     }
 }
