@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int framerate = 120;
     [SerializeField] private Material glitchMaterial;
 
-    private GameState _currentState;
+    public event Action<GameState> OnGameStateChanged;
 
     public static GameManager Instance;
 
@@ -51,9 +51,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Application.targetFrameRate = framerate;
+    }
 
+    private void Start()
+    {
         SetGameState(GameState.MainMenu);
-        _currentState = GameState.MainMenu;
     }
 
     private void ResetGlitchMaterial(Scene scene, LoadSceneMode sceneMode)
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState newState)
     {
-        _currentState = newState;
+        OnGameStateChanged?.Invoke(newState);
         switch (newState)
         {
             case GameState.MainMenu:

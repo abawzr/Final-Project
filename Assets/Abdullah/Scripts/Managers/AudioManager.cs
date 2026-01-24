@@ -67,12 +67,15 @@ public class AudioManager : MonoBehaviour
 
         // Create single audio source for music
         _musicSource = gameObject.AddComponent<AudioSource>();
-        _musicSource.clip = ambientMusic;
+        _musicSource.clip = mainmenuMusic;
         _musicSource.loop = true;
+        _musicSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Music")[0];
         _musicSource.spatialBlend = 0; // 2D Sound
+        _musicSource.playOnAwake = true;
 
         // Create single audio source for 2D sound effects
         _sfx2dSource = gameObject.AddComponent<AudioSource>();
+        _sfx2dSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
         _sfx2dSource.spatialBlend = 0; // 2D SFX Sound
 
         // Load Volumes to sliders
@@ -82,6 +85,33 @@ public class AudioManager : MonoBehaviour
             LoadVolume("MusicVolume", musicSlider, 0);
         if (sfxSlider != null)
             LoadVolume("SFXVolume", sfxSlider, 0);
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameStateChanged += UpdateMusic;
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameStateChanged -= UpdateMusic;
+    }
+
+    private void UpdateMusic(GameManager.GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameManager.GameState.Gameplay:
+                _musicSource.clip = ambientMusic;
+                _musicSource.Play();
+                break;
+            case GameManager.GameState.MainMenu:
+                _musicSource.clip = mainmenuMusic;
+                _musicSource.Play();
+                break;
+        }
     }
 
     private void SetVolume(string parameter, float dBValue)

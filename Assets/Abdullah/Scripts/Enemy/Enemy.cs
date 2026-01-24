@@ -29,8 +29,17 @@ public class Enemy : MonoBehaviour
     [Header("Glitch Death (SPECIAL ONLY)")]
     [SerializeField] private RawImage glitchImage;
     [SerializeField] private CanvasGroup deathCanvas;
-    [SerializeField] private Button restartButton;
+    [SerializeField] private Button restartButton1;
+    [SerializeField] private Button restartButton2;
+    [SerializeField] private Button restartButton3;
+    [SerializeField] private Button restartButton4;
+    [SerializeField] private Button restartButton5;
+    [SerializeField] private Button restartButton6;
+    [SerializeField] private Button restartButton7;
+    [SerializeField] private Button restartButton8;
+    [SerializeField] private Button restartButton9;
     [SerializeField] private string afterFirstDeathSceneName;
+    [SerializeField] private AudioClip noiseClip;
 
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -141,7 +150,7 @@ public class Enemy : MonoBehaviour
         transform.LookAt(new Vector3(cameraTransform.position.x, transform.position.y, cameraTransform.position.z)); // Face camera
 
         // Calculate enemy's face position
-        Vector3 enemyFacePosition = transform.position + transform.up * 1.8f;
+        Vector3 enemyFacePosition = transform.position + transform.up * 2.5f;
 
         // Snap camera to look at enemy face
         StartCoroutine(SnapCameraToEnemy(enemyFacePosition));
@@ -254,8 +263,24 @@ public class Enemy : MonoBehaviour
         deathCanvas.interactable = true;
         deathCanvas.blocksRaycasts = true;
 
-        restartButton.onClick.RemoveAllListeners();
-        restartButton.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton1.onClick.RemoveAllListeners();
+        restartButton1.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton2.onClick.RemoveAllListeners();
+        restartButton2.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton3.onClick.RemoveAllListeners();
+        restartButton3.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton4.onClick.RemoveAllListeners();
+        restartButton4.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton5.onClick.RemoveAllListeners();
+        restartButton5.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton6.onClick.RemoveAllListeners();
+        restartButton6.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton7.onClick.RemoveAllListeners();
+        restartButton7.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton8.onClick.RemoveAllListeners();
+        restartButton8.onClick.AddListener(OnGlitchRestartPressed);
+        restartButton9.onClick.RemoveAllListeners();
+        restartButton9.onClick.AddListener(OnGlitchRestartPressed);
 
         yield return null;
     }
@@ -269,6 +294,27 @@ public class Enemy : MonoBehaviour
         glitchImage.material.SetFloat("_Intensity", _glitchIntensity);
         glitchImage.material.SetFloat("_ChromaticSplit", 0.3f + 0.1f * _restartPressCount);
         glitchImage.material.SetFloat("_NoiseAmount", 0.3f + 0.1f * _restartPressCount);
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play2DSFX(noiseClip);
+        }
+
+        if (_restartPressCount == 1)
+        {
+            restartButton2.gameObject.SetActive(true);
+            restartButton3.gameObject.SetActive(true);
+            restartButton4.gameObject.SetActive(true);
+            restartButton5.gameObject.SetActive(true);
+        }
+
+        else if (_restartPressCount == 2)
+        {
+            restartButton6.gameObject.SetActive(true);
+            restartButton7.gameObject.SetActive(true);
+            restartButton8.gameObject.SetActive(true);
+            restartButton9.gameObject.SetActive(true);
+        }
 
         if (_restartPressCount >= 3)
         {
