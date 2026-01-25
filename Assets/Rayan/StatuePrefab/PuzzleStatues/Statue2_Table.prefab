@@ -276,7 +276,7 @@ MonoBehaviour:
   glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   glowWidth: 5
   audioSource: {fileID: 3794866229603126420}
-  rotateSound: {fileID: 0}
+  rotateSound: {fileID: 8300000, guid: 7324ddc948706a148bb1031b286e298c, type: 3}
   arrowsUI: {fileID: 559227720688679460}
   enableDebugLogs: 1
 --- !u!1 &3006332450028241456
@@ -772,7 +772,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.17
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -816,7 +816,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

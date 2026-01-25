@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1870907525456352841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3140123961178727780}
+  - component: {fileID: 2880796415012533179}
+  m_Layer: 0
+  m_Name: StatueSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3140123961178727780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870907525456352841}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.36875, y: 0, z: 14.41621}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2880796415012533179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870907525456352841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3816ffbac99604f839f37e8658bcec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatueWorldSpawner
+  statuePrefabs:
+  - {fileID: 7690997448440297567, guid: dcc6f3d6d381f474e98f1daebe620847, type: 3}
+  - {fileID: 3741501857509310996, guid: 48ad9bedce7b121448acbfc049609d9d, type: 3}
+  - {fileID: 8909406218725885278, guid: 4573a91ed0cd4744eb63548f3b83b947, type: 3}
+  - {fileID: 4408122858736694830, guid: 128b007fb4c950240a5538b99a4015f5, type: 3}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spawnOnStart: 1
+  statuesParent: {fileID: 0}
