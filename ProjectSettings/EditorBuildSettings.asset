@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartScene.unity
+    path: Assets/Abdullah/Scenes/MainMenuScene.unity
+    guid: fb8e8258d8f643141958412dc03d20bc
+  - enabled: 1
+    path: Assets/Abdullah/Scenes/StartScene.unity
     guid: 985c77b8a0954104fad3102d33858d03
   - enabled: 1
-    path: Assets/Scenes/yasirwork 1.unity
-    guid: 9cdd7c75bced1ea47a44fa38d9decd9f
+    path: Assets/Abdullah/Scenes/GameScene.unity
+    guid: 0ba0173ddafb8724c854b5c5a09d8cd9
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

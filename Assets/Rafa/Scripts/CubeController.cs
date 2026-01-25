@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class CubeController : MonoBehaviour
-{   [SerializeField]float rotateAngle=15f;
+{   [SerializeField]float rotateAngle=10f;
      void Update()
     {
         if(Input.GetMouseButtonDown(0))
@@ -11,10 +11,11 @@ public class CubeController : MonoBehaviour
             if(Physics.Raycast(ray,out hit))
             {
                 if(hit.transform.CompareTag("Cube"))
-                {   //rotate the cube 15 degrees around y axis
-                    Vector3 currentAngle = hit.transform.eulerAngles;
-                    float nextY = currentAngle.y + rotateAngle;
-                    hit.transform.eulerAngles = new Vector3(currentAngle.x, nextY, currentAngle.z);
+                {   
+                var rotator = hit.transform.GetComponentInParent<MirrorRotator>();
+                Debug.Log("Hit mirror: " + hit.transform.name + " rotator? " + (rotator != null));
+                rotator?.RotateStep();
+
                 }
             }
         }
