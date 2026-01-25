@@ -22,9 +22,6 @@ public class PuzzleStateListener : MonoBehaviour
     [Tooltip("Priority threshold - puzzle is active when camera priority is above this")]
     [SerializeField] private int priorityThreshold = 5;
 
-    [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = false;
-
     /// <summary>
     /// Fired when puzzle mode is entered.
     /// </summary>
@@ -56,29 +53,6 @@ public class PuzzleStateListener : MonoBehaviour
     /// </summary>
     public bool IsPuzzleActive => _isPuzzleActive;
 
-    private void Start()
-    {
-        // Validate setup
-        if (puzzleCamera == null && (detectionMethod == DetectionMethod.CameraPriority || detectionMethod == DetectionMethod.Both))
-        {
-            Debug.LogError("[PuzzleStateListener] No puzzle camera assigned! Camera priority detection will not work.");
-        }
-
-        // Warn if using GameManager detection
-        if (detectionMethod == DetectionMethod.GameManagerState || detectionMethod == DetectionMethod.Both)
-        {
-            if (GameManager.Instance == null)
-            {
-                Debug.LogWarning("[PuzzleStateListener] GameManager.Instance is null. GameManager state detection will not work until it's available.");
-            }
-        }
-
-        if (enableDebugLogs)
-        {
-            Debug.Log($"[PuzzleStateListener] Initialized with detection method: {detectionMethod}");
-        }
-    }
-
     private void OnDestroy()
     {
         // Only clean up static events when application is quitting
@@ -107,12 +81,10 @@ public class PuzzleStateListener : MonoBehaviour
 
             if (isActive)
             {
-                if (enableDebugLogs) Debug.Log("[PuzzleStateListener] Puzzle ENABLED");
                 OnPuzzleEnabled?.Invoke();
             }
             else
             {
-                if (enableDebugLogs) Debug.Log("[PuzzleStateListener] Puzzle DISABLED");
                 OnPuzzleDisabled?.Invoke();
             }
         }
@@ -157,9 +129,8 @@ public class PuzzleStateListener : MonoBehaviour
         if (GameManager.Instance == null)
         {
             // Only warn once to avoid log spam
-            if (!_hasWarnedAboutGameManager && enableDebugLogs)
+            if (!_hasWarnedAboutGameManager)
             {
-                Debug.LogWarning("[PuzzleStateListener] GameManager.Instance is null, cannot check game state.");
                 _hasWarnedAboutGameManager = true;
             }
             return false;
@@ -171,39 +142,28 @@ public class PuzzleStateListener : MonoBehaviour
         // FIX: Actually check the GameManager state
         // This assumes GameManager has a CurrentState property and GameState enum
         // Modify this based on your actual GameManager implementation
-        try
+
+        // Option 1: If GameManager has a public CurrentState property
+        // return GameManager.Instance.CurrentState == GameManager.GameState.Puzzle;
+
+        // Option 2: If GameManager has a method to check state
+        // return GameManager.Instance.IsInPuzzleState();
+
+        // Option 3: Use reflection to check (works if property exists but isn't public)
+        var currentStateProperty = GameManager.Instance.GetType().GetProperty("CurrentState");
+        if (currentStateProperty != null)
         {
-            // Option 1: If GameManager has a public CurrentState property
-            // return GameManager.Instance.CurrentState == GameManager.GameState.Puzzle;
-
-            // Option 2: If GameManager has a method to check state
-            // return GameManager.Instance.IsInPuzzleState();
-
-            // Option 3: Use reflection to check (works if property exists but isn't public)
-            var currentStateProperty = GameManager.Instance.GetType().GetProperty("CurrentState");
-            if (currentStateProperty != null)
-            {
-                var currentState = currentStateProperty.GetValue(GameManager.Instance);
-                var puzzleState = Enum.Parse(typeof(GameManager.GameState), "Puzzle");
-                return currentState.Equals(puzzleState);
-            }
-
-            // Fallback: If we can't determine the state, use camera priority
-            if (enableDebugLogs && !_hasWarnedAboutGameManager)
-            {
-                Debug.LogWarning("[PuzzleStateListener] Could not find CurrentState property on GameManager. Falling back to camera priority.");
-                _hasWarnedAboutGameManager = true;
-            }
-            return CheckCameraPriority();
+            var currentState = currentStateProperty.GetValue(GameManager.Instance);
+            var puzzleState = Enum.Parse(typeof(GameManager.GameState), "Puzzle");
+            return currentState.Equals(puzzleState);
         }
-        catch (Exception ex)
+
+        // Fallback: If we can't determine the state, use camera priority
+        if (!_hasWarnedAboutGameManager)
         {
-            if (enableDebugLogs)
-            {
-                Debug.LogWarning($"[PuzzleStateListener] Error checking GameManager state: {ex.Message}. Falling back to camera priority.");
-            }
-            return CheckCameraPriority();
+            _hasWarnedAboutGameManager = true;
         }
+        return CheckCameraPriority();
     }
 
     #region Public Methods
@@ -241,11 +201,6 @@ public class PuzzleStateListener : MonoBehaviour
     {
         detectionMethod = method;
         _hasWarnedAboutGameManager = false; // Reset warning
-
-        if (enableDebugLogs)
-        {
-            Debug.Log($"[PuzzleStateListener] Detection method changed to: {method}");
-        }
     }
 
     #endregion

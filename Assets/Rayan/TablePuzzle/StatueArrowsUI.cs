@@ -55,9 +55,6 @@ public class StatueArrowsUI : MonoBehaviour
     [SerializeField] private AudioClip clickSound;
     [SerializeField] private AudioClip hoverSound;
 
-    [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = false;
-
     // Events - fired when arrows are clicked
     public event Action OnLeftArrowClicked;
     public event Action OnRightArrowClicked;
@@ -147,8 +144,6 @@ public class StatueArrowsUI : MonoBehaviour
         if (rightArrowOutline != null) rightArrowOutline.enabled = false;
 
         _isInitialized = true;
-
-        if (enableDebugLogs) Debug.Log("[StatueArrowsUI] Initialized");
     }
 
     /// <summary>
@@ -281,8 +276,6 @@ public class StatueArrowsUI : MonoBehaviour
     /// </summary>
     public void Show()
     {
-        if (enableDebugLogs) Debug.Log("[StatueArrowsUI] Show()");
-
         if (!_isInitialized)
         {
             InitializeComponent();
@@ -296,8 +289,6 @@ public class StatueArrowsUI : MonoBehaviour
     /// </summary>
     public void Hide()
     {
-        if (enableDebugLogs) Debug.Log("[StatueArrowsUI] Hide()");
-
         SetVisible(false);
         ResetHoverStates();
     }
@@ -309,8 +300,6 @@ public class StatueArrowsUI : MonoBehaviour
     private void SetVisible(bool visible)
     {
         _isVisible = visible;
-
-        if (enableDebugLogs) Debug.Log($"[StatueArrowsUI] SetVisible({visible})");
 
         // Handle UI Canvas visibility via CanvasGroup
         if (canvasGroup != null)
@@ -405,8 +394,6 @@ public class StatueArrowsUI : MonoBehaviour
     {
         if (!_isVisible) return;
 
-        if (enableDebugLogs) Debug.Log($"[StatueArrowsUI] Hover enter {(isLeft ? "LEFT" : "RIGHT")} arrow");
-
         if (isLeft)
         {
             _leftHovered = true;
@@ -446,8 +433,6 @@ public class StatueArrowsUI : MonoBehaviour
     /// </summary>
     private void OnArrowHoverExit(bool isLeft)
     {
-        if (enableDebugLogs) Debug.Log($"[StatueArrowsUI] Hover exit {(isLeft ? "LEFT" : "RIGHT")} arrow");
-
         if (isLeft)
         {
             _leftHovered = false;
@@ -523,11 +508,8 @@ public class StatueArrowsUI : MonoBehaviour
         // CRITICAL FIX: Prevent clicking invisible arrows
         if (!_isVisible)
         {
-            if (enableDebugLogs) Debug.Log("[StatueArrowsUI] Left arrow click IGNORED - not visible");
             return;
         }
-
-        if (enableDebugLogs) Debug.Log("[StatueArrowsUI] Left arrow CLICKED!");
 
         PlayClickSound();
         OnLeftArrowClicked?.Invoke();
@@ -542,11 +524,8 @@ public class StatueArrowsUI : MonoBehaviour
         // CRITICAL FIX: Prevent clicking invisible arrows
         if (!_isVisible)
         {
-            if (enableDebugLogs) Debug.Log("[StatueArrowsUI] Right arrow click IGNORED - not visible");
             return;
         }
-
-        if (enableDebugLogs) Debug.Log("[StatueArrowsUI] Right arrow CLICKED!");
 
         PlayClickSound();
         OnRightArrowClicked?.Invoke();

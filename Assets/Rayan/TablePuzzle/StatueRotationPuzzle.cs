@@ -45,9 +45,6 @@ public class StatueRotationPuzzle : MonoBehaviour
     [Tooltip("Duration of drop animation in seconds")]
     [SerializeField] private float dropDuration = 0.3f;
 
-    [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = false;
-
     // Events
     public static event Action OnPuzzleSolved;
 
@@ -71,13 +68,7 @@ public class StatueRotationPuzzle : MonoBehaviour
         if (playerInventory == null)
         {
             playerInventory = FindFirstObjectByType<PlayerInventory>();
-            if (playerInventory == null)
-            {
-                Debug.LogError("[StatueRotationPuzzle] PlayerInventory is NULL! Puzzle will not function.");
-            }
         }
-
-        ValidateConfigs();
     }
 
     private void OnEnable()
@@ -118,75 +109,19 @@ public class StatueRotationPuzzle : MonoBehaviour
 
     #endregion
 
-    #region Validation
-
-    /// <summary>
-    /// Validates all statue configurations and logs errors for invalid setups.
-    /// </summary>
-    private void ValidateConfigs()
-    {
-        for (int i = 0; i < statueConfigs.Count; i++)
-        {
-            var config = statueConfigs[i];
-
-            if (string.IsNullOrEmpty(config.statueName))
-            {
-                Debug.LogWarning($"[StatueRotationPuzzle] Config[{i}] has no name specified.");
-                config.statueName = $"Statue_{i}";
-            }
-
-            if (config.statueItem == null)
-            {
-                Debug.LogError($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' has NULL statueItem!");
-            }
-
-            if (config.statuePrefab == null)
-            {
-                Debug.LogError($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' has NULL statuePrefab!");
-            }
-            else
-            {
-                // Check if prefab has required components
-                if (config.statuePrefab.GetComponent<RotatableStatue>() == null)
-                {
-                    Debug.LogWarning($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' prefab is missing RotatableStatue component (will be added at runtime).");
-                }
-
-                if (config.statuePrefab.GetComponentInChildren<StatueArrowsUI>(true) == null)
-                {
-                    Debug.LogWarning($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' prefab is missing StatueArrowsUI in children.");
-                }
-            }
-
-            if (config.tablePosition == null)
-            {
-                Debug.LogError($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' has NULL tablePosition!");
-            }
-        }
-
-        if (enableDebugLogs)
-        {
-            Debug.Log($"[StatueRotationPuzzle] Validated {statueConfigs.Count} statue configurations.");
-        }
-    }
-
-    #endregion
 
     #region Puzzle State
 
     private void OnPuzzleActivated()
     {
-        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] OnPuzzleActivated!");
 
         if (_isPuzzleSolved)
         {
-            if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Already solved, ignoring activation.");
             return;
         }
 
         if (_isSpawning)
         {
-            if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Already spawning, ignoring activation.");
             return;
         }
 
@@ -196,7 +131,6 @@ public class StatueRotationPuzzle : MonoBehaviour
 
     private void OnPuzzleDeactivated()
     {
-        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] OnPuzzleDeactivated!");
         _isActive = false;
     }
 
@@ -217,12 +151,10 @@ public class StatueRotationPuzzle : MonoBehaviour
 
         if (playerInventory == null)
         {
-            Debug.LogError("[StatueRotationPuzzle] PlayerInventory is NULL! Cannot spawn statues.");
             _isSpawning = false;
             yield break;
         }
 
-        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Checking {statueConfigs.Count} configs for spawning...");
 
         int spawnedCount = 0;
 
@@ -231,20 +163,17 @@ public class StatueRotationPuzzle : MonoBehaviour
             // Skip if already spawned
             if (IsStatueAlreadySpawned(config))
             {
-                if (enableDebugLogs) Debug.Log($"  '{config.statueName}': Already spawned, skipping.");
                 continue;
             }
 
             // Skip invalid configs
             if (config.statueItem == null || config.statuePrefab == null || config.tablePosition == null)
             {
-                if (enableDebugLogs) Debug.Log($"  '{config.statueName}': Invalid config, skipping.");
                 continue;
             }
 
             // Check if player has the item
             bool hasItem = playerInventory.HasItem(config.statueItem);
-            if (enableDebugLogs) Debug.Log($"  '{config.statueName}': HasItem = {hasItem}");
 
             if (hasItem)
             {
@@ -256,14 +185,10 @@ public class StatueRotationPuzzle : MonoBehaviour
             }
         }
 
-        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Spawned {spawnedCount} statues. Total on table: {_spawnedStatues.Count}");
-
         // FIX: Wait for ALL drop animations to complete before checking win condition
         // This ensures IsAtCorrectRotation() returns accurate results
         if (_pendingDropAnimations > 0)
         {
-            if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Waiting for {_pendingDropAnimations} drop animations to complete...");
-
             // Wait until all animations are done
             while (_pendingDropAnimations > 0)
             {
@@ -314,8 +239,6 @@ public class StatueRotationPuzzle : MonoBehaviour
             ? finalPosition + Vector3.up * dropHeight
             : finalPosition;
 
-        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Spawning '{config.statueName}' at {finalPosition}");
-
         // Instantiate WITHOUT parent to avoid scale/position inheritance issues
         GameObject statueObj = Instantiate(config.statuePrefab, startPosition, finalRotation);
         statueObj.name = $"{config.statueName}_Table";
@@ -328,7 +251,6 @@ public class StatueRotationPuzzle : MonoBehaviour
         if (animator != null)
         {
             animator.enabled = false;
-            if (enableDebugLogs) Debug.Log($"  Disabled Animator on '{config.statueName}'");
         }
 
         // Setup RotatableStatue component
@@ -336,7 +258,6 @@ public class StatueRotationPuzzle : MonoBehaviour
         if (rotatableStatue == null)
         {
             rotatableStatue = statueObj.AddComponent<RotatableStatue>();
-            if (enableDebugLogs) Debug.Log($"  Added RotatableStatue component to '{config.statueName}'");
         }
 
         rotatableStatue.Initialize(config.statueName, config.correctRotation);
@@ -352,8 +273,6 @@ public class StatueRotationPuzzle : MonoBehaviour
         {
             rotatableStatue.OnPlacementComplete();
         }
-
-        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Successfully spawned '{config.statueName}'");
     }
 
     /// <summary>
@@ -383,7 +302,6 @@ public class StatueRotationPuzzle : MonoBehaviour
         if (statue != null)
         {
             statue.OnPlacementComplete();
-            if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] '{statue.ConfigName}' drop complete");
         }
 
         // Decrement pending counter
@@ -407,10 +325,6 @@ public class StatueRotationPuzzle : MonoBehaviour
         // Check if all required statues are placed
         if (_spawnedStatues.Count < statueConfigs.Count)
         {
-            if (enableDebugLogs)
-            {
-                Debug.Log($"[StatueRotationPuzzle] Not all statues placed ({_spawnedStatues.Count}/{statueConfigs.Count})");
-            }
             return;
         }
 
@@ -423,10 +337,6 @@ public class StatueRotationPuzzle : MonoBehaviour
 
             if (!statue.IsAtCorrectRotation())
             {
-                if (enableDebugLogs)
-                {
-                    Debug.Log($"[StatueRotationPuzzle] '{statue.ConfigName}' not at correct rotation ({statue.CurrentRotation}), placed={statue.IsPlaced}");
-                }
                 return;
             }
         }
@@ -441,8 +351,6 @@ public class StatueRotationPuzzle : MonoBehaviour
     private void OnPuzzleSolvedInternal()
     {
         _isPuzzleSolved = true;
-
-        Debug.Log("[StatueRotationPuzzle] ? PUZZLE SOLVED! ?");
 
         // Hide/show objects
         if (objectToHide != null)
@@ -474,7 +382,8 @@ public class StatueRotationPuzzle : MonoBehaviour
         if (puzzlePerspective != null)
         {
             puzzlePerspective.CanInteract = false;
-            if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Disabled table interaction");
+            puzzlePerspective.DisablePuzzle();
+            LabDoor.IsPuzzle3Solved = true;
         }
 
         // Fire event (RecordPlayerController listens to this to disable record player)
@@ -512,7 +421,6 @@ public class StatueRotationPuzzle : MonoBehaviour
     /// </summary>
     public void ResetPuzzle()
     {
-        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Resetting puzzle...");
 
         // Stop any spawning in progress
         if (_spawnCoroutine != null)
@@ -540,7 +448,6 @@ public class StatueRotationPuzzle : MonoBehaviour
         if (objectToHide != null) objectToHide.SetActive(true);
         if (objectToShow != null) objectToShow.SetActive(false);
 
-        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Reset complete.");
     }
 
     #endregion

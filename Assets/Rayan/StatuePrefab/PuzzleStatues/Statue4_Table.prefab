@@ -99,7 +99,6 @@ MonoBehaviour:
   audioSource: {fileID: 1335958196943908669}
   rotateSound: {fileID: 8300000, guid: 7324ddc948706a148bb1031b286e298c, type: 3}
   arrowsUI: {fileID: 0}
-  enableDebugLogs: 1
 --- !u!1 &1635485076774757138
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +236,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 1
   arrowLayerName: PuzzleArrows
-  enableDebugLogs: 0
 --- !u!65 &9039534645414894009
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -416,7 +414,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 0
   arrowLayerName: PuzzleArrows
-  enableDebugLogs: 0
 --- !u!65 &9050314177239080154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -724,7 +721,6 @@ MonoBehaviour:
   audioSource: {fileID: 7561095584685906923}
   clickSound: {fileID: 0}
   hoverSound: {fileID: 0}
-  enableDebugLogs: 0
 --- !u!82 &7561095584685906923
 AudioSource:
   m_ObjectHideFlags: 0
@@ -851,14 +847,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6651841617945608913}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.3826836, z: -0, w: -0.92387944}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.17000002, y: -0.03, z: 0.17000002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2019441246650785294}
   m_Father: {fileID: 5907147461261393552}
-  m_LocalEulerAnglesHint: {x: 0, y: 315, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6591094465592937610
 MeshFilter:
   m_ObjectHideFlags: 0

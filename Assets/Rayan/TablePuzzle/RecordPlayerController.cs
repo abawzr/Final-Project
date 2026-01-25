@@ -36,9 +36,6 @@ public class RecordPlayerController : MonoBehaviour
     [Tooltip("If true, automatically disables record player when puzzle is solved")]
     [SerializeField] private bool disableOnPuzzleSolved = true;
 
-    [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = false;
-
     // Events
     public static event Action OnStoryStarted;
     public static event Action OnStoryStopped;
@@ -157,7 +154,6 @@ public class RecordPlayerController : MonoBehaviour
     /// </summary>
     private void OnPuzzleSolved()
     {
-        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Puzzle solved - disabling record player");
         DisableRecordPlayer();
     }
 
@@ -169,7 +165,6 @@ public class RecordPlayerController : MonoBehaviour
         // Don't allow playing if disabled or already playing
         if (_isDisabled || _isPlaying)
         {
-            if (enableDebugLogs) Debug.Log($"[RecordPlayerController] PlayStory ignored - disabled={_isDisabled}, playing={_isPlaying}");
             return;
         }
 
@@ -199,8 +194,6 @@ public class RecordPlayerController : MonoBehaviour
         _finishCheckCoroutine = StartCoroutine(CheckForAudioFinish());
 
         OnStoryStarted?.Invoke();
-
-        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Story started");
     }
 
     /// <summary>
@@ -211,7 +204,6 @@ public class RecordPlayerController : MonoBehaviour
         // Don't allow stopping if disabled
         if (_isDisabled)
         {
-            if (enableDebugLogs) Debug.Log("[RecordPlayerController] StopStory ignored - disabled");
             return;
         }
 
@@ -235,8 +227,6 @@ public class RecordPlayerController : MonoBehaviour
         MoveNeedle(needleStopAngle);
 
         OnStoryStopped?.Invoke();
-
-        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Story stopped");
     }
 
     /// <summary>
@@ -277,8 +267,6 @@ public class RecordPlayerController : MonoBehaviour
         MoveNeedle(needleStopAngle);
 
         OnStoryFinished?.Invoke();
-
-        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Story finished");
     }
 
     /// <summary>
@@ -352,8 +340,6 @@ public class RecordPlayerController : MonoBehaviour
 
         // Move needle to stop position
         MoveNeedle(needleStopAngle);
-
-        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Record player disabled");
     }
 
     /// <summary>
@@ -373,8 +359,6 @@ public class RecordPlayerController : MonoBehaviour
         {
             stopButton.Enable();
         }
-
-        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Record player enabled");
     }
 
     #endregion

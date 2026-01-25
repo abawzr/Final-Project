@@ -34,11 +34,8 @@ public class InventorySlotUI : MonoBehaviour
 
     public void RemoveItem(ItemSO item)
     {
-        Debug.Log($"Item: {item} is enter RemoveItem method , {currentItem}");
-
         if (currentItem == item)
         {
-            Debug.Log($"Item: {item} is removed from inventoy slot ui");
             currentItem = null;
             itemIcon.sprite = null;
             itemIcon.color = new Color(itemIcon.color.r, itemIcon.color.g, itemIcon.color.b, 0f);

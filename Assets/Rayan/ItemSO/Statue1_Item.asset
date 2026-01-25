@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03214da78aa16449085a88a9bb7825, type: 3}
   m_Name: Statue1_Item
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemName: Statue1
+  itemName: Human
   itemIcon: {fileID: 0}
   itemPrefab: {fileID: 7690997448440297567, guid: dcc6f3d6d381f474e98f1daebe620847, type: 3}

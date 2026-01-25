@@ -33,10 +33,6 @@ public class PuzzleInputHandler : MonoBehaviour
     [SerializeField] private float raycastDistance = 100f;
     [SerializeField] private int maxRaycastHits = 10;
 
-    [Header("Debug")]
-    [SerializeField] private bool showDebugRay = false;
-    [SerializeField] private bool enableDebugLogs = false;
-
     // Currently hovered objects
     private RotatableStatue _hoveredStatue;
     private RecordPlayerButton _hoveredButton;
@@ -65,11 +61,6 @@ public class PuzzleInputHandler : MonoBehaviour
             {
                 puzzleCamera = puzzleCamObj.GetComponent<Camera>();
             }
-
-            if (puzzleCamera == null)
-            {
-                Debug.LogWarning("[PuzzleInputHandler] No puzzle camera assigned or found. Using Camera.main as fallback.");
-            }
         }
     }
 
@@ -90,16 +81,12 @@ public class PuzzleInputHandler : MonoBehaviour
         _isActive = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
-        if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Activated");
     }
 
     private void OnPuzzleDisabled()
     {
         _isActive = false;
         ClearAllHovers();
-
-        if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Deactivated");
     }
 
     private void Update()
@@ -110,11 +97,6 @@ public class PuzzleInputHandler : MonoBehaviour
         if (cam == null) return;
 
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-        if (showDebugRay)
-        {
-            Debug.DrawRay(ray.origin, ray.direction * raycastDistance, Color.yellow);
-        }
 
         // Perform raycast and process results
         ProcessRaycast(ray);
@@ -275,11 +257,6 @@ public class PuzzleInputHandler : MonoBehaviour
                         if (ownerStatue.OnHoverEnter())
                         {
                             _hoveredStatue = ownerStatue;
-                            if (enableDebugLogs) Debug.Log($"[PuzzleInputHandler] Arrow hover triggered statue hover for '{ownerStatue.ConfigName}'");
-                        }
-                        else
-                        {
-                            if (enableDebugLogs) Debug.Log($"[PuzzleInputHandler] Arrow hover - statue '{ownerStatue.ConfigName}' rejected hover");
                         }
                     }
                 }
@@ -302,8 +279,6 @@ public class PuzzleInputHandler : MonoBehaviour
                 ClearButtonHover();
                 _hoveredButton = foundButton;
                 _hoveredButton.OnHoverEnter();
-
-                if (enableDebugLogs) Debug.Log($"[PuzzleInputHandler] Hovering button {foundButton.name}");
             }
             return;
         }
@@ -322,11 +297,6 @@ public class PuzzleInputHandler : MonoBehaviour
                 if (foundStatue.OnHoverEnter())
                 {
                     _hoveredStatue = foundStatue;
-                    if (enableDebugLogs) Debug.Log($"[PuzzleInputHandler] Hovering statue '{foundStatue.ConfigName}'");
-                }
-                else
-                {
-                    if (enableDebugLogs) Debug.Log($"[PuzzleInputHandler] Statue '{foundStatue.ConfigName}' rejected hover (not placed or not interactable)");
                 }
             }
             return;
@@ -344,7 +314,6 @@ public class PuzzleInputHandler : MonoBehaviour
         // Check if arrows are actually visible/interactable
         if (!arrowsUI.IsVisible)
         {
-            if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Arrow hover skipped - arrows not visible");
             return;
         }
 
@@ -384,16 +353,12 @@ public class PuzzleInputHandler : MonoBehaviour
             _isLeftArrowHovered = true;
             _isRightArrowHovered = false;
             _hoveredArrowsUI.OnLeftArrowHoverEnter();
-
-            if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Hovering LEFT arrow");
         }
         else
         {
             _isRightArrowHovered = true;
             _isLeftArrowHovered = false;
             _hoveredArrowsUI.OnRightArrowHoverEnter();
-
-            if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Hovering RIGHT arrow");
         }
     }
 
@@ -406,8 +371,6 @@ public class PuzzleInputHandler : MonoBehaviour
         {
             _hoveredStatue.OnHoverExit();
             _hoveredStatue = null;
-
-            if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Cleared statue hover");
         }
     }
 
@@ -462,8 +425,6 @@ public class PuzzleInputHandler : MonoBehaviour
         ClearArrowHoverOnly();
         ClearButtonHover();
         ClearStatueHover();
-
-        if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Cleared all hovers");
     }
 
     /// <summary>
@@ -477,7 +438,6 @@ public class PuzzleInputHandler : MonoBehaviour
             // Extra safety check - ensure arrows are still visible
             if (!_hoveredArrowsUI.IsVisible)
             {
-                if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Arrow click ignored - arrows no longer visible");
                 ClearArrowHoverOnly();
                 return;
             }
@@ -485,12 +445,10 @@ public class PuzzleInputHandler : MonoBehaviour
             if (_isLeftArrowHovered)
             {
                 _hoveredArrowsUI.OnLeftArrowClickRaycast();
-                if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Clicked LEFT arrow");
             }
             else if (_isRightArrowHovered)
             {
                 _hoveredArrowsUI.OnRightArrowClickRaycast();
-                if (enableDebugLogs) Debug.Log("[PuzzleInputHandler] Clicked RIGHT arrow");
             }
             return;
         }
@@ -499,14 +457,7 @@ public class PuzzleInputHandler : MonoBehaviour
         if (_hoveredButton != null)
         {
             _hoveredButton.OnClickRaycast();
-            if (enableDebugLogs) Debug.Log($"[PuzzleInputHandler] Clicked button {_hoveredButton.name}");
             return;
-        }
-
-        // Click on statue - currently does nothing, rotation is done through arrows
-        if (_hoveredStatue != null)
-        {
-            if (enableDebugLogs) Debug.Log($"[PuzzleInputHandler] Clicked statue '{_hoveredStatue.ConfigName}' (no action)");
         }
     }
 

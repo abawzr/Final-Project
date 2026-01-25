@@ -24,9 +24,6 @@ public class RotationArrow : MonoBehaviour
     [Tooltip("If set, the arrow will be moved to this layer on Start")]
     [SerializeField] private string arrowLayerName = "";
 
-    [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = false;
-
     // Cached reference to parent StatueArrowsUI
     private StatueArrowsUI _cachedArrowsUI;
     private bool _hasCachedUI = false;
@@ -63,9 +60,6 @@ public class RotationArrow : MonoBehaviour
 
         // Optional layer setup
         SetupLayer();
-
-        // Validate setup
-        ValidateSetup();
     }
 
     /// <summary>
@@ -100,10 +94,6 @@ public class RotationArrow : MonoBehaviour
         if (_cachedArrowsUI != null)
         {
             _hasCachedUI = true;
-        }
-        else if (enableDebugLogs)
-        {
-            Debug.LogWarning($"[RotationArrow] {name}: Could not find StatueArrowsUI in parent hierarchy!");
         }
 
         return _cachedArrowsUI;
@@ -141,10 +131,6 @@ public class RotationArrow : MonoBehaviour
         {
             _hasCachedStatue = true;
         }
-        else if (enableDebugLogs)
-        {
-            Debug.LogWarning($"[RotationArrow] {name}: Could not find RotatableStatue in parent hierarchy!");
-        }
 
         return _cachedStatue;
     }
@@ -166,38 +152,6 @@ public class RotationArrow : MonoBehaviour
 
         gameObject.layer = layer;
 
-        if (enableDebugLogs)
-        {
-            Debug.Log($"[RotationArrow] {name}: Set to layer '{arrowLayerName}' ({layer})");
-        }
-    }
-
-    /// <summary>
-    /// Validates the arrow setup and logs warnings for common issues.
-    /// </summary>
-    private void ValidateSetup()
-    {
-        // Check for collider
-        Collider col = GetComponent<Collider>();
-        if (col == null)
-        {
-            Debug.LogError($"[RotationArrow] {name}: Missing Collider component! Arrow won't be clickable.");
-        }
-        else if (!col.enabled)
-        {
-            Debug.LogWarning($"[RotationArrow] {name}: Collider is disabled. Arrow won't be clickable.");
-        }
-
-        // Check for StatueArrowsUI
-        if (_cachedArrowsUI == null)
-        {
-            Debug.LogError($"[RotationArrow] {name}: No StatueArrowsUI found in parent hierarchy!");
-        }
-
-        if (enableDebugLogs)
-        {
-            Debug.Log($"[RotationArrow] {name}: Setup complete. IsLeft={isLeftArrow}, ArrowsUI={_cachedArrowsUI != null}, Statue={_cachedStatue?.ConfigName ?? "none"}");
-        }
     }
 
     /// <summary>

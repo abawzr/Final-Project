@@ -140,7 +140,6 @@ public class RecordPlayerButton : MonoBehaviour
             else
             {
                 _baseGlowIntensity = 2.0f;
-                Debug.LogWarning($"[RecordPlayerButton] Material on {glowRenderer.name} doesn't have _GlowIntensity property. Using default value.");
             }
         }
     }

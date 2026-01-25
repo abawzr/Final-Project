@@ -44,12 +44,6 @@ public class StatueWorldSpawner : MonoBehaviour
         // Reset available spawn points
         _availableSpawnPoints = new List<Transform>(spawnPoints);
 
-        // Check if we have enough spawn points
-        if (spawnPoints.Count < statuePrefabs.Count)
-        {
-            Debug.LogWarning($"StatueWorldSpawner: Not enough spawn points ({spawnPoints.Count}) for all statues ({statuePrefabs.Count})");
-        }
-
         foreach (GameObject statuePrefab in statuePrefabs)
         {
             if (statuePrefab == null) continue;
@@ -57,14 +51,11 @@ public class StatueWorldSpawner : MonoBehaviour
             Transform spawnPoint = GetRandomSpawnPoint();
             if (spawnPoint == null)
             {
-                Debug.LogWarning($"StatueWorldSpawner: No available spawn points left for {statuePrefab.name}");
                 continue;
             }
 
             SpawnStatue(statuePrefab, spawnPoint);
         }
-
-        Debug.Log($"StatueWorldSpawner: Spawned {_spawnedStatues.Count} statues");
     }
 
     /// <summary>

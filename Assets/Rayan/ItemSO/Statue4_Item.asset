@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03214da78aa16449085a88a9bb7825, type: 3}
   m_Name: Statue4_Item
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemName: Statue4
+  itemName: Gazelle
   itemIcon: {fileID: 0}
   itemPrefab: {fileID: 4408122858736694830, guid: 128b007fb4c950240a5538b99a4015f5, type: 3}

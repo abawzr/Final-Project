@@ -29,9 +29,6 @@ public class RotatableStatue : MonoBehaviour
     [Header("Arrow UI")]
     [SerializeField] private StatueArrowsUI arrowsUI;
 
-    [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = false;
-
     // Static event for puzzle controller
     public static event Action OnAnyStatueRotated;
 
@@ -70,14 +67,11 @@ public class RotatableStatue : MonoBehaviour
 
     private void Awake()
     {
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {name}: Awake");
         InitializeComponents();
     }
 
     private void Start()
     {
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {name}: Start - ArrowsUI: {arrowsUI != null}");
-
         // Ensure initialization is complete
         if (!_isInitialized)
         {
@@ -193,11 +187,6 @@ public class RotatableStatue : MonoBehaviour
                 arrowsUI = arrowsCanvas.GetComponent<StatueArrowsUI>();
             }
         }
-
-        if (arrowsUI == null && enableDebugLogs)
-        {
-            Debug.LogWarning($"[RotatableStatue] {name}: Could not find ArrowsUI!");
-        }
     }
 
     /// <summary>
@@ -209,11 +198,6 @@ public class RotatableStatue : MonoBehaviour
 
         _arrowsInitialWorldRotation = arrowsUI.transform.rotation;
         _arrowsRotationInitialized = true;
-
-        if (enableDebugLogs)
-        {
-            Debug.Log($"[RotatableStatue] {_configName}: Arrows initial rotation: {_arrowsInitialWorldRotation.eulerAngles}");
-        }
     }
 
     #endregion
@@ -230,8 +214,6 @@ public class RotatableStatue : MonoBehaviour
         arrowsUI.OnLeftArrowClicked += RotateCounterClockwise;
         arrowsUI.OnRightArrowClicked += RotateClockwise;
         _isSubscribedToArrows = true;
-
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Subscribed to arrow events");
     }
 
     /// <summary>
@@ -244,8 +226,6 @@ public class RotatableStatue : MonoBehaviour
         arrowsUI.OnLeftArrowClicked -= RotateCounterClockwise;
         arrowsUI.OnRightArrowClicked -= RotateClockwise;
         _isSubscribedToArrows = false;
-
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Unsubscribed from arrow events");
     }
 
     #endregion
@@ -257,8 +237,6 @@ public class RotatableStatue : MonoBehaviour
     /// </summary>
     public void Initialize(string configName, float correctRotation)
     {
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {name}: Initialize({configName}, {correctRotation})");
-
         _configName = configName;
         _correctRotation = NormalizeRotation(correctRotation);
         _isPlaced = false;
@@ -295,8 +273,6 @@ public class RotatableStatue : MonoBehaviour
         _isPlaced = true;
         _currentRotation = NormalizeRotation(transform.eulerAngles.y);
 
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Placement complete at rotation {_currentRotation}");
-
         // Final initialization check
         if (arrowsUI == null)
         {
@@ -318,8 +294,6 @@ public class RotatableStatue : MonoBehaviour
         {
             SetHovered(false);
         }
-
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Interactable = {interactable}");
     }
 
     #endregion
@@ -331,8 +305,6 @@ public class RotatableStatue : MonoBehaviour
     /// </summary>
     public void RotateClockwise()
     {
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: RotateClockwise called");
-
         if (!CanRotate()) return;
 
         Rotate(rotationStep);
@@ -343,8 +315,6 @@ public class RotatableStatue : MonoBehaviour
     /// </summary>
     public void RotateCounterClockwise()
     {
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: RotateCounterClockwise called");
-
         if (!CanRotate()) return;
 
         Rotate(-rotationStep);
@@ -357,19 +327,16 @@ public class RotatableStatue : MonoBehaviour
     {
         if (!_isInteractable)
         {
-            if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Cannot rotate - not interactable");
             return false;
         }
 
         if (_isRotating)
         {
-            if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Cannot rotate - already rotating");
             return false;
         }
 
         if (!_isPlaced)
         {
-            if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Cannot rotate - not placed yet");
             return false;
         }
 
@@ -430,8 +397,6 @@ public class RotatableStatue : MonoBehaviour
         // Fire events
         OnRotationChanged?.Invoke(_currentRotation);
         OnAnyStatueRotated?.Invoke();
-
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: Rotation complete = {_currentRotation}");
     }
 
     /// <summary>
@@ -473,7 +438,6 @@ public class RotatableStatue : MonoBehaviour
     {
         if (!_isInteractable || !_isPlaced)
         {
-            if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: OnHoverEnter rejected (interactable={_isInteractable}, placed={_isPlaced})");
             return false;
         }
 
@@ -498,8 +462,6 @@ public class RotatableStatue : MonoBehaviour
 
         _isHovered = hovered;
 
-        if (enableDebugLogs) Debug.Log($"[RotatableStatue] {_configName}: SetHovered({hovered})");
-
         // Update outline
         if (outlineComponent != null)
         {
@@ -522,10 +484,6 @@ public class RotatableStatue : MonoBehaviour
             {
                 arrowsUI.Hide();
             }
-        }
-        else if (hovered && enableDebugLogs)
-        {
-            Debug.LogWarning($"[RotatableStatue] {_configName}: ArrowsUI is null, cannot show arrows!");
         }
     }
 
