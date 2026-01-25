@@ -25,9 +25,9 @@ public class LabDoor : MonoBehaviour, IInteractable
     {
         CanInteract = true;
 
-        IsPuzzle1Solved = true;
-        IsPuzzle2Solved = true;
-        IsPuzzle3Solved = true;
+        IsPuzzle1Solved = false;
+        IsPuzzle2Solved = false;
+        IsPuzzle3Solved = false;
 
         _puzzle1Triggered = false;
         _puzzle2Triggered = false;
