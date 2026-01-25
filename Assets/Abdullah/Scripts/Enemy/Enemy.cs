@@ -26,6 +26,11 @@ public class Enemy : MonoBehaviour
     [Header("Obstacle Glitch")]
     [SerializeField] private Material obstacleGlitchMaterial;
 
+    [Header("Proximity Glitch")]
+    [SerializeField] private RawImage proximityGlitchImage;
+    [SerializeField] private float maxGlitchDistance = 20f;
+    [SerializeField] private float maxGlitchNoiseAmount = 0.4f;
+
     [Header("Glitch Death (SPECIAL ONLY)")]
     [SerializeField] private RawImage glitchImage;
     [SerializeField] private CanvasGroup deathCanvas;
@@ -68,6 +73,12 @@ public class Enemy : MonoBehaviour
             deathCanvas.interactable = false;
             deathCanvas.blocksRaycasts = false;
         }
+
+        if (proximityGlitchImage != null)
+        {
+            proximityGlitchImage.enabled = true;
+            proximityGlitchImage.material.SetFloat("_NoiseAmount", 0f);
+        }
     }
 
     private void Update()
@@ -85,6 +96,7 @@ public class Enemy : MonoBehaviour
         }
 
         PlayFootstep();
+        UpdateProximityGlitch();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -127,6 +139,25 @@ public class Enemy : MonoBehaviour
 
             meshRenderer.material = _originalObstacleMaterial;
         }
+    }
+
+    private void UpdateProximityGlitch()
+    {
+        if (proximityGlitchImage == null || _isJumpscareOccurred)
+            return;
+
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
+
+        if (distance > maxGlitchDistance)
+        {
+            proximityGlitchImage.material.SetFloat("_NoiseAmount", 0f);
+            return;
+        }
+
+        float t = 1f - Mathf.Clamp01(distance / maxGlitchDistance);
+        float noiseAmount = t * maxGlitchNoiseAmount;
+
+        proximityGlitchImage.material.SetFloat("_NoiseAmount", noiseAmount);
     }
 
     private IEnumerator TriggerJumpscare()
@@ -256,8 +287,6 @@ public class Enemy : MonoBehaviour
 
         glitchImage.enabled = true;
         glitchImage.material.SetFloat("_Intensity", _glitchIntensity);
-        glitchImage.material.SetFloat("_ChromaticSplit", 0.3f);
-        glitchImage.material.SetFloat("_NoiseAmount", 0.3f);
 
         deathCanvas.alpha = 1;
         deathCanvas.interactable = true;
@@ -292,8 +321,6 @@ public class Enemy : MonoBehaviour
         _glitchIntensity += 0.25f;
 
         glitchImage.material.SetFloat("_Intensity", _glitchIntensity);
-        glitchImage.material.SetFloat("_ChromaticSplit", 0.3f + 0.1f * _restartPressCount);
-        glitchImage.material.SetFloat("_NoiseAmount", 0.3f + 0.1f * _restartPressCount);
 
         if (AudioManager.Instance != null)
         {

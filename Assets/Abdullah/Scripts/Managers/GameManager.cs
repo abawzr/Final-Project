@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private int framerate = 120;
     [SerializeField] private Material glitchMaterial;
+    [SerializeField] private Material glitchMaterial2;
 
     public event Action<GameState> OnGameStateChanged;
 
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour
         glitchMaterial.SetFloat("_Intensity", 0);
         glitchMaterial.SetFloat("_ChromaticSplit", 0);
         glitchMaterial.SetFloat("_NoiseAmount", 0);
+
+        glitchMaterial2.SetFloat("_Intensity", 0);
     }
 
     public void SetGameState(GameState newState)

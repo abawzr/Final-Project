@@ -39,6 +39,22 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(PlayFootstepSound());
     }
 
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateChanged += ResetMoveInput;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateChanged -= ResetMoveInput;
+        }
+    }
+
     private void Update()
     {
         if (!IsControlsEnabled) return;
@@ -112,5 +128,11 @@ public class PlayerMovement : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    private void ResetMoveInput(GameManager.GameState _)
+    {
+        move.x = 0;
+        move.z = 0;
     }
 }
