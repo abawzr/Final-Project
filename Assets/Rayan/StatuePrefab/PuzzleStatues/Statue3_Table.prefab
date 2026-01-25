@@ -29,16 +29,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387157958666730414}
-  m_LocalRotation: {x: 0.2751522, y: -0.6513764, z: 0.6513764, w: 0.2751522}
+  m_LocalRotation: {x: 0.27059805, y: -0.6532815, z: 0.6532815, w: 0.27059805}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7756002224660244601}
-  m_LocalEulerAnglesHint: {x: 90, y: -134.2, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -135, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.9, y: -7.34}
+  m_AnchoredPosition: {x: -50, y: -11}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2814996447687981533
@@ -136,6 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 1
+  arrowLayerName: PuzzleArrows
+  enableDebugLogs: 0
 --- !u!65 &3360046125255380936
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -155,8 +157,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 89.58516, y: 101.03141, z: 11.810909}
+  m_Center: {x: 0.47725263, y: -0.9736828, z: 0.52539396}
 --- !u!114 &2907953995949104607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,16 +321,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3746387367074424526}
-  m_LocalRotation: {x: -0.66524047, y: -0.23969807, z: 0.23969807, w: -0.66524047}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalRotation: {x: -0.6532815, y: -0.27059805, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.20000002, z: 0.20000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7756002224660244601}
-  m_LocalEulerAnglesHint: {x: 90, y: -320.37, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: -45, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12, y: -7.34}
+  m_AnchoredPosition: {x: 50, y: -11}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8991087334180881931
@@ -426,6 +428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 0
+  arrowLayerName: PuzzleArrows
+  enableDebugLogs: 0
 --- !u!65 &3082095071181633432
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -445,8 +449,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 94.82498, y: 94.92016, z: 11.810909}
+  m_Center: {x: -1.9818765, y: -4.3116636, z: 0.52539396}
 --- !u!114 &344428962873042320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,6 +481,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2560545514577078779}
   - component: {fileID: 4532586792188616555}
+  - component: {fileID: -1034425773126413286}
+  - component: {fileID: -3878479245433927330}
   m_Layer: 0
   m_Name: Statue3_Table
   m_TagString: Untagged
@@ -493,7 +499,7 @@ Transform:
   m_GameObject: {fileID: 5455767291225528841}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.328, y: 1.251, z: 22.19}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -523,6 +529,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &-1034425773126413286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455767291225528841}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.39204, y: 0.12491807, z: 0.33878374}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3878479245433927330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455767291225528841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e825dea600eccd14e9f61ce676a2b68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RotatableStatue
+  rotationStep: 45
+  rotationDuration: 0.2
+  outlineComponent: {fileID: 3666347753119306263}
+  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  glowWidth: 5
+  audioSource: {fileID: 3266119329827343002}
+  rotateSound: {fileID: 8300000, guid: 7324ddc948706a148bb1031b286e298c, type: 3}
+  arrowsUI: {fileID: 0}
+  enableDebugLogs: 1
 --- !u!1 &6557037087992079656
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,8 +583,6 @@ GameObject:
   - component: {fileID: 285003470719828310}
   - component: {fileID: 2302270332942384663}
   - component: {fileID: 6658974392057044935}
-  - component: {fileID: 4861661795780905499}
-  - component: {fileID: 3786064387179374961}
   - component: {fileID: 3266119329827343002}
   - component: {fileID: 3666347753119306263}
   m_Layer: 0
@@ -555,7 +601,7 @@ Transform:
   m_GameObject: {fileID: 6557037087992079656}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08870983, y: -0.0075600147, z: -0.3409214}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.17, y: -0.03, z: 0.17}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -641,48 +687,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!95 &4861661795780905499
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557037087992079656}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 126d4f20c0603b64fa7c72be32b7a04d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3786064387179374961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557037087992079656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e825dea600eccd14e9f61ce676a2b68a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RotatableStatue
-  rotationStep: 45
-  rotationDuration: 0.2
-  outlineComponent: {fileID: 3666347753119306263}
-  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  glowWidth: 5
-  audioSource: {fileID: 3266119329827343002}
-  rotateSound: {fileID: 0}
-  arrowsUI: {fileID: 0}
 --- !u!82 &3266119329827343002
 AudioSource:
   m_ObjectHideFlags: 0
@@ -696,7 +700,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.17
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -740,7 +744,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -831,8 +835,8 @@ RectTransform:
   m_GameObject: {fileID: 9178724409198456846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.0025}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2470682096738337520}
   - {fileID: 8959659125589796721}
@@ -840,7 +844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.055}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5917629994764342317
@@ -936,8 +940,11 @@ MonoBehaviour:
   rightArrowImage: {fileID: 7933674391562487310}
   leftArrowObject: {fileID: 387157958666730414}
   rightArrowObject: {fileID: 3746387367074424526}
-  normalScale: 1
-  hoverScale: 1.2
+  useRendererForVisibility: 1
+  hiddenAlpha: 0
+  visibleAlpha: 1
+  normalScale: 0.8
+  hoverScale: 1
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   hoverColor: {r: 1, g: 0.9, b: 0.5, a: 1}
   transitionSpeed: 10
@@ -947,11 +954,10 @@ MonoBehaviour:
   arrowGlowWidth: 3
   arrowCanvas: {fileID: 5917629994764342317}
   canvasGroup: {fileID: 4797203116017174334}
-  billboardToCamera: 1
-  targetCamera: {fileID: 0}
   audioSource: {fileID: 5677715018500064618}
   clickSound: {fileID: 0}
   hoverSound: {fileID: 0}
+  enableDebugLogs: 0
 --- !u!82 &5677715018500064618
 AudioSource:
   m_ObjectHideFlags: 0

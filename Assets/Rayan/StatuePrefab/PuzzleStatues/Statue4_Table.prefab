@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5907147461261393552}
   - component: {fileID: 7127264029026955993}
+  - component: {fileID: 7814421017248513393}
+  - component: {fileID: 8407012417246217882}
   m_Layer: 0
   m_Name: Statue4_Table
   m_TagString: Untagged
@@ -26,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1377039666545121682}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.328, y: 1.251, z: 22.19}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -56,6 +58,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &7814421017248513393
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377039666545121682}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.39204, y: 0.12491807, z: 0.33878374}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8407012417246217882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377039666545121682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e825dea600eccd14e9f61ce676a2b68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RotatableStatue
+  rotationStep: 45
+  rotationDuration: 0.2
+  outlineComponent: {fileID: 5619512989836467080}
+  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  glowWidth: 5
+  audioSource: {fileID: 1335958196943908669}
+  rotateSound: {fileID: 8300000, guid: 7324ddc948706a148bb1031b286e298c, type: 3}
+  arrowsUI: {fileID: 0}
+  enableDebugLogs: 1
 --- !u!1 &1635485076774757138
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,16 +129,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635485076774757138}
-  m_LocalRotation: {x: 0.2751522, y: -0.6513764, z: 0.6513764, w: 0.2751522}
+  m_LocalRotation: {x: 0.27059805, y: -0.6532815, z: 0.6532815, w: 0.27059805}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3393437194768844360}
-  m_LocalEulerAnglesHint: {x: 90, y: -134.2, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -135, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.9, y: -7.34}
+  m_AnchoredPosition: {x: -50, y: -11}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7284076775702501055
@@ -192,6 +236,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 1
+  arrowLayerName: PuzzleArrows
+  enableDebugLogs: 0
 --- !u!65 &9039534645414894009
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -211,8 +257,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 89.58516, y: 101.03141, z: 11.810909}
+  m_Center: {x: 0.47725263, y: -0.9736828, z: 0.52539396}
 --- !u!114 &7892149102155841778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,16 +308,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3383527862978344860}
-  m_LocalRotation: {x: -0.66524047, y: -0.23969807, z: 0.23969807, w: -0.66524047}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalRotation: {x: -0.6532815, y: -0.27059805, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.20000002, z: 0.20000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3393437194768844360}
-  m_LocalEulerAnglesHint: {x: 90, y: -320.37, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: -45, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12, y: -7.34}
+  m_AnchoredPosition: {x: 50, y: -11}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7516915874853269672
@@ -369,6 +415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 0
+  arrowLayerName: PuzzleArrows
+  enableDebugLogs: 0
 --- !u!65 &9050314177239080154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -388,8 +436,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 94.82498, y: 94.92016, z: 11.810909}
+  m_Center: {x: -1.9818765, y: -4.3116636, z: 0.52539396}
 --- !u!114 &8843364577951361759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,8 +602,8 @@ RectTransform:
   m_GameObject: {fileID: 5835124807143782132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.0025}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 552707241877809747}
   - {fileID: 8175433598494300678}
@@ -563,7 +611,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.055}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4975645456034905389
@@ -659,8 +707,11 @@ MonoBehaviour:
   rightArrowImage: {fileID: 4175307894450264762}
   leftArrowObject: {fileID: 1635485076774757138}
   rightArrowObject: {fileID: 3383527862978344860}
-  normalScale: 1
-  hoverScale: 1.2
+  useRendererForVisibility: 1
+  hiddenAlpha: 0
+  visibleAlpha: 1
+  normalScale: 0.8
+  hoverScale: 1
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   hoverColor: {r: 1, g: 0.9, b: 0.5, a: 1}
   transitionSpeed: 10
@@ -670,11 +721,10 @@ MonoBehaviour:
   arrowGlowWidth: 3
   arrowCanvas: {fileID: 4975645456034905389}
   canvasGroup: {fileID: 6622152688760461262}
-  billboardToCamera: 1
-  targetCamera: {fileID: 0}
   audioSource: {fileID: 7561095584685906923}
   clickSound: {fileID: 0}
   hoverSound: {fileID: 0}
+  enableDebugLogs: 0
 --- !u!82 &7561095584685906923
 AudioSource:
   m_ObjectHideFlags: 0
@@ -784,8 +834,6 @@ GameObject:
   - component: {fileID: 6591094465592937610}
   - component: {fileID: 5867367271471995444}
   - component: {fileID: 5160482118235386560}
-  - component: {fileID: 2225767591601863878}
-  - component: {fileID: 5805096197189638687}
   - component: {fileID: 1335958196943908669}
   - component: {fileID: 5619512989836467080}
   m_Layer: 0
@@ -803,14 +851,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6651841617945608913}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.5732359, z: -0, w: 0.81939036}
-  m_LocalPosition: {x: 0.09210014, y: 0.06483996, z: -0.3853302}
+  m_LocalRotation: {x: 0, y: 0.3826836, z: -0, w: -0.92387944}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.17000002, y: -0.03, z: 0.17000002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2019441246650785294}
   m_Father: {fileID: 5907147461261393552}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 315, z: 0}
 --- !u!33 &6591094465592937610
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -890,48 +938,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!95 &2225767591601863878
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6651841617945608913}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 126d4f20c0603b64fa7c72be32b7a04d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5805096197189638687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6651841617945608913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e825dea600eccd14e9f61ce676a2b68a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RotatableStatue
-  rotationStep: 45
-  rotationDuration: 0.2
-  outlineComponent: {fileID: 5619512989836467080}
-  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  glowWidth: 5
-  audioSource: {fileID: 1335958196943908669}
-  rotateSound: {fileID: 0}
-  arrowsUI: {fileID: 0}
 --- !u!82 &1335958196943908669
 AudioSource:
   m_ObjectHideFlags: 0
@@ -945,7 +951,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.17
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -989,7 +995,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
