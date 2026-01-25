@@ -7,6 +7,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private AudioClip playerReactionClip;
     [SerializeField] private CinemachineCamera cinemachineCamera;
+    [SerializeField] private bool oneTimePlay;
 
     public bool CanInteract { get; set; }
     public bool IsReactionFinished;
@@ -19,8 +20,11 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
     private IEnumerator SoundSequence()
     {
-        PlayerMovement.IsControlsEnabled = false;
-        cinemachineCamera.Priority = 10;
+        if (oneTimePlay)
+        {
+            PlayerMovement.IsControlsEnabled = false;
+            cinemachineCamera.Priority = 10;
+        }
 
         if (AudioManager.Instance != null)
         {
@@ -48,7 +52,10 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInventory playerInventory)
     {
-        CanInteract = false;
+        if (oneTimePlay)
+        {
+            CanInteract = false;
+        }
 
         StartCoroutine(SoundSequence());
     }

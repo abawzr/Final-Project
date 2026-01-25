@@ -57,7 +57,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!IsControlsEnabled) return;
+        if (!IsControlsEnabled)
+        {
+            move.x = 0;
+            move.y = 0;
+            return;
+        }
 
         Move();
         Jump();

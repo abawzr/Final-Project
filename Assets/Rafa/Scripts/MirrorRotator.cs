@@ -5,7 +5,7 @@ using UnityEngine;
 public class MirrorRotator : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+
     [SerializeField] private float stepAnngle = 15f;
     [SerializeField] private float rotationSpeed = 360f;
 
@@ -13,9 +13,7 @@ public class MirrorRotator : MonoBehaviour
 
     public void RotateStep()
     {
-        Debug.Log("RotateStep called on " + gameObject.name);
-
-        if (_isRotating) return; 
+        if (_isRotating) return;
 
         Quaternion target =
             transform.rotation * Quaternion.Euler(0f, stepAnngle, 0f);

@@ -4,6 +4,7 @@ public class LaserSensor : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private Light lampLight; // Point Light
+    [SerializeField] private PuzzlePerspective puzzlePerspective;
 
     [Header("Light Settings")]
     [SerializeField] private float lightOnIntensity = 3f;
@@ -15,7 +16,7 @@ public class LaserSensor : MonoBehaviour
     {
         if (lampLight != null)
         {
-             lampLight.enabled = true;
+            lampLight.enabled = true;
             lampLight.intensity = lightOffIntensity;
         }
     }
@@ -23,12 +24,16 @@ public class LaserSensor : MonoBehaviour
     {
         if (lampLight != null)
             lampLight.intensity = lightOnIntensity;
-            Debug.Log("LaserSensor Activated");
+
+        CubeController.CanInteract = false;
+        LabDoor.IsPuzzle1Solved = true;
+        puzzlePerspective.CanInteract = false;
+        puzzlePerspective.DisablePuzzle();
     }
     public void DeactivateSensor()
     {
         if (lampLight != null)
             lampLight.intensity = lightOffIntensity;
     }
-    
+
 }

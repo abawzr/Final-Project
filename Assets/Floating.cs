@@ -32,7 +32,7 @@ public class FloatAndSpin : MonoBehaviour
         if (enableFloat)
         {
             Vector3 axis = floatAxis.sqrMagnitude > 0f ? floatAxis.normalized : Vector3.up;
-            float offset = Mathf.Sin((Time.time * floatSpeed) + _phaseOffset) * floatAmplitude;
+            float offset = Mathf.Sin((Time.unscaledTime * floatSpeed) + _phaseOffset) * floatAmplitude;
 
             if (useLocalSpaceForFloat)
                 transform.localPosition = _startPosition + axis * offset;
@@ -43,7 +43,7 @@ public class FloatAndSpin : MonoBehaviour
         if (enableSpin)
         {
             Vector3 axis = spinAxis.sqrMagnitude > 0f ? spinAxis.normalized : Vector3.up;
-            float angle = spinSpeed * Time.deltaTime;
+            float angle = spinSpeed * Time.unscaledDeltaTime;
 
             if (useLocalSpaceForSpin)
                 transform.Rotate(axis, angle, Space.Self);

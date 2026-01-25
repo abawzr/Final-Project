@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
     /// <summary>
     /// Fixed-size array of items representing the player's inventory slots.
     /// </summary>
-    private ItemSO[] _items = new ItemSO[4];
+    private ItemSO[] _items = new ItemSO[6];
 
     /// <summary>
     /// Fired when an item is added to the inventory.

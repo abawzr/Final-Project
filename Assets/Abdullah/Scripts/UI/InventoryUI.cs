@@ -37,7 +37,7 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < _inventorySlots.Length; i++)
         {
-            if (_inventorySlots[i].HasItem)
+            if (_inventorySlots[i].HasItem && _inventorySlots[i].CurrentItem == item)
             {
                 _inventorySlots[i].RemoveItem(item);
                 break;

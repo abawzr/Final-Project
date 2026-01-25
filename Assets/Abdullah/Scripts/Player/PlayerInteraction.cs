@@ -42,7 +42,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     _currentTarget = interactableObject;
 
-                    if ((interactableObject is PuzzlePerspective || interactableObject is Door || interactableObject is RecordPlayer) && interactableObject.CanInteract)
+                    if ((interactableObject is PuzzlePerspective || interactableObject is Door || interactableObject is RecordPlayer || interactableObject is LabDoor) && interactableObject.CanInteract)
                         interactionTMP.text = interactionText;
 
                     else if (interactableObject is PickableItem)

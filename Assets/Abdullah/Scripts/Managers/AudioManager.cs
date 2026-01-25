@@ -213,7 +213,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="clip">The audio clip to play.</param>
     /// <param name="position">The world position where the sound originates.</param>
     /// <param name="volume">Optional volume multiplier (default = 1).</param>
-    public void Play3DSFX(AudioClip clip, Vector3 position, float volume = 1f)
+    public void Play3DSFX(AudioClip clip, Vector3 position, float minDistance = 1f, float volume = 1f)
     {
         if (clip == null) return;
 
@@ -239,6 +239,7 @@ public class AudioManager : MonoBehaviour
         source.clip = clip;
         source.transform.position = position;
         source.volume = Mathf.Clamp01(volume);
+        source.minDistance = minDistance;
         source.Play();
     }
 

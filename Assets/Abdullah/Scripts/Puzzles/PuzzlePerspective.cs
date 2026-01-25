@@ -11,6 +11,16 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
     [Header("Padlock")]
     [SerializeField] private GameObject padlock;
 
+    [Header("Paintings")]
+    [SerializeField] private bool isPaintingPuzzle;
+    [SerializeField] private AudioClip noPaintingsClip;
+    [SerializeField] private ItemSO painting1;
+    [SerializeField] private ItemSO painting2;
+    [SerializeField] private ItemSO painting3;
+    [SerializeField] private GameObject paintingSpawn1;
+    [SerializeField] private GameObject paintingSpawn2;
+    [SerializeField] private GameObject paintingSpawn3;
+
     public bool CanInteract { get; set; }
 
     private bool _isPuzzleEnabled;
@@ -47,6 +57,32 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
     public void Interact(PlayerInventory playerInventory)
     {
         if (!CanInteract) return;
+
+        if (isPaintingPuzzle)
+        {
+            if (!playerInventory.HasItem(painting1) || !playerInventory.HasItem(painting2) || !playerInventory.HasItem(painting3))
+            {
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.Play2DSFX(noPaintingsClip);
+                }
+
+                return;
+            }
+
+            else if (playerInventory.HasItem(painting1) && playerInventory.HasItem(painting2) && playerInventory.HasItem(painting3))
+            {
+                paintingSpawn1.SetActive(true);
+                paintingSpawn2.SetActive(true);
+                paintingSpawn3.SetActive(true);
+
+                playerInventory.UseOrDropItem(painting1, isUse: true);
+                playerInventory.UseOrDropItem(painting2, isUse: true);
+                playerInventory.UseOrDropItem(painting3, isUse: true);
+            }
+
+            isPaintingPuzzle = false;
+        }
 
         if (GameManager.Instance != null)
         {
