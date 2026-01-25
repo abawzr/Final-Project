@@ -4,6 +4,12 @@ using UnityEngine;
 
 /// <summary>
 /// Controls the record player with play/stop functionality and optional spinning disc.
+/// v4 - Features:
+///      - Play button spam prevention (locked while playing, unlocked when stopped)
+///      - Play button stays pressed while sound plays, releases when sound ends
+///      - Stop button releases play button and allows it to be pressed again
+///      - DisableRecordPlayer() method to disable after puzzle is solved
+///      - Subscribes to StatueRotationPuzzle.OnPuzzleSolved to auto-disable
 /// </summary>
 public class RecordPlayerController : MonoBehaviour
 {
@@ -26,6 +32,13 @@ public class RecordPlayerController : MonoBehaviour
     [SerializeField] private float needleStopAngle = 0f;
     [SerializeField] private float needleRotationSpeed = 2f;
 
+    [Header("Puzzle Integration")]
+    [Tooltip("If true, automatically disables record player when puzzle is solved")]
+    [SerializeField] private bool disableOnPuzzleSolved = true;
+
+    [Header("Debug")]
+    [SerializeField] private bool enableDebugLogs = false;
+
     // Events
     public static event Action OnStoryStarted;
     public static event Action OnStoryStopped;
@@ -33,17 +46,21 @@ public class RecordPlayerController : MonoBehaviour
 
     // State
     private bool _isPlaying = false;
+    private bool _isDisabled = false;
     private float _currentNeedleAngle;
     private Coroutine _needleCoroutine;
-    private float _playStartTime; // Track when playback started to prevent false finish detection
+    private Coroutine _finishCheckCoroutine;
+
+    // Track if we're quitting to know when to clean up static events
+    private static bool _isApplicationQuitting = false;
 
     public bool IsPlaying => _isPlaying;
+    public bool IsDisabled => _isDisabled;
 
     private void Awake()
     {
         _currentNeedleAngle = needleStopAngle;
 
-        // Setup audio source if not assigned
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
@@ -53,14 +70,12 @@ public class RecordPlayerController : MonoBehaviour
             }
         }
 
-        // Configure audio source
         audioSource.playOnAwake = false;
         audioSource.loop = false;
     }
 
     private void OnEnable()
     {
-        // Subscribe to button events
         if (playButton != null)
         {
             playButton.OnButtonClicked.AddListener(PlayStory);
@@ -70,11 +85,16 @@ public class RecordPlayerController : MonoBehaviour
         {
             stopButton.OnButtonClicked.AddListener(StopStory);
         }
+
+        // Subscribe to puzzle solved event
+        if (disableOnPuzzleSolved)
+        {
+            StatueRotationPuzzle.OnPuzzleSolved += OnPuzzleSolved;
+        }
     }
 
     private void OnDisable()
     {
-        // Unsubscribe from button events
         if (playButton != null)
         {
             playButton.OnButtonClicked.RemoveListener(PlayStory);
@@ -84,6 +104,42 @@ public class RecordPlayerController : MonoBehaviour
         {
             stopButton.OnButtonClicked.RemoveListener(StopStory);
         }
+
+        // Unsubscribe from puzzle solved event
+        if (disableOnPuzzleSolved)
+        {
+            StatueRotationPuzzle.OnPuzzleSolved -= OnPuzzleSolved;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Stop coroutines
+        if (_needleCoroutine != null)
+        {
+            StopCoroutine(_needleCoroutine);
+            _needleCoroutine = null;
+        }
+
+        if (_finishCheckCoroutine != null)
+        {
+            StopCoroutine(_finishCheckCoroutine);
+            _finishCheckCoroutine = null;
+        }
+
+        // Only clean up static events when application is quitting
+        // This prevents breaking other listeners during scene transitions
+        if (_isApplicationQuitting)
+        {
+            OnStoryStarted = null;
+            OnStoryStopped = null;
+            OnStoryFinished = null;
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        _isApplicationQuitting = true;
     }
 
     private void Update()
@@ -91,21 +147,18 @@ public class RecordPlayerController : MonoBehaviour
         // Spin the record disc while playing
         if (_isPlaying && recordDisc != null)
         {
-            float rotationAmount = discRotationSpeed * 360f / 60f * Time.deltaTime; // Convert RPM to degrees per second
+            float rotationAmount = discRotationSpeed * 360f / 60f * Time.deltaTime;
             recordDisc.Rotate(discRotationAxis, rotationAmount, Space.Self);
         }
+    }
 
-        // Check if narration finished naturally
-        // Add time check to prevent false positive during audio startup
-        if (_isPlaying && audioSource != null && !audioSource.isPlaying && storyNarration != null)
-        {
-            // Only trigger finish if we've been playing for at least 0.5 seconds
-            // This prevents false detection during audio initialization
-            if (Time.time - _playStartTime > 0.5f)
-            {
-                OnNarrationFinished();
-            }
-        }
+    /// <summary>
+    /// Called when the puzzle is solved. Disables the record player.
+    /// </summary>
+    private void OnPuzzleSolved()
+    {
+        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Puzzle solved - disabling record player");
+        DisableRecordPlayer();
     }
 
     /// <summary>
@@ -113,9 +166,15 @@ public class RecordPlayerController : MonoBehaviour
     /// </summary>
     public void PlayStory()
     {
+        // Don't allow playing if disabled or already playing
+        if (_isDisabled || _isPlaying)
+        {
+            if (enableDebugLogs) Debug.Log($"[RecordPlayerController] PlayStory ignored - disabled={_isDisabled}, playing={_isPlaying}");
+            return;
+        }
+
         if (audioSource == null) return;
 
-        // Always restart from beginning
         audioSource.Stop();
 
         if (storyNarration != null)
@@ -125,15 +184,23 @@ public class RecordPlayerController : MonoBehaviour
         }
 
         _isPlaying = true;
-        _playStartTime = Time.time; // Track when we started playing
+
+        // Lock the play button to prevent spam (it's already pressed and locked via stayPressedMode)
+        // The button handles this internally when stayPressedMode is true
 
         // Move needle to play position
         MoveNeedle(needlePlayAngle);
 
-        // Fire event
+        // Start coroutine to check for finish
+        if (_finishCheckCoroutine != null)
+        {
+            StopCoroutine(_finishCheckCoroutine);
+        }
+        _finishCheckCoroutine = StartCoroutine(CheckForAudioFinish());
+
         OnStoryStarted?.Invoke();
 
-        Debug.Log("Record Player: Story started");
+        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Story started");
     }
 
     /// <summary>
@@ -141,18 +208,56 @@ public class RecordPlayerController : MonoBehaviour
     /// </summary>
     public void StopStory()
     {
+        // Don't allow stopping if disabled
+        if (_isDisabled)
+        {
+            if (enableDebugLogs) Debug.Log("[RecordPlayerController] StopStory ignored - disabled");
+            return;
+        }
+
         if (audioSource == null) return;
 
         audioSource.Stop();
         _isPlaying = false;
 
-        // Move needle back to stop position
+        if (_finishCheckCoroutine != null)
+        {
+            StopCoroutine(_finishCheckCoroutine);
+            _finishCheckCoroutine = null;
+        }
+
+        // Release the play button so it can be pressed again
+        if (playButton != null)
+        {
+            playButton.Release();
+        }
+
         MoveNeedle(needleStopAngle);
 
-        // Fire event
         OnStoryStopped?.Invoke();
 
-        Debug.Log("Record Player: Story stopped");
+        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Story stopped");
+    }
+
+    /// <summary>
+    /// Coroutine that checks when audio finishes naturally.
+    /// </summary>
+    private IEnumerator CheckForAudioFinish()
+    {
+        // Wait a moment for audio to actually start
+        yield return new WaitForSeconds(0.2f);
+
+        // Wait until audio stops playing
+        while (audioSource != null && audioSource.isPlaying)
+        {
+            yield return null;
+        }
+
+        // Only trigger if we're still supposed to be playing
+        if (_isPlaying)
+        {
+            OnNarrationFinished();
+        }
     }
 
     /// <summary>
@@ -161,14 +266,19 @@ public class RecordPlayerController : MonoBehaviour
     private void OnNarrationFinished()
     {
         _isPlaying = false;
+        _finishCheckCoroutine = null;
 
-        // Move needle back to stop position
+        // Release the play button so it goes back up and can be pressed again
+        if (playButton != null)
+        {
+            playButton.Release();
+        }
+
         MoveNeedle(needleStopAngle);
 
-        // Fire event
         OnStoryFinished?.Invoke();
 
-        Debug.Log("Record Player: Story finished");
+        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Story finished");
     }
 
     /// <summary>
@@ -194,41 +304,100 @@ public class RecordPlayerController : MonoBehaviour
         while (Mathf.Abs(_currentNeedleAngle - targetAngle) > 0.1f)
         {
             _currentNeedleAngle = Mathf.Lerp(_currentNeedleAngle, targetAngle, Time.deltaTime * needleRotationSpeed);
-
-            // Apply rotation - assuming Z axis rotation for needle arm
             needleArm.localRotation = Quaternion.Euler(0f, 0f, _currentNeedleAngle);
-
             yield return null;
         }
 
         _currentNeedleAngle = targetAngle;
         needleArm.localRotation = Quaternion.Euler(0f, 0f, _currentNeedleAngle);
+        _needleCoroutine = null;
+    }
+
+    #region Public Methods
+
+    /// <summary>
+    /// Completely disables the record player. No buttons can be clicked.
+    /// Used when puzzle is solved.
+    /// </summary>
+    public void DisableRecordPlayer()
+    {
+        _isDisabled = true;
+
+        // Stop any playing audio
+        if (_isPlaying)
+        {
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+            }
+            _isPlaying = false;
+
+            if (_finishCheckCoroutine != null)
+            {
+                StopCoroutine(_finishCheckCoroutine);
+                _finishCheckCoroutine = null;
+            }
+        }
+
+        // Disable both buttons
+        if (playButton != null)
+        {
+            playButton.Disable();
+        }
+
+        if (stopButton != null)
+        {
+            stopButton.Disable();
+        }
+
+        // Move needle to stop position
+        MoveNeedle(needleStopAngle);
+
+        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Record player disabled");
     }
 
     /// <summary>
-    /// Gets the current playback progress (0-1).
+    /// Re-enables the record player after it was disabled.
     /// </summary>
+    public void EnableRecordPlayer()
+    {
+        _isDisabled = false;
+
+        // Enable both buttons
+        if (playButton != null)
+        {
+            playButton.Enable();
+        }
+
+        if (stopButton != null)
+        {
+            stopButton.Enable();
+        }
+
+        if (enableDebugLogs) Debug.Log("[RecordPlayerController] Record player enabled");
+    }
+
+    #endregion
+
+    #region Public Properties
+
     public float GetPlaybackProgress()
     {
         if (audioSource == null || audioSource.clip == null) return 0f;
         return audioSource.time / audioSource.clip.length;
     }
 
-    /// <summary>
-    /// Gets the current playback time in seconds.
-    /// </summary>
     public float GetCurrentTime()
     {
         if (audioSource == null) return 0f;
         return audioSource.time;
     }
 
-    /// <summary>
-    /// Gets the total duration of the story in seconds.
-    /// </summary>
     public float GetTotalDuration()
     {
         if (storyNarration == null) return 0f;
         return storyNarration.length;
     }
+
+    #endregion
 }

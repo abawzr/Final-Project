@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 875755528474772969}
   - component: {fileID: 6682173766257604685}
   - component: {fileID: 4025919271393924768}
-  - component: {fileID: 4873222421180204113}
-  - component: {fileID: 4464488741695188307}
   - component: {fileID: 1935668564228564875}
   - component: {fileID: 2323213313887487250}
   m_Layer: 0
@@ -118,48 +116,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!95 &4873222421180204113
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829408172288434924}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 126d4f20c0603b64fa7c72be32b7a04d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4464488741695188307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829408172288434924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e825dea600eccd14e9f61ce676a2b68a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RotatableStatue
-  rotationStep: 45
-  rotationDuration: 0.2
-  outlineComponent: {fileID: 1935668564228564875}
-  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  glowWidth: 5
-  audioSource: {fileID: 2323213313887487250}
-  rotateSound: {fileID: 0}
-  arrowsUI: {fileID: 0}
 --- !u!114 &1935668564228564875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,8 +246,8 @@ GameObject:
   - component: {fileID: 2102790975654263844}
   - component: {fileID: 4364024733849288217}
   - component: {fileID: 6717032288525304601}
-  - component: {fileID: 1424832188034046724}
   - component: {fileID: 1158236284847587667}
+  - component: {fileID: 4398437882008492901}
   m_Layer: 0
   m_Name: RightArrow
   m_TagString: Untagged
@@ -306,16 +262,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583434255270170180}
-  m_LocalRotation: {x: -0.66524047, y: -0.23969807, z: 0.23969807, w: -0.66524047}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalRotation: {x: -0.6532815, y: -0.27059805, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.20000002, z: 0.20000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5524504943854007479}
-  m_LocalEulerAnglesHint: {x: 90, y: -320.37, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: -45, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12, y: -7.34}
+  m_AnchoredPosition: {x: 50, y: -11}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7629145635057744542
@@ -413,27 +369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 0
---- !u!65 &1424832188034046724
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1583434255270170180}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  arrowLayerName: PuzzleArrows
+  enableDebugLogs: 1
 --- !u!114 &1158236284847587667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,6 +391,27 @@ MonoBehaviour:
   bakeValues: []
   outlineMaskMaterial: {fileID: 2100000, guid: 106f3ff43a17d4967a2b64c7a92e49ec, type: 2}
   outlineFillMaterial: {fileID: 2100000, guid: 311313efa011949e98b6761d652ad13c, type: 2}
+--- !u!65 &4398437882008492901
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583434255270170180}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 84.3, y: 99.4, z: 42.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3238277162632271785
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +443,7 @@ RectTransform:
   m_GameObject: {fileID: 3238277162632271785}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.0025}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1684033589892696462}
@@ -494,7 +452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.055}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6613763485928850326
@@ -590,8 +548,11 @@ MonoBehaviour:
   rightArrowImage: {fileID: 2102790975654263844}
   leftArrowObject: {fileID: 8519374120164181513}
   rightArrowObject: {fileID: 1583434255270170180}
-  normalScale: 1
-  hoverScale: 1.2
+  useRendererForVisibility: 1
+  hiddenAlpha: 0
+  visibleAlpha: 1
+  normalScale: 0.8
+  hoverScale: 1
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   hoverColor: {r: 1, g: 0.9, b: 0.5, a: 1}
   transitionSpeed: 10
@@ -601,11 +562,10 @@ MonoBehaviour:
   arrowGlowWidth: 3
   arrowCanvas: {fileID: 6613763485928850326}
   canvasGroup: {fileID: 1137874449769421258}
-  billboardToCamera: 1
-  targetCamera: {fileID: 0}
   audioSource: {fileID: 2997821332342463470}
   clickSound: {fileID: 0}
   hoverSound: {fileID: 0}
+  enableDebugLogs: 1
 --- !u!82 &2997821332342463470
 AudioSource:
   m_ObjectHideFlags: 0
@@ -826,6 +786,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2325376941752893843}
   - component: {fileID: 5018487586801100093}
+  - component: {fileID: 3560646103511767429}
+  - component: {fileID: 472618146081058889}
   m_Layer: 0
   m_Name: Statue1_Table
   m_TagString: Untagged
@@ -842,7 +804,7 @@ Transform:
   m_GameObject: {fileID: 7112936522129497672}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.328, y: 1.251, z: 22.19}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -872,6 +834,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3560646103511767429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112936522129497672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e825dea600eccd14e9f61ce676a2b68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RotatableStatue
+  rotationStep: 45
+  rotationDuration: 0.2
+  outlineComponent: {fileID: 1935668564228564875}
+  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  glowWidth: 5
+  audioSource: {fileID: 0}
+  rotateSound: {fileID: 0}
+  arrowsUI: {fileID: 1140804068048715479}
+  enableDebugLogs: 1
+--- !u!65 &472618146081058889
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112936522129497672}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.39204, y: 0.12491807, z: 0.33878374}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8519374120164181513
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,8 +889,8 @@ GameObject:
   - component: {fileID: 5905438284933778013}
   - component: {fileID: 5236963322961670087}
   - component: {fileID: 3837208975193415532}
-  - component: {fileID: 2640683491103411168}
   - component: {fileID: 6524879046305239470}
+  - component: {fileID: 5945878932219272608}
   m_Layer: 0
   m_Name: LeftArrow
   m_TagString: Untagged
@@ -901,16 +905,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8519374120164181513}
-  m_LocalRotation: {x: 0.2751522, y: -0.6513764, z: 0.6513764, w: 0.2751522}
+  m_LocalRotation: {x: 0.27059805, y: -0.6532815, z: 0.6532815, w: 0.27059805}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5524504943854007479}
-  m_LocalEulerAnglesHint: {x: 90, y: -134.2, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -135, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.9, y: -7.34}
+  m_AnchoredPosition: {x: -50, y: -11}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &780907658199163581
@@ -1008,27 +1012,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationArrow
   isLeftArrow: 1
---- !u!65 &2640683491103411168
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8519374120164181513}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  arrowLayerName: PuzzleArrows
+  enableDebugLogs: 1
 --- !u!114 &6524879046305239470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,3 +1034,24 @@ MonoBehaviour:
   bakeValues: []
   outlineMaskMaterial: {fileID: 2100000, guid: 106f3ff43a17d4967a2b64c7a92e49ec, type: 2}
   outlineFillMaterial: {fileID: 2100000, guid: 311313efa011949e98b6761d652ad13c, type: 2}
+--- !u!65 &5945878932219272608
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8519374120164181513}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 84.3, y: 99.4, z: 42.5}
+  m_Center: {x: 0, y: 0, z: 0}

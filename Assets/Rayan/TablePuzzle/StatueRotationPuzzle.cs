@@ -5,7 +5,10 @@ using UnityEngine;
 
 /// <summary>
 /// Main controller for the statue rotation puzzle.
-/// Manages statue spawning, win condition checking, and puzzle completion.
+/// v6 - Fixes:
+///      - Improved win condition check timing (waits for ALL placements to complete)
+///      - Added null safety in win condition check
+///      - Better debug logging with consistent format
 /// </summary>
 public class StatueRotationPuzzle : MonoBehaviour
 {
@@ -13,11 +16,15 @@ public class StatueRotationPuzzle : MonoBehaviour
     [SerializeField] private List<StatueConfig> statueConfigs = new List<StatueConfig>();
 
     [Header("Inventory Reference")]
-    //[SerializeField] private PlayerInventory playerInventory;
+    [SerializeField] private PlayerInventory playerInventory;
 
     [Header("Puzzle Completion")]
     [SerializeField] private GameObject objectToHide;
     [SerializeField] private GameObject objectToShow;
+
+    [Header("Table Interaction")]
+    [Tooltip("Reference to PuzzlePerspective to disable interaction after puzzle is solved")]
+    [SerializeField] private PuzzlePerspective puzzlePerspective;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -25,19 +32,56 @@ public class StatueRotationPuzzle : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] private float delayBetweenSpawns = 0.5f;
+    [SerializeField] private float initialSpawnDelay = 0.3f;
+    [SerializeField] private float postSpawnCheckDelay = 0.5f;
 
-    // Events for external systems
+    [Header("Drop Animation")]
+    [Tooltip("Enable code-based drop animation")]
+    [SerializeField] private bool useDropAnimation = true;
+
+    [Tooltip("Height above table to start the drop")]
+    [SerializeField] private float dropHeight = 0.5f;
+
+    [Tooltip("Duration of drop animation in seconds")]
+    [SerializeField] private float dropDuration = 0.3f;
+
+    [Header("Debug")]
+    [SerializeField] private bool enableDebugLogs = false;
+
+    // Events
     public static event Action OnPuzzleSolved;
 
     // Track spawned statues
     private List<RotatableStatue> _spawnedStatues = new List<RotatableStatue>();
     private bool _isPuzzleSolved = false;
     private bool _isActive = false;
-    private bool _isSpawning = false; // Guard against multiple spawn coroutines
+    private bool _isSpawning = false;
+    private Coroutine _spawnCoroutine;
+
+    // Track pending drop animations
+    private int _pendingDropAnimations = 0;
+
+    // Track if we're quitting to know when to clean up static events
+    private static bool _isApplicationQuitting = false;
+
+    #region Unity Lifecycle
+
+    private void Awake()
+    {
+        if (playerInventory == null)
+        {
+            playerInventory = FindFirstObjectByType<PlayerInventory>();
+            if (playerInventory == null)
+            {
+                Debug.LogError("[StatueRotationPuzzle] PlayerInventory is NULL! Puzzle will not function.");
+            }
+        }
+
+        ValidateConfigs();
+    }
 
     private void OnEnable()
     {
-        // Subscribe to PuzzleStateListener (doesn't require modifying PuzzlePerspective)
         PuzzleStateListener.OnPuzzleEnabled += OnPuzzleActivated;
         PuzzleStateListener.OnPuzzleDisabled += OnPuzzleDeactivated;
         RotatableStatue.OnAnyStatueRotated += CheckWinCondition;
@@ -50,63 +94,199 @@ public class StatueRotationPuzzle : MonoBehaviour
         RotatableStatue.OnAnyStatueRotated -= CheckWinCondition;
     }
 
-    /// <summary>
-    /// Called when the puzzle camera becomes active.
-    /// Spawns all collected statues onto the table.
-    /// </summary>
-    private void OnPuzzleActivated()
+    private void OnDestroy()
     {
-        if (_isPuzzleSolved) return;
-        if (_isSpawning) return; // Don't start another spawn coroutine
+        // Stop any running coroutines
+        if (_spawnCoroutine != null)
+        {
+            StopCoroutine(_spawnCoroutine);
+            _spawnCoroutine = null;
+        }
 
-        _isActive = true;
-        StartCoroutine(SpawnCollectedStatues());
+        // Only clean up static event when application is quitting
+        // This prevents breaking other listeners during scene transitions
+        if (_isApplicationQuitting)
+        {
+            OnPuzzleSolved = null;
+        }
     }
 
+    private void OnApplicationQuit()
+    {
+        _isApplicationQuitting = true;
+    }
+
+    #endregion
+
+    #region Validation
+
     /// <summary>
-    /// Called when exiting the puzzle view.
+    /// Validates all statue configurations and logs errors for invalid setups.
     /// </summary>
+    private void ValidateConfigs()
+    {
+        for (int i = 0; i < statueConfigs.Count; i++)
+        {
+            var config = statueConfigs[i];
+
+            if (string.IsNullOrEmpty(config.statueName))
+            {
+                Debug.LogWarning($"[StatueRotationPuzzle] Config[{i}] has no name specified.");
+                config.statueName = $"Statue_{i}";
+            }
+
+            if (config.statueItem == null)
+            {
+                Debug.LogError($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' has NULL statueItem!");
+            }
+
+            if (config.statuePrefab == null)
+            {
+                Debug.LogError($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' has NULL statuePrefab!");
+            }
+            else
+            {
+                // Check if prefab has required components
+                if (config.statuePrefab.GetComponent<RotatableStatue>() == null)
+                {
+                    Debug.LogWarning($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' prefab is missing RotatableStatue component (will be added at runtime).");
+                }
+
+                if (config.statuePrefab.GetComponentInChildren<StatueArrowsUI>(true) == null)
+                {
+                    Debug.LogWarning($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' prefab is missing StatueArrowsUI in children.");
+                }
+            }
+
+            if (config.tablePosition == null)
+            {
+                Debug.LogError($"[StatueRotationPuzzle] Config[{i}] '{config.statueName}' has NULL tablePosition!");
+            }
+        }
+
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[StatueRotationPuzzle] Validated {statueConfigs.Count} statue configurations.");
+        }
+    }
+
+    #endregion
+
+    #region Puzzle State
+
+    private void OnPuzzleActivated()
+    {
+        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] OnPuzzleActivated!");
+
+        if (_isPuzzleSolved)
+        {
+            if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Already solved, ignoring activation.");
+            return;
+        }
+
+        if (_isSpawning)
+        {
+            if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Already spawning, ignoring activation.");
+            return;
+        }
+
+        _isActive = true;
+        _spawnCoroutine = StartCoroutine(SpawnCollectedStatues());
+    }
+
     private void OnPuzzleDeactivated()
     {
+        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] OnPuzzleDeactivated!");
         _isActive = false;
     }
 
+    #endregion
+
+    #region Statue Spawning
+
     /// <summary>
-    /// Spawns all statues that the player has collected.
+    /// Spawns statues for items in the player's inventory.
     /// </summary>
     private IEnumerator SpawnCollectedStatues()
     {
         _isSpawning = true;
+        _pendingDropAnimations = 0;
 
-        // Small delay to let camera transition complete
-        yield return new WaitForSeconds(0.3f);
+        // Wait for puzzle to fully activate
+        yield return new WaitForSeconds(initialSpawnDelay);
+
+        if (playerInventory == null)
+        {
+            Debug.LogError("[StatueRotationPuzzle] PlayerInventory is NULL! Cannot spawn statues.");
+            _isSpawning = false;
+            yield break;
+        }
+
+        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Checking {statueConfigs.Count} configs for spawning...");
+
+        int spawnedCount = 0;
 
         foreach (StatueConfig config in statueConfigs)
         {
             // Skip if already spawned
-            if (IsStatueAlreadySpawned(config)) continue;
+            if (IsStatueAlreadySpawned(config))
+            {
+                if (enableDebugLogs) Debug.Log($"  '{config.statueName}': Already spawned, skipping.");
+                continue;
+            }
 
-            // Check if player has this statue in inventory
-            //if (playerInventory != null && playerInventory.HasItem(config.statueItem))
-            //{
-            //    SpawnStatue(config);
+            // Skip invalid configs
+            if (config.statueItem == null || config.statuePrefab == null || config.tablePosition == null)
+            {
+                if (enableDebugLogs) Debug.Log($"  '{config.statueName}': Invalid config, skipping.");
+                continue;
+            }
 
-            //    // Remove from inventory (use the item)
-            //    playerInventory.UseOrDropItem(config.statueItem, true);
+            // Check if player has the item
+            bool hasItem = playerInventory.HasItem(config.statueItem);
+            if (enableDebugLogs) Debug.Log($"  '{config.statueName}': HasItem = {hasItem}");
 
-            //    yield return new WaitForSeconds(delayBetweenSpawns);
-            //}
+            if (hasItem)
+            {
+                SpawnStatue(config);
+                playerInventory.UseOrDropItem(config.statueItem, true);
+                spawnedCount++;
+
+                yield return new WaitForSeconds(delayBetweenSpawns);
+            }
         }
 
-        // Check win condition after all statues are placed
-        yield return new WaitForSeconds(0.5f);
+        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Spawned {spawnedCount} statues. Total on table: {_spawnedStatues.Count}");
+
+        // FIX: Wait for ALL drop animations to complete before checking win condition
+        // This ensures IsAtCorrectRotation() returns accurate results
+        if (_pendingDropAnimations > 0)
+        {
+            if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Waiting for {_pendingDropAnimations} drop animations to complete...");
+
+            // Wait until all animations are done
+            while (_pendingDropAnimations > 0)
+            {
+                yield return null;
+            }
+
+            // Small additional delay for safety
+            yield return new WaitForSeconds(0.1f);
+        }
+        else
+        {
+            // If no drop animations, still wait the configured delay
+            yield return new WaitForSeconds(postSpawnCheckDelay);
+        }
+
         CheckWinCondition();
 
         _isSpawning = false;
+        _spawnCoroutine = null;
     }
 
     /// <summary>
-    /// Checks if a statue has already been spawned on the table.
+    /// Checks if a statue with the given config name is already spawned.
     /// </summary>
     private bool IsStatueAlreadySpawned(StatueConfig config)
     {
@@ -121,98 +301,148 @@ public class StatueRotationPuzzle : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawns a single statue at its designated table position.
+    /// Spawns a single statue at the configured position.
     /// </summary>
     private void SpawnStatue(StatueConfig config)
     {
-        if (config.statuePrefab == null || config.tablePosition == null)
+        // Get the final position on the table
+        Vector3 finalPosition = config.tablePosition.position;
+        Quaternion finalRotation = config.tablePosition.rotation;
+
+        // Calculate start position (above the table for drop animation)
+        Vector3 startPosition = useDropAnimation
+            ? finalPosition + Vector3.up * dropHeight
+            : finalPosition;
+
+        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Spawning '{config.statueName}' at {finalPosition}");
+
+        // Instantiate WITHOUT parent to avoid scale/position inheritance issues
+        GameObject statueObj = Instantiate(config.statuePrefab, startPosition, finalRotation);
+        statueObj.name = $"{config.statueName}_Table";
+
+        // Ensure the statue has the correct scale from the prefab
+        statueObj.transform.localScale = config.statuePrefab.transform.localScale;
+
+        // Disable any Animator to prevent it from overriding position
+        Animator animator = statueObj.GetComponent<Animator>();
+        if (animator != null)
         {
-            Debug.LogWarning($"StatueRotationPuzzle: Missing prefab or table position for statue {config.statueName}");
-            return;
+            animator.enabled = false;
+            if (enableDebugLogs) Debug.Log($"  Disabled Animator on '{config.statueName}'");
         }
 
-        // Instantiate at table position (animation will handle the drop)
-        GameObject statueObj = Instantiate(
-            config.statuePrefab,
-            config.tablePosition.position,
-            config.tablePosition.rotation,
-            transform
-        );
-
-        // Setup the rotatable statue component
+        // Setup RotatableStatue component
         RotatableStatue rotatableStatue = statueObj.GetComponent<RotatableStatue>();
         if (rotatableStatue == null)
         {
             rotatableStatue = statueObj.AddComponent<RotatableStatue>();
+            if (enableDebugLogs) Debug.Log($"  Added RotatableStatue component to '{config.statueName}'");
         }
 
-        // Initialize the statue
         rotatableStatue.Initialize(config.statueName, config.correctRotation);
         _spawnedStatues.Add(rotatableStatue);
 
-        // Trigger the placement animation
-        Animator animator = statueObj.GetComponent<Animator>();
-        if (animator != null)
+        // Start drop animation
+        if (useDropAnimation)
         {
-            animator.SetTrigger("Place");
-            // Start a fallback coroutine in case Animation Event doesn't call OnPlacementComplete
-            StartCoroutine(FallbackPlacementComplete(rotatableStatue, 2f));
+            _pendingDropAnimations++;
+            StartCoroutine(DropAnimation(statueObj.transform, startPosition, finalPosition, rotatableStatue));
         }
         else
         {
-            // No animator - just mark as placed immediately
-            Debug.LogWarning($"StatueRotationPuzzle: No Animator for {config.statueName}. Marking as placed immediately.");
             rotatableStatue.OnPlacementComplete();
         }
+
+        if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] Successfully spawned '{config.statueName}'");
     }
 
     /// <summary>
-    /// Fallback to mark statue as placed if Animation Event doesn't fire.
+    /// Animates a statue dropping from start to end position.
     /// </summary>
-    private IEnumerator FallbackPlacementComplete(RotatableStatue statue, float delay)
+    private IEnumerator DropAnimation(Transform statueTransform, Vector3 startPos, Vector3 endPos, RotatableStatue statue)
     {
-        yield return new WaitForSeconds(delay);
+        float elapsed = 0f;
 
-        // Only call if not already placed
-        if (statue != null && !statue.IsPlaced)
+        while (elapsed < dropDuration)
         {
-            Debug.LogWarning($"StatueRotationPuzzle: Animation Event 'OnPlacementComplete' not called for {statue.ConfigName}. Using fallback.");
-            statue.OnPlacementComplete();
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / dropDuration);
+
+            // Ease out cubic (decelerate at the end for natural landing)
+            float easedT = 1f - Mathf.Pow(1f - t, 3f);
+
+            statueTransform.position = Vector3.Lerp(startPos, endPos, easedT);
+
+            yield return null;
         }
+
+        // Snap to final position
+        statueTransform.position = endPos;
+
+        // Mark placement complete
+        if (statue != null)
+        {
+            statue.OnPlacementComplete();
+            if (enableDebugLogs) Debug.Log($"[StatueRotationPuzzle] '{statue.ConfigName}' drop complete");
+        }
+
+        // Decrement pending counter
+        _pendingDropAnimations--;
     }
 
+    #endregion
+
+    #region Win Condition
+
     /// <summary>
-    /// Checks if all statues are placed and at correct rotations.
+    /// Checks if all statues are placed and at the correct rotation.
     /// </summary>
     private void CheckWinCondition()
     {
         if (_isPuzzleSolved) return;
 
-        // Must have all 4 statues placed
+        // Clean up null references from destroyed statues
+        _spawnedStatues.RemoveAll(s => s == null);
+
+        // Check if all required statues are placed
         if (_spawnedStatues.Count < statueConfigs.Count)
         {
+            if (enableDebugLogs)
+            {
+                Debug.Log($"[StatueRotationPuzzle] Not all statues placed ({_spawnedStatues.Count}/{statueConfigs.Count})");
+            }
             return;
         }
 
         // Check if all statues are at correct rotation
+        // Note: IsAtCorrectRotation() now checks _isPlaced internally
         foreach (RotatableStatue statue in _spawnedStatues)
         {
-            if (statue == null || !statue.IsAtCorrectRotation())
+            // Extra null safety
+            if (statue == null) continue;
+
+            if (!statue.IsAtCorrectRotation())
             {
+                if (enableDebugLogs)
+                {
+                    Debug.Log($"[StatueRotationPuzzle] '{statue.ConfigName}' not at correct rotation ({statue.CurrentRotation}), placed={statue.IsPlaced}");
+                }
                 return;
             }
         }
 
         // All conditions met - puzzle solved!
-        OnPuzzleSolved_Internal();
+        OnPuzzleSolvedInternal();
     }
 
     /// <summary>
     /// Handles puzzle completion.
     /// </summary>
-    private void OnPuzzleSolved_Internal()
+    private void OnPuzzleSolvedInternal()
     {
         _isPuzzleSolved = true;
+
+        Debug.Log("[StatueRotationPuzzle] ? PUZZLE SOLVED! ?");
 
         // Hide/show objects
         if (objectToHide != null)
@@ -240,26 +470,80 @@ public class StatueRotationPuzzle : MonoBehaviour
             }
         }
 
-        // Fire event
-        OnPuzzleSolved?.Invoke();
+        // Disable table interaction (player can't press E on the table anymore)
+        if (puzzlePerspective != null)
+        {
+            puzzlePerspective.CanInteract = false;
+            if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Disabled table interaction");
+        }
 
-        Debug.Log("Puzzle Solved!");
+        // Fire event (RecordPlayerController listens to this to disable record player)
+        OnPuzzleSolved?.Invoke();
     }
 
-    /// <summary>
-    /// Returns true if the puzzle is currently active (in puzzle view).
-    /// </summary>
+    #endregion
+
+    #region Public Properties
+
+    /// <summary>Returns true if the puzzle is currently active.</summary>
     public bool IsActive => _isActive;
 
-    /// <summary>
-    /// Returns true if the puzzle has been solved.
-    /// </summary>
+    /// <summary>Returns true if the puzzle has been solved.</summary>
     public bool IsSolved => _isPuzzleSolved;
 
-    /// <summary>
-    /// Gets the number of statues currently placed on the table.
-    /// </summary>
+    /// <summary>Returns the number of statues currently placed on the table.</summary>
     public int PlacedStatueCount => _spawnedStatues.Count;
+
+    /// <summary>Returns the total number of statues required to solve the puzzle.</summary>
+    public int RequiredStatueCount => statueConfigs.Count;
+
+    /// <summary>Returns a read-only list of spawned statues.</summary>
+    public IReadOnlyList<RotatableStatue> SpawnedStatues => _spawnedStatues.AsReadOnly();
+
+    /// <summary>Returns true if currently spawning statues.</summary>
+    public bool IsSpawning => _isSpawning;
+
+    #endregion
+
+    #region Public Methods
+
+    /// <summary>
+    /// Manually resets the puzzle. Destroys all spawned statues.
+    /// </summary>
+    public void ResetPuzzle()
+    {
+        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Resetting puzzle...");
+
+        // Stop any spawning in progress
+        if (_spawnCoroutine != null)
+        {
+            StopCoroutine(_spawnCoroutine);
+            _spawnCoroutine = null;
+        }
+
+        // Destroy all spawned statues
+        foreach (RotatableStatue statue in _spawnedStatues)
+        {
+            if (statue != null)
+            {
+                Destroy(statue.gameObject);
+            }
+        }
+        _spawnedStatues.Clear();
+
+        // Reset state
+        _isPuzzleSolved = false;
+        _isSpawning = false;
+        _pendingDropAnimations = 0;
+
+        // Reset visuals
+        if (objectToHide != null) objectToHide.SetActive(true);
+        if (objectToShow != null) objectToShow.SetActive(false);
+
+        if (enableDebugLogs) Debug.Log("[StatueRotationPuzzle] Reset complete.");
+    }
+
+    #endregion
 }
 
 /// <summary>
@@ -268,19 +552,19 @@ public class StatueRotationPuzzle : MonoBehaviour
 [System.Serializable]
 public class StatueConfig
 {
-    [Tooltip("Name for identification")]
+    [Tooltip("Name for identification (must be unique)")]
     public string statueName;
 
-    [Tooltip("Reference to the inventory item")]
-    //public ItemSO statueItem;
+    [Tooltip("Reference to the inventory item that unlocks this statue")]
+    public ItemSO statueItem;
 
-    //[Tooltip("The statue prefab to spawn")]
+    [Tooltip("The statue prefab to spawn (should have RotatableStatue and StatueArrowsUI)")]
     public GameObject statuePrefab;
 
-    [Tooltip("Fixed position on the table where this statue spawns")]
+    [Tooltip("Position on the table where this statue will be placed")]
     public Transform tablePosition;
 
-    [Tooltip("Target Y rotation (0, 45, 90, 135, 180, 225, 270, 315)")]
+    [Tooltip("Target Y rotation for puzzle solution (0, 45, 90, 135, 180, 225, 270, 315)")]
     [Range(0f, 315f)]
     public float correctRotation;
 }

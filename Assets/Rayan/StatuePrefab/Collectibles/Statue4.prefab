@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 56305969998735626}
   - component: {fileID: 1277906301385883514}
   - component: {fileID: 7931398158271529515}
-  - component: {fileID: 3635433278368211733}
   - component: {fileID: -6476750497083497556}
   - component: {fileID: 1702690003083855540}
   - component: {fileID: 3645838077744588684}
+  - component: {fileID: 8164450892180451091}
   m_Layer: 0
   m_Name: Statue4
   m_TagString: Untagged
@@ -118,28 +118,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!95 &3635433278368211733
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4408122858736694830}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 126d4f20c0603b64fa7c72be32b7a04d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-6476750497083497556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +255,19 @@ MonoBehaviour:
   bakeValues: []
   outlineMaskMaterial: {fileID: 2100000, guid: 106f3ff43a17d4967a2b64c7a92e49ec, type: 2}
   outlineFillMaterial: {fileID: 2100000, guid: 311313efa011949e98b6761d652ad13c, type: 2}
+--- !u!114 &8164450892180451091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4408122858736694830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f077926eec1d9aa439fe77416d5a0d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickableItem
+  item: {fileID: 11400000, guid: e40d661dcf4a7ae4096fd6023c0bc136, type: 2}
 --- !u!1 &5247185714273541040
 GameObject:
   m_ObjectHideFlags: 0
