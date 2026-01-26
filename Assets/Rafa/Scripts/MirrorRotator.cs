@@ -13,8 +13,6 @@ public class MirrorRotator : MonoBehaviour
 
     public void RotateStep()
     {
-        Debug.Log("RotateStep called on " + gameObject.name);
-
         if (_isRotating) return; 
 
         Quaternion target =

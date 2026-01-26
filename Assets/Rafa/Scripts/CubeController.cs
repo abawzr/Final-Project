@@ -13,7 +13,7 @@ public class CubeController : MonoBehaviour
                 if(hit.transform.CompareTag("Cube"))
                 {   
                 var rotator = hit.transform.GetComponentInParent<MirrorRotator>();
-                Debug.Log("Hit mirror: " + hit.transform.name + " rotator? " + (rotator != null));
+                
                 rotator?.RotateStep();
 
                 }

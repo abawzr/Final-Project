@@ -197,6 +197,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 726369845279322972, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
+      propertyPath: stepAnngle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106881535514695362, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
+      propertyPath: stepAnngle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745204441446802416, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
+      propertyPath: stepAnngle
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4429976125623642725, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.623669
@@ -237,6 +249,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5332274999641607283, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
+      propertyPath: stepAnngle
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5826326051682821764, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.08919578
@@ -260,6 +276,14 @@ PrefabInstance:
     - target: {fileID: 6925566707714522824, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
       propertyPath: m_Name
       value: Mirrors arange5 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904010759706692179, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
+      propertyPath: stepAnngle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774190696711880689, guid: 5199ed4bd9d235142b9ac878c913ac22, type: 3}
+      propertyPath: stepAnngle
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

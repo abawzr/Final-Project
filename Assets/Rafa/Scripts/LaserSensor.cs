@@ -15,7 +15,7 @@ public class LaserSensor : MonoBehaviour
     {
         if (lampLight != null)
         {
-             lampLight.enabled = true;
+            lampLight.enabled = true;
             lampLight.intensity = lightOffIntensity;
         }
     }
@@ -23,12 +23,12 @@ public class LaserSensor : MonoBehaviour
     {
         if (lampLight != null)
             lampLight.intensity = lightOnIntensity;
-            //Debug.Log("LaserSensor Activated");
+        //Debug.Log("LaserSensor Activated");
     }
     public void DeactivateSensor()
     {
         if (lampLight != null)
             lampLight.intensity = lightOffIntensity;
     }
-    
+
 }

@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject InstructionsPanel;    //3-panel
 
     [Header("Scene Loading")]
-    public string gameplaySceneName="Gameplay Scene";
+    public string gameplaySceneName="yasirwork 1";
     void Start()
     {
         ShowMainMenu();
