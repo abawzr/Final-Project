@@ -8,11 +8,20 @@ public class Laser : MonoBehaviour
     private float LaserLength = 100f;
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private int maxReflections = 10;
+    private LaserSensor _lastSensor;
+
 
 
     // Update is called once per frame
     void Update()
     {
+        if (_lastSensor != null)
+        {
+            _lastSensor.DeactivateSensor();   //turn off previous sensor
+            _lastSensor = null;
+        }
+
+
         Vector3 direction = transform.forward;
         Ray ray = new Ray(oragin.position, direction);
         Vector3[]points= new Vector3[maxReflections+2];
@@ -59,31 +68,40 @@ public class Laser : MonoBehaviour
         //do a raycast from hit point as areflect ray
         if (Physics.Raycast(reflictRay, out reflectHit, LaserLength))
         {
-            points[pointCount++]= reflectHit.point;
-            //if hit the door sensor activate it
-            if (reflectHit.transform.CompareTag("LaserSensor"))
-            {
-                SensorCase(reflectHit);
-                return;
-            }
-            else if (reflectHit.transform.CompareTag("Cube"))
-            {
-                CubeCase(reflectHit, reflictRay, points, ref pointCount, 1);
-                return;
-            }
-            return;
-        }else
-            {
-                // if(pointCount<points.Length)
-                // points[pointCount++]=reflictRay.origin+reflictRay.direction*LaserLength;
-            }
+            bool valid = reflectHit.transform.CompareTag("Cube") || reflectHit.transform.CompareTag("LaserSensor");
+
+    if (!valid)
+    {
+        // stop at the mirror hit point (do not draw reflection)
+        return;
     }
+
+    // draw the reflection segment
+    points[pointCount++] = reflectHit.point;
+
+    if (reflectHit.transform.CompareTag("LaserSensor"))
+    {
+        SensorCase(reflectHit);
+        return;
+    }
+
+    // hit another mirror
+    CubeCase(reflectHit, reflictRay, points, ref pointCount, 1);
+    return;
+    }
+    else
+    {
+        //nothing ahead => no reflection line
+        return;
+    }
+        }
     void SensorCase(RaycastHit hit)
     {
         LaserSensor sensor=hit.transform.GetComponent<LaserSensor>();
         if(sensor!=null)
         {
             sensor.ActivateSensor();
+            _lastSensor = sensor;
         }
     }
         
