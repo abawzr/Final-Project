@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material glitchMaterial;
     [SerializeField] private Material glitchMaterial2;
 
-    private GameState _currentState;
-
     public event Action<GameState> OnGameStateChanged;
 
     public static GameManager Instance;
@@ -73,7 +71,6 @@ public class GameManager : MonoBehaviour
     public void SetGameState(GameState newState)
     {
         OnGameStateChanged?.Invoke(newState);
-        Debug.Log(_currentState);
         switch (newState)
         {
             case GameState.MainMenu:
