@@ -23,6 +23,23 @@ public class UIManager : MonoBehaviour
     public string menuSceneName = "MainMenu Scene";
 
     bool isPaused;
+    public static UIManager Instance { get; private set; }
+    private void Awake() {
+        // Singleton pattern
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        // Detach from parent if it exists
+        if (transform.parent != null)
+            transform.SetParent(null);
+
+        DontDestroyOnLoad(gameObject);
+
+    }
     
     void Start()
     {

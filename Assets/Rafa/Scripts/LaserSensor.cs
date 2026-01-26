@@ -23,7 +23,7 @@ public class LaserSensor : MonoBehaviour
     {
         if (lampLight != null)
             lampLight.intensity = lightOnIntensity;
-            Debug.Log("LaserSensor Activated");
+            //Debug.Log("LaserSensor Activated");
     }
     public void DeactivateSensor()
     {
