@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatueWorldSpawner
   statuePrefabs:
-  - {fileID: 7690997448440297567, guid: dcc6f3d6d381f474e98f1daebe620847, type: 3}
-  - {fileID: 3741501857509310996, guid: 48ad9bedce7b121448acbfc049609d9d, type: 3}
-  - {fileID: 8909406218725885278, guid: 4573a91ed0cd4744eb63548f3b83b947, type: 3}
-  - {fileID: 4408122858736694830, guid: 128b007fb4c950240a5538b99a4015f5, type: 3}
+  - {fileID: 7556001726240875756, guid: b3da63ed88f21134ca46e2b334f17870, type: 3}
+  - {fileID: 818768502969420352, guid: caa5768a0142b9f468239603205d68e2, type: 3}
+  - {fileID: 2213380966558281042, guid: 1eef75348962f754d81483069fee22b7, type: 3}
+  - {fileID: 8168177972614815845, guid: 2a532b6943c8427448fd98eeb28a1700, type: 3}
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
