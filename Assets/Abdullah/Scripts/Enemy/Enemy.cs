@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour
     private Material _originalObstacleMaterial;
     private float _stepTimer;
     private bool _isJumpscareOccurred;
+    private CinemachineCamera _activePuzzleCamera;
 
     // first death only
     private int _restartPressCount;
@@ -183,6 +185,16 @@ public class Enemy : MonoBehaviour
         // Calculate enemy's face position
         Vector3 enemyFacePosition = transform.position + transform.up * 2.5f;
 
+        PuzzlePerspective puzzle = FindObjectOfType<PuzzlePerspective>();
+        if (puzzle != null)
+        {
+            _activePuzzleCamera = puzzle.GetComponentInChildren<CinemachineCamera>();
+            if (_activePuzzleCamera != null)
+            {
+                _activePuzzleCamera.Priority = 0;
+            }
+        }
+
         // Snap camera to look at enemy face
         StartCoroutine(SnapCameraToEnemy(enemyFacePosition));
 
@@ -211,6 +223,9 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            if (GameManager.Instance != null)
+                GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
