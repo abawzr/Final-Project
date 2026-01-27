@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -8,11 +7,6 @@ public class AudioManager : MonoBehaviour
 {
     [Header("Mixer")]
     [SerializeField] private AudioMixer audioMixer;
-
-    [Header("Sliders")]
-    [SerializeField] private Slider masterSlider;
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider sfxSlider;
 
     [Header("3D Audio Settings")]
     [Range(1, 30)][SerializeField] private int sfx3dPoolSize = 10; // Number of 3D audio sources to pool
@@ -24,7 +18,7 @@ public class AudioManager : MonoBehaviour
     private List<AudioSource> _sfx3dPool; // Pool of 3D audio sources for spatial sounds
     private AudioSource _sfx2dSource; // Single audio source for 2D sound effects
     private AudioSource _musicSource; // Single audio source for background music
-    private Coroutine _fadeCoroutine;
+    private bool _isMusicPaused;
 
     /// <summary>
     /// Singleton instance of AudioManager
@@ -77,14 +71,6 @@ public class AudioManager : MonoBehaviour
         _sfx2dSource = gameObject.AddComponent<AudioSource>();
         _sfx2dSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
         _sfx2dSource.spatialBlend = 0; // 2D SFX Sound
-
-        // Load Volumes to sliders
-        if (masterSlider != null)
-            LoadVolume("MasterVolume", masterSlider, 0);
-        if (musicSlider != null)
-            LoadVolume("MusicVolume", musicSlider, 0);
-        if (sfxSlider != null)
-            LoadVolume("SFXVolume", sfxSlider, 0);
     }
 
     private void OnEnable()
@@ -104,12 +90,29 @@ public class AudioManager : MonoBehaviour
         switch (gameState)
         {
             case GameManager.GameState.Gameplay:
+                if (_musicSource.clip == ambientMusic && _musicSource.isPlaying) break;
                 _musicSource.clip = ambientMusic;
-                _musicSource.Play();
+                _musicSource.volume = 0.1f;
+                if (_isMusicPaused)
+                {
+                    _musicSource.UnPause();
+                    _isMusicPaused = false;
+                }
+                else
+                    _musicSource.Play();
                 break;
+
             case GameManager.GameState.MainMenu:
                 _musicSource.clip = mainmenuMusic;
+                _musicSource.volume = 1f;
                 _musicSource.Play();
+                break;
+
+            case GameManager.GameState.FirstDeath:
+            case GameManager.GameState.Choice:
+            case GameManager.GameState.Cutscene:
+                _musicSource.Pause();
+                _isMusicPaused = true;
                 break;
         }
     }
@@ -120,91 +123,26 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat(parameter, dBValue);
     }
 
-    private void LoadVolume(string parameter, Slider slider, float defaultValue)
+    public void LoadVolume(string parameter, Slider slider, float defaultValue)
     {
         float saved = PlayerPrefs.GetFloat(parameter, defaultValue);
         slider.SetValueWithoutNotify(saved);
         audioMixer.SetFloat(parameter, saved);
     }
 
-    private IEnumerator FadeVolume(string parameter, float targetDB, float duration)
+    public void SetMasterVolume(float value)
     {
-        audioMixer.GetFloat(parameter, out float currentDB);
-
-        // Unmute
-        if (targetDB == 0)
-        {
-            targetDB = PlayerPrefs.GetFloat(parameter, targetDB);
-        }
-
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float newDB = Mathf.Lerp(currentDB, targetDB, elapsed / duration);
-            audioMixer.SetFloat(parameter, newDB);
-            yield return null;
-        }
-
-        audioMixer.SetFloat(parameter, targetDB);
+        SetVolume("MasterVolume", value);
     }
 
-    // Called from Timeline Signal
-    public void FadeMasterToMuted(float duration)
+    public void SetMusicVolume(float value)
     {
-        if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeVolume("MasterVolume", -80f, duration));
+        SetVolume("MusicVolume", value);
     }
 
-    // Called from Timeline Signal
-    public void FadeMasterToNormal(float duration)
+    public void SetSFXVolume(float value)
     {
-        if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeVolume("MasterVolume", 0f, duration));
-    }
-
-    // Called from Timeline Signal
-    public void FadeMusicToMuted(float duration)
-    {
-        if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeVolume("MusicVolume", -80f, duration));
-    }
-
-    // Called from Timeline Signal
-    public void FadeMusicToNormal(float duration)
-    {
-        if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeVolume("MusicVolume", 0f, duration));
-    }
-
-    // Called from Timeline Signal
-    public void FadeSFXToMuted(float duration)
-    {
-        if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeVolume("SFXVolume", -80f, duration));
-    }
-
-    // Called from Timeline Signal
-    public void FadeSFXToNormal(float duration)
-    {
-        if (_fadeCoroutine != null) StopCoroutine(_fadeCoroutine);
-        _fadeCoroutine = StartCoroutine(FadeVolume("SFXVolume", 0f, duration));
-    }
-
-    public void OnMasterVolumeChanged()
-    {
-        SetVolume("MasterVolume", masterSlider.value);
-    }
-
-    public void OnMusicVolumeChanged()
-    {
-        SetVolume("MusicVolume", musicSlider.value);
-    }
-
-    public void OnSFXVolumeChanged()
-    {
-        SetVolume("SFXVolume", sfxSlider.value);
+        SetVolume("SFXVolume", value);
     }
 
     /// <summary>

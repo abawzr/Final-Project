@@ -10,6 +10,7 @@ public class LaserSensor : MonoBehaviour
     [SerializeField] private float lightOnIntensity = 3f;
     [SerializeField] private float lightOffIntensity = 0f;
 
+    private bool _isSolved = false;
 
     private Renderer objectRenderer;
     void Awake()
@@ -19,12 +20,17 @@ public class LaserSensor : MonoBehaviour
             lampLight.enabled = true;
             lampLight.intensity = lightOffIntensity;
         }
+
+        _isSolved = false;
     }
     public void ActivateSensor()
     {
+        if (_isSolved) return;
+
         if (lampLight != null)
             lampLight.intensity = lightOnIntensity;
 
+        _isSolved = true;
         CubeController.CanInteract = false;
         LabDoor.IsPuzzle1Solved = true;
         puzzlePerspective.CanInteract = false;

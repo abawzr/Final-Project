@@ -42,7 +42,7 @@ public class LabDoor : MonoBehaviour, IInteractable
 
             if (AudioManager.Instance != null)
             {
-                AudioManager.Instance.Play3DSFX(puzzleSolvedClip, soundPosition.position, 5f);
+                AudioManager.Instance.Play3DSFX(puzzleSolvedClip, soundPosition.position, 7f);
             }
 
             puzzleRedLight1.material = puzzleGreenLight;
@@ -54,7 +54,7 @@ public class LabDoor : MonoBehaviour, IInteractable
 
             if (AudioManager.Instance != null)
             {
-                AudioManager.Instance.Play3DSFX(puzzleSolvedClip, soundPosition.position, 5f);
+                AudioManager.Instance.Play3DSFX(puzzleSolvedClip, soundPosition.position, 7f);
             }
 
             puzzleRedLight2.material = puzzleGreenLight;
@@ -66,7 +66,7 @@ public class LabDoor : MonoBehaviour, IInteractable
 
             if (AudioManager.Instance != null)
             {
-                AudioManager.Instance.Play3DSFX(puzzleSolvedClip, soundPosition.position, 5f);
+                AudioManager.Instance.Play3DSFX(puzzleSolvedClip, soundPosition.position, 7f);
             }
 
             puzzleRedLight3.material = puzzleGreenLight;

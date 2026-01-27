@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 public class MainMenu : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -8,11 +10,49 @@ public class MainMenu : MonoBehaviour
     public GameObject SettingsPanel;        //2-panel
     public GameObject InstructionsPanel;    //3-panel
 
-    void Start()
+    [Header("Buttons")]
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button quitButton;
+
+    [Header("Audio Sliders")]
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
+    private void Awake()
     {
-        ShowMainMenu();
         if (GameManager.Instance != null)
-            GameManager.Instance.SetGameState(GameManager.GameState.MainMenu);
+        {
+            startButton.onClick.RemoveAllListeners();
+            quitButton.onClick.RemoveAllListeners();
+            startButton.onClick.AddListener(GameManager.Instance.StartGame);
+            quitButton.onClick.AddListener(GameManager.Instance.QuitGame);
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            // Load Volumes to sliders
+            if (masterSlider != null)
+            {
+                AudioManager.Instance.LoadVolume("MasterVolume", masterSlider, 0);
+                masterSlider.onValueChanged.RemoveAllListeners();
+                masterSlider.onValueChanged.AddListener(AudioManager.Instance.SetMasterVolume);
+            }
+            if (musicSlider != null)
+            {
+                AudioManager.Instance.LoadVolume("MusicVolume", musicSlider, 0);
+                musicSlider.onValueChanged.RemoveAllListeners();
+                musicSlider.onValueChanged.AddListener(AudioManager.Instance.SetMusicVolume);
+            }
+            if (sfxSlider != null)
+            {
+                AudioManager.Instance.LoadVolume("SFXVolume", sfxSlider, 0);
+                sfxSlider.onValueChanged.RemoveAllListeners();
+                sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
+            }
+        }
+
+        ShowMainMenu();
     }
 
     ///////////////////Panels//////////////////
@@ -46,6 +86,4 @@ public class MainMenu : MonoBehaviour
     {
         ShowMainMenu();
     }
-
-
 }

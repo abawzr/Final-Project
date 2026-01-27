@@ -77,48 +77,56 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
                 break;
 
             case GameState.Pause:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
                 break;
 
             case GameState.Gameplay:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Locked;
                 PlayerMovement.IsControlsEnabled = true;
+                UIManager.CanPause = true;
                 break;
 
             case GameState.FirstDeath:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
                 break;
 
             case GameState.Choice:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
                 break;
 
             case GameState.Puzzle:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
                 break;
 
             case GameState.Cutscene:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Locked;
                 PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
                 break;
 
             case GameState.Credits:
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.Locked;
                 PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
                 break;
 
             default:
@@ -130,6 +138,18 @@ public class GameManager : MonoBehaviour
     {
         SetGameState(GameState.Gameplay);
         SceneManager.LoadSceneAsync("StartScene");
+    }
+
+    public void BackToMenu()
+    {
+        SetGameState(GameState.MainMenu);
+        SceneManager.LoadSceneAsync("MainMenuScene");
+    }
+
+    public void Restart()
+    {
+        SetGameState(GameState.Gameplay);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame()
