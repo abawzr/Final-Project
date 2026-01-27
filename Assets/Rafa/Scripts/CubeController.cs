@@ -24,6 +24,7 @@ public class CubeController : MonoBehaviour
                 if (hit.transform.CompareTag("Cube"))
                 {
                     var rotator = hit.transform.GetComponentInParent<MirrorRotator>();
+
                     rotator?.RotateStep();
 
                 }

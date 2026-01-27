@@ -4,65 +4,71 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private Transform oragin;
-    private float LaserLength = 100f;
+    ///_values??
+    [SerializeField] private Transform oragin;  //laser start point
+    private float LaserLength = 20f;
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private int maxReflections = 10;
-    private LaserSensor _lastSensor;
-
-
+    private LaserSensor _lastSensor;          //Last activated sensor
 
     // Update is called once per frame
-    void Update()
+    void Awake()
     {
         if (_lastSensor != null)
         {
             _lastSensor.DeactivateSensor();   //turn off previous sensor
             _lastSensor = null;
         }
+    }
+    void Update()
+    {
 
-
-        Vector3 direction = transform.forward;
-        Ray ray = new Ray(oragin.position, direction);
-        Vector3[]points= new Vector3[maxReflections+2];
-        int pointCount=0;
-        points[pointCount++]= oragin.position; //pointcount=0  ,then pointcount=1
+        // Initial ray
+        Ray ray = new Ray(oragin.position, transform.forward);
         RaycastHit hit;
 
+        //array to store points
+        Vector3[] points = new Vector3[maxReflections + 2];
+        int pointCount = 0;
+        points[pointCount++] = oragin.position; //pointcount=0  ,then pointcount=1
 
+        //Raycast and reflection logic//
         if (Physics.Raycast(ray, out hit, LaserLength))
         {
-            points[pointCount++]= hit.point;
-            
+            points[pointCount++] = hit.point;
 
             //check if hit the cube
             if (hit.transform.CompareTag("Cube"))
             {
-                CubeCase(hit, ray,points, ref pointCount, 1);
-            }else if (hit.transform.CompareTag("LaserSensor"))
+                //handle reflection recursively
+                CubeCase(hit, ray, points, ref pointCount, 1);
+            }
+            else if (hit.transform.CompareTag("LaserSensor"))
             {
+                //handle sensor activation
                 SensorCase(hit);
-        
             }
         }
         else
         {
-            points[pointCount++]= oragin.position + direction * LaserLength;
+            //no hit draw full laser
+            points[pointCount++] = oragin.position + transform.forward * LaserLength;//??
             lineRenderer.positionCount = 2;
             lineRenderer.SetPosition(0, oragin.position);
-            lineRenderer.SetPosition(1, oragin.position + direction * LaserLength);
+            lineRenderer.SetPosition(1, oragin.position + transform.forward * LaserLength);
         }
         //apply points to line renderer
         lineRenderer.positionCount = pointCount;
         for (int i = 0; i < pointCount; i++)
-        lineRenderer.SetPosition(i, points[i]);
+            lineRenderer.SetPosition(i, points[i]);
     }
-    void CubeCase(RaycastHit hit, Ray ray,Vector3[] points, ref int pointCount, int lastIndex)
-    {   
-        if(pointCount>=points.Length)return; 
-        
+    void CubeCase(RaycastHit hit, Ray ray, Vector3[] points, ref int pointCount, int lastIndex)
+    {   //check array bound
+        if (pointCount >= points.Length) return;
+
+        //calculate reflection direction
         Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
-        Ray reflictRay= new Ray(hit.point + reflectDir * 0.01f, reflectDir);
+        Ray reflictRay = new Ray(hit.point + reflectDir * 0.01f, reflectDir);
         RaycastHit reflectHit;
 
         //do a raycast from hit point as areflect ray
@@ -70,40 +76,38 @@ public class Laser : MonoBehaviour
         {
             bool valid = reflectHit.transform.CompareTag("Cube") || reflectHit.transform.CompareTag("LaserSensor");
 
-    if (!valid)
-    {
-        // stop at the mirror hit point (do not draw reflection)
-        return;
-    }
+            if (!valid)
+            {
+                // stop at the mirror hit point (do not draw reflection)
+                return;
+            }
+            // save hit point
+            points[pointCount++] = reflectHit.point;
 
-    // draw the reflection segment
-    points[pointCount++] = reflectHit.point;
-
-    if (reflectHit.transform.CompareTag("LaserSensor"))
-    {
-        SensorCase(reflectHit);
-        return;
-    }
-
-    // hit another mirror
-    CubeCase(reflectHit, reflictRay, points, ref pointCount, 1);
-    return;
-    }
-    else
-    {
-        //nothing ahead => no reflection line
-        return;
-    }
+            if (reflectHit.transform.CompareTag("LaserSensor"))
+            {
+                SensorCase(reflectHit);
+                return;
+            }
+            // hit mirror
+            CubeCase(reflectHit, reflictRay, points, ref pointCount, 1);
+            return;
         }
+        else
+        {
+            //hit nothing so no reflection line
+            return;
+        }
+    }
     void SensorCase(RaycastHit hit)
     {
-        LaserSensor sensor=hit.transform.GetComponent<LaserSensor>();
-        if(sensor!=null)
+        LaserSensor sensor = hit.transform.GetComponent<LaserSensor>();
+        if (sensor != null)
         {
             sensor.ActivateSensor();
             _lastSensor = sensor;
         }
     }
-        
+
 
 }

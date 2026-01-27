@@ -13,7 +13,7 @@ public class MirrorRotator : MonoBehaviour
 
     public void RotateStep()
     {
-        if (_isRotating) return;
+        if (_isRotating) return; 
 
         Quaternion target =
             transform.rotation * Quaternion.Euler(0f, stepAnngle, 0f);
