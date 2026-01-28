@@ -631,6 +631,10 @@ PrefabInstance:
       propertyPath: interactionTMP
       value: 
       objectReference: {fileID: 540048439}
+    - target: {fileID: 9220917863409743540, guid: 4cb0c5e6d68cb4e45a338d7a4db12514, type: 3}
+      propertyPath: inventoryCall
+      value: 
+      objectReference: {fileID: 1012310227}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2468,9 +2472,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6242067728243624444, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 540048445}
-    - targetCorrespondingSourceObject: {fileID: 6242067728243624444, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 540048444}
   m_SourcePrefab: {fileID: 100100000, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
 --- !u!114 &540048439 stripped
 MonoBehaviour:
@@ -2493,18 +2494,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2129716334226951724, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
   m_PrefabInstance: {fileID: 540048438}
   m_PrefabAsset: {fileID: 0}
---- !u!225 &540048444
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527942837}
-  m_Enabled: 0
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!95 &540048445
 Animator:
   serializedVersion: 7
@@ -2513,7 +2502,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527942837}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3c0a5619bbfc27b4aba5b30519e61c23, type: 2}
   m_CullingMode: 0
@@ -4040,9 +4029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83764225f73b62c4fa41787ef4bcfe73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryCall
-  inventoryUI: {fileID: 527942837}
-  animator: {fileID: 0}
-  claoseAnimationTime: 0.2
+  animator: {fileID: 540048445}
+  claoseAnimationTime: 10
 --- !u!1 &1053001081
 GameObject:
   m_ObjectHideFlags: 0
