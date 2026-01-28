@@ -5,15 +5,16 @@ using System.Collections;
 public class InventoryCall : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private GameObject inventoryUI;
+
     [SerializeField] private Animator animator;
-    [SerializeField] private float claoseAnimationTime = 0.2f;
     private bool _isOpen;
+    private Coroutine _closeCoroutine;
+    [SerializeField] private float claoseAnimationTime = 10f;
+
     void Start()
     {
         _isOpen = false;
-        if (inventoryUI != null)
-            inventoryUI.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -33,29 +34,26 @@ public class InventoryCall : MonoBehaviour
         else
             Close();
     }
-    private void Open()
+    public void Open()
     {
-        if (!inventoryUI) return;
-        inventoryUI.SetActive(true);
+
         if (animator != null) animator.SetBool("isOpen", true);
-        if (animator != null) animator.SetBool("isClose", false);
+
+        _closeCoroutine = StartCoroutine(DisableAfterClose());
 
     }
     private void Close()
     {
-        if (!inventoryUI) return;
-        inventoryUI.SetActive(false);
-        if (animator != null) animator.SetBool("isClose", true);
         if (animator != null) animator.SetBool("isOpen", false);
-
-        StartCoroutine(DisableAfterClose());
-
-
+        if (_closeCoroutine != null)
+        {
+            StopCoroutine(_closeCoroutine);
+            _closeCoroutine = null;
+        }
     }
     private IEnumerator DisableAfterClose()
     {
         yield return new WaitForSeconds(claoseAnimationTime);
-        if (!_isOpen && inventoryUI)
-            inventoryUI.SetActive(false);
+        Close();
     }
 }

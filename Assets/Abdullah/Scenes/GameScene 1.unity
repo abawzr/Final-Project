@@ -12469,6 +12469,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mirrors arange5 (1) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 545770987131114881, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: stepAnngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2658771908188763639, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: stepAnngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437382173466306275, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: stepAnngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806196496892031472, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: stepAnngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996156601511356610, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: stepAnngle
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6783182466992620050, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.222
@@ -12508,6 +12528,18 @@ PrefabInstance:
     - target: {fileID: 6783182466992620050, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449131137420812672, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: stepAnngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7860120275249631084, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.616
+      objectReference: {fileID: 0}
+    - target: {fileID: 7860120275249631084, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.131
       objectReference: {fileID: 0}
     - target: {fileID: 8739645344042520581, guid: b05e4162c5b40b74b8c5472c4b8960e2, type: 3}
       propertyPath: puzzlePerspective

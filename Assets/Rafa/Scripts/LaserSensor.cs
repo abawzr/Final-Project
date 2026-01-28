@@ -15,6 +15,9 @@ public class LaserSensor : MonoBehaviour
     private Renderer objectRenderer;
     void Awake()
     {
+        if (lampLight == null)
+            lampLight = GetComponentInChildren<Light>();
+
         if (lampLight != null)
         {
             lampLight.enabled = true;

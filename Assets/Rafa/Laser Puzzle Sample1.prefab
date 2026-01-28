@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2510672111881504159}
-  - component: {fileID: 513874543325094638}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MirrorPivot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,20 +32,6 @@ Transform:
   - {fileID: 143094981917550499}
   m_Father: {fileID: 8962646026826994629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &513874543325094638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1101976822301548216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc11b6d3eeb84b4da1d4949b5c7e699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MirrorRotator
-  stepAnngle: 25
-  rotationSpeed: 360
 --- !u!1 &1328726775032838773
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +152,7 @@ GameObject:
   - component: {fileID: 8177072762346373780}
   - component: {fileID: 1515747317437581342}
   - component: {fileID: 3360069580738413337}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirror 5
   m_TagString: Cube
   m_Icon: {fileID: 0}
@@ -204,7 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab0f6faf4c49044db954a08547e7aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeController
-  rotateAngle: 15
+  stepAnngle: 25
+  rotationSpeed: 360
 --- !u!65 &3360069580738413337
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -235,8 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3611304273964759699}
-  - component: {fileID: 6742508897433679849}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MirrorPivot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,20 +244,6 @@ Transform:
   - {fileID: 5855093995770610569}
   m_Father: {fileID: 8962646026826994629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6742508897433679849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3183796037363101789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc11b6d3eeb84b4da1d4949b5c7e699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MirrorRotator
-  stepAnngle: 25
-  rotationSpeed: 360
 --- !u!1 &3488990388592076550
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,8 +287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2503145377152178804}
-  - component: {fileID: 3070106158963228361}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MirrorPivot 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,20 +310,6 @@ Transform:
   - {fileID: 9184485778829487030}
   m_Father: {fileID: 8962646026826994629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3070106158963228361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3497352287369810322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc11b6d3eeb84b4da1d4949b5c7e699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MirrorRotator
-  stepAnngle: 25
-  rotationSpeed: 360
 --- !u!1 &3593060786226243494
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +321,7 @@ GameObject:
   - component: {fileID: 143094981917550499}
   - component: {fileID: 7475945917310969333}
   - component: {fileID: 4270999721505583210}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirror 1
   m_TagString: Cube
   m_Icon: {fileID: 0}
@@ -402,7 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab0f6faf4c49044db954a08547e7aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeController
-  rotateAngle: 15
+  stepAnngle: 25
+  rotationSpeed: 360
 --- !u!65 &4270999721505583210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -435,7 +392,7 @@ GameObject:
   - component: {fileID: 5855093995770610569}
   - component: {fileID: 1034048040914887210}
   - component: {fileID: 3870837215899014788}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirror 2
   m_TagString: Cube
   m_Icon: {fileID: 0}
@@ -472,7 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab0f6faf4c49044db954a08547e7aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeController
-  rotateAngle: 15
+  stepAnngle: 25
+  rotationSpeed: 360
 --- !u!65 &3870837215899014788
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -534,8 +492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1066343793653333164}
-  - component: {fileID: 6087025607527934639}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MirrorPivot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,20 +515,6 @@ Transform:
   - {fileID: 3851724801990191775}
   m_Father: {fileID: 8962646026826994629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6087025607527934639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3924593572300356377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc11b6d3eeb84b4da1d4949b5c7e699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MirrorRotator
-  stepAnngle: 25
-  rotationSpeed: 360
 --- !u!1 &3926451199264343573
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +526,7 @@ GameObject:
   - component: {fileID: 6351069064189665665}
   - component: {fileID: 4624182246014987582}
   - component: {fileID: 8232283865195771424}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirror 4
   m_TagString: Cube
   m_Icon: {fileID: 0}
@@ -620,7 +563,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab0f6faf4c49044db954a08547e7aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeController
-  rotateAngle: 15
+  stepAnngle: 25
+  rotationSpeed: 360
 --- !u!65 &8232283865195771424
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -651,7 +595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8962646026826994629}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirrors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,6 +670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Laser
   oragin: {fileID: 8179637930473199841}
+  laserLength: 15
   lineRenderer: {fileID: 7414576902741781023}
   maxReflections: 5
 --- !u!120 &7414576902741781023
@@ -849,7 +794,7 @@ GameObject:
   - component: {fileID: 3851724801990191775}
   - component: {fileID: 6212493262685594129}
   - component: {fileID: 2169185064184517660}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirror 3
   m_TagString: Cube
   m_Icon: {fileID: 0}
@@ -886,7 +831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab0f6faf4c49044db954a08547e7aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeController
-  rotateAngle: 15
+  stepAnngle: 25
+  rotationSpeed: 360
 --- !u!65 &2169185064184517660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1046,7 +992,7 @@ GameObject:
   - component: {fileID: 9184485778829487030}
   - component: {fileID: 2932659601332587745}
   - component: {fileID: 5331138489246355239}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirror 5
   m_TagString: Cube
   m_Icon: {fileID: 0}
@@ -1083,7 +1029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab0f6faf4c49044db954a08547e7aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeController
-  rotateAngle: 15
+  stepAnngle: 25
+  rotationSpeed: 360
 --- !u!65 &5331138489246355239
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1114,8 +1061,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1506621427923485505}
-  - component: {fileID: 6003690323841422172}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MirrorPivot 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,20 +1084,6 @@ Transform:
   - {fileID: 6351069064189665665}
   m_Father: {fileID: 8962646026826994629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6003690323841422172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6717124813586793905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc11b6d3eeb84b4da1d4949b5c7e699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MirrorRotator
-  stepAnngle: 25
-  rotationSpeed: 360
 --- !u!1 &7263886260503723053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,8 +1093,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6876562837363609994}
-  - component: {fileID: 2052256078641993969}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MirrorPivot 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1185,20 +1116,6 @@ Transform:
   - {fileID: 8177072762346373780}
   m_Father: {fileID: 8962646026826994629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2052256078641993969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7263886260503723053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc11b6d3eeb84b4da1d4949b5c7e699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MirrorRotator
-  stepAnngle: 25
-  rotationSpeed: 360
 --- !u!1001 &9274974278296169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1210,6 +1127,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -1290,6 +1211,10 @@ PrefabInstance:
       value: Mirror_3 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
       value: Cube
       objectReference: {fileID: 0}
@@ -1366,6 +1291,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -1489,6 +1418,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cup_1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8549754765575568408, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8977115579159071705, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1514,6 +1447,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -1656,6 +1593,10 @@ PrefabInstance:
       value: Mirror_3
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
       value: Cube
       objectReference: {fileID: 0}
@@ -1732,6 +1673,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -1855,6 +1800,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cup_1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8549754765575568408, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8977115579159071705, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1880,6 +1829,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -1960,6 +1913,10 @@ PrefabInstance:
       value: Mirror_3 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
       value: Cube
       objectReference: {fileID: 0}
@@ -2036,6 +1993,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -2159,6 +2120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cup_1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8549754765575568408, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8977115579159071705, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2277,6 +2242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserSensor
   lampLight: {fileID: 9201973606015114090}
+  puzzlePerspective: {fileID: 0}
   lightOnIntensity: 3
   lightOffIntensity: 0
 --- !u!65 &1575482478155612989
@@ -2361,6 +2327,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cup_1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8549754765575568408, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8977115579159071705, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2386,6 +2356,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -2551,6 +2525,10 @@ PrefabInstance:
       value: Mirror_3
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
       value: Cube
       objectReference: {fileID: 0}
@@ -2627,6 +2605,10 @@ PrefabInstance:
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_Name
       value: Mirror_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4214502297330301920, guid: 48a5b2faad17710449470e97e1071d84, type: 3}
       propertyPath: m_TagString
@@ -2750,6 +2732,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cup_1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8549754765575568408, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8977115579159071705, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2819,6 +2805,10 @@ PrefabInstance:
     - target: {fileID: 8549754765575568408, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
       propertyPath: m_Name
       value: Cup_1 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549754765575568408, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8977115579159071705, guid: 8d5621dd7b698af4bb585bb6c7324af1, type: 3}
       propertyPath: m_Enabled
