@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     public GameObject canvas;
     public GameObject SettingsPanel;    //1-panel
     public GameObject PausePanel;       //2-panel
+    [SerializeField] private GameObject gameplayCanvas;
+    [SerializeField] private GameObject screenEffectsCanvas;
 
     [Header("Buttons")]
     [SerializeField] private Button restartButton;
@@ -17,8 +19,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
-
-    private bool _isPaused = false;
 
     public static bool CanPause;
 
@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        _isPaused = false;
+        CanPause = true;
         CloseAllGameplayPanels();
     }
 
@@ -86,13 +86,13 @@ public class UIManager : MonoBehaviour
     /// 1-Pause panel
     public void PauseToggel()
     {
-        if (_isPaused)
-        {
-            ContinueGame();
-        }
-        else if (CanPause)
+        if (CanPause)
         {
             PauseUI();
+        }
+        else
+        {
+            ContinueGame();
         }
     }
 
@@ -101,10 +101,13 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.SetGameState(GameManager.GameState.Pause);
 
-        _isPaused = true;
+        CanPause = false;
         CloseAllGameplayPanels();
-        if (canvas) canvas.SetActive(true);
-        if (PausePanel) PausePanel.SetActive(true);
+
+        if (canvas != null) canvas.SetActive(true);
+        if (PausePanel != null) PausePanel.SetActive(true);
+        if (gameplayCanvas != null) gameplayCanvas.SetActive(false);
+        if (screenEffectsCanvas != null) gameplayCanvas.SetActive(false);
     }
 
     //Continue Game after Pause
@@ -113,25 +116,27 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
 
-        _isPaused = false;
+        CanPause = true;
         CloseAllGameplayPanels();
 
-        if (PausePanel) PausePanel.SetActive(false);
-        if (canvas) canvas.SetActive(false);
+        if (PausePanel != null) PausePanel.SetActive(false);
+        if (canvas != null) canvas.SetActive(false);
+        if (gameplayCanvas != null) gameplayCanvas.SetActive(true);
+        if (screenEffectsCanvas != null) gameplayCanvas.SetActive(true);
     }
 
     //2- Settings Panel
     //Open Settinge From Pause NOT menu
     public void OpenSettingeFromPause()
     {
-        if (PausePanel) PausePanel.SetActive(false);
-        if (SettingsPanel) SettingsPanel.SetActive(true);
+        if (PausePanel != null) PausePanel.SetActive(false);
+        if (SettingsPanel != null) SettingsPanel.SetActive(true);
     }
 
     public void BackFromSettings()
     {
-        if (SettingsPanel) SettingsPanel.SetActive(false);
-        if (PausePanel) PausePanel.SetActive(true);
+        if (SettingsPanel != null) SettingsPanel.SetActive(false);
+        if (PausePanel != null) PausePanel.SetActive(true);
     }
 }
 
