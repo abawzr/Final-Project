@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    [SerializeField] private InventoryCall inventoryCall;
+
     /// <summary>
     /// Fixed-size array of items representing the player's inventory slots.
     /// </summary>
@@ -41,6 +43,7 @@ public class PlayerInventory : MonoBehaviour
             {
                 _items[i] = newItem;
                 OnItemPicked?.Invoke(newItem);
+                inventoryCall.Open();
                 return;
             }
         }
