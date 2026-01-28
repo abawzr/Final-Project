@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     [Header("Jumpscare")]
     [SerializeField] private float triggerJumpscareDistance;
     [SerializeField] private AudioClip jumpscareClip;
+    [SerializeField] private PuzzlePerspective padlockPuzzle;
 
     [Header("Footstep")]
     [SerializeField] private AudioClip footstepClip;
@@ -185,10 +186,9 @@ public class Enemy : MonoBehaviour
         // Calculate enemy's face position
         Vector3 enemyFacePosition = transform.position + transform.up * 2.5f;
 
-        PuzzlePerspective puzzle = FindObjectOfType<PuzzlePerspective>();
-        if (puzzle != null)
+        if (padlockPuzzle != null)
         {
-            _activePuzzleCamera = puzzle.GetComponentInChildren<CinemachineCamera>();
+            _activePuzzleCamera = padlockPuzzle.GetPuzzleCamera();
             if (_activePuzzleCamera != null)
             {
                 _activePuzzleCamera.Priority = 0;
