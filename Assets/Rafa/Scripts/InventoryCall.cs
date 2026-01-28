@@ -7,13 +7,13 @@ public class InventoryCall : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [SerializeField] private Animator animator;
-    private bool _isOpen;
+    public static bool CanOpen;
     private Coroutine _closeCoroutine;
     [SerializeField] private float claoseAnimationTime = 10f;
 
     void Start()
     {
-        _isOpen = false;
+        CanOpen = true;
 
     }
 
@@ -28,14 +28,15 @@ public class InventoryCall : MonoBehaviour
 
     private void ToggleInventory()
     {
-        _isOpen = !_isOpen;
-        if (_isOpen)
+
+        if (CanOpen)
             Open();
         else
             Close();
     }
     public void Open()
     {
+        CanOpen = false;
 
         if (animator != null) animator.SetBool("isOpen", true);
 
@@ -44,6 +45,7 @@ public class InventoryCall : MonoBehaviour
     }
     private void Close()
     {
+        CanOpen = true;
         if (animator != null) animator.SetBool("isOpen", false);
         if (_closeCoroutine != null)
         {
