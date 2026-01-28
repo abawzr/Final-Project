@@ -2666,6 +2666,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3138178458500775296, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -134
+      objectReference: {fileID: 0}
     - target: {fileID: 4960389258369655332, guid: ae18a842d249271439e518af1b61ec7e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2781,7 +2785,7 @@ CanvasGroup:
   m_GameObject: {fileID: 527942837}
   m_Enabled: 0
   m_Alpha: 1
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!95 &540048445
@@ -2792,7 +2796,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527942837}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3c0a5619bbfc27b4aba5b30519e61c23, type: 2}
   m_CullingMode: 0

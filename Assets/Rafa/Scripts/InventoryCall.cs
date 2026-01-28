@@ -37,21 +37,25 @@ public class InventoryCall : MonoBehaviour
     {
         if (!inventoryUI) return;
         inventoryUI.SetActive(true);
-        // if (animator != null) animator.SetBool("isOpen", true);
+        if (animator != null) animator.SetBool("isOpen", true);
+        if (animator != null) animator.SetBool("isClose", false);
+
     }
     private void Close()
     {
         if (!inventoryUI) return;
         inventoryUI.SetActive(false);
-        // if (animator != null) animator.SetBool("isClose", false);
-        // StartCoroutine(DisableAfterClose());
+        if (animator != null) animator.SetBool("isClose", true);
+        if (animator != null) animator.SetBool("isOpen", false);
+
+        StartCoroutine(DisableAfterClose());
 
 
     }
-    // private IEnumerator DisableAfterClose()
-    // {
-    //     yield return new WaitForSeconds(claoseAnimationTime);
-    //     if (!_isOpen && inventoryUI)
-    //         inventoryUI.SetActive(false);
-    // }
+    private IEnumerator DisableAfterClose()
+    {
+        yield return new WaitForSeconds(claoseAnimationTime);
+        if (!_isOpen && inventoryUI)
+            inventoryUI.SetActive(false);
+    }
 }
