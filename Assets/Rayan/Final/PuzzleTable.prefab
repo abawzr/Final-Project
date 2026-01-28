@@ -183,6 +183,14 @@ MonoBehaviour:
   puzzleCamera: {fileID: 8130831278588827493}
   interactionTMP: {fileID: 0}
   padlock: {fileID: 0}
+  isPaintingPuzzle: 0
+  noPaintingsClip: {fileID: 0}
+  painting1: {fileID: 0}
+  painting2: {fileID: 0}
+  painting3: {fileID: 0}
+  paintingSpawn1: {fileID: 0}
+  paintingSpawn2: {fileID: 0}
+  paintingSpawn3: {fileID: 0}
 --- !u!114 &6698514022127881596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,26 +204,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatueRotationPuzzle
   statueConfigs:
-  - statueName: Statue1
+  - statueName: Lion
     statueItem: {fileID: 11400000, guid: f5afb048037d3a6418d1dcd8aa6fd3d9, type: 2}
-    statuePrefab: {fileID: 7112936522129497672, guid: b066972b762cb0b4da89077a94810690, type: 3}
+    statuePrefab: {fileID: 186685153354566449, guid: a07fb718b3f9dcf42a075457303c5d80, type: 3}
     tablePosition: {fileID: 8560881071437980960}
-    correctRotation: 180
-  - statueName: Statue2
+    correctRotation: 45
+  - statueName: Deer
     statueItem: {fileID: 11400000, guid: 35d6d8680ac03304f987f5d64e06c809, type: 2}
-    statuePrefab: {fileID: 3002606873594938831, guid: 896d032e730e1d54dab119d7b7a4a894, type: 3}
+    statuePrefab: {fileID: 2929713042170505501, guid: ea89299a777f69444b90a1777ad3d9b9, type: 3}
     tablePosition: {fileID: 6804552520708967103}
-    correctRotation: 135
-  - statueName: Statue3
+    correctRotation: 90
+  - statueName: Human
     statueItem: {fileID: 11400000, guid: 5ea3f70306561bb4087fe00fb45c7359, type: 2}
-    statuePrefab: {fileID: 5455767291225528841, guid: cecd76a7c36ba7e4098833f55c2f5c94, type: 3}
+    statuePrefab: {fileID: 4233155401323683275, guid: 5ae16d0b622e5324489e0c98ce65ee6b, type: 3}
     tablePosition: {fileID: 5211006726156194181}
-    correctRotation: 225
-  - statueName: Statue4
+    correctRotation: 45
+  - statueName: Mirror
     statueItem: {fileID: 11400000, guid: e40d661dcf4a7ae4096fd6023c0bc136, type: 2}
-    statuePrefab: {fileID: 1377039666545121682, guid: 0c9ce54fc9186e84ca0b80886d6c8593, type: 3}
+    statuePrefab: {fileID: 7743040659157356577, guid: 1867058827085e1499e1a48ebb9e8f6c, type: 3}
     tablePosition: {fileID: 8384268304494291630}
-    correctRotation: 270
+    correctRotation: 225
   playerInventory: {fileID: 0}
   objectToHide: {fileID: 0}
   objectToShow: {fileID: 0}
@@ -228,7 +236,6 @@ MonoBehaviour:
   useDropAnimation: 1
   dropHeight: 0.04301
   dropDuration: 0.3
-  enableDebugLogs: 1
 --- !u!114 &1603778176916514265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +251,6 @@ MonoBehaviour:
   puzzleCamera: {fileID: 8130831278588827493}
   detectionMethod: 0
   priorityThreshold: 5
-  enableDebugLogs: 0
 --- !u!114 &5089016527662245907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,8 +273,6 @@ MonoBehaviour:
   useSeparateArrowLayer: 1
   raycastDistance: 100
   maxRaycastHits: 10
-  showDebugRay: 0
-  enableDebugLogs: 0
 --- !u!82 &3108023008536845797
 AudioSource:
   m_ObjectHideFlags: 0
@@ -555,7 +559,7 @@ Transform:
   m_GameObject: {fileID: 5544240444910283490}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.992, y: -0.204, z: -0.193}
+  m_LocalPosition: {x: -1.13, y: -0.204, z: -0.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -586,7 +590,7 @@ Transform:
   m_GameObject: {fileID: 6886703546364539209}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.539, y: -0.20400003, z: 0.233}
+  m_LocalPosition: {x: -0.66, y: -0.20400003, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -617,7 +621,7 @@ Transform:
   m_GameObject: {fileID: 6946197916677004815}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.277, y: -0.20400003, z: -0.367}
+  m_LocalPosition: {x: -0.2, y: -0.20400003, z: -0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -648,7 +652,7 @@ Transform:
   m_GameObject: {fileID: 7803862540155498242}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.175, y: -0.20400003, z: -0.085}
+  m_LocalPosition: {x: 0.36, y: -0.20400003, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
