@@ -39,6 +39,11 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
         }
     }
 
+    public CinemachineCamera GetPuzzleCamera()
+    {
+        return puzzleCamera;
+    }
+
     public void DisablePuzzle()
     {
         if (GameManager.Instance != null)
