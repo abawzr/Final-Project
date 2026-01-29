@@ -5,11 +5,19 @@ public class Note : MonoBehaviour, IInteractable
 {
     public bool CanInteract { get; set; }
 
-    [SerializeField] private string noteText; // text on the note
+    [Header("Note Text")]
+    [TextArea(3, 10)]
+    [SerializeField] private string noteTextEnglish;
+
+    [TextArea(3, 10)]
+    [SerializeField] private string noteTextArabic;
 
     [SerializeField] private GameObject noteUI; // UI to display the note
-    [SerializeField] private TMP_Text noteTextTMP;
+    [SerializeField] private TMP_Text englishTextTMP;
+    [SerializeField] private TMP_Text arabicTextTMP;
+
     bool _isReading = false;
+    [SerializeField] private bool useArabic = false;
     private void Awake()
     {
         CanInteract = true;
@@ -36,9 +44,16 @@ public class Note : MonoBehaviour, IInteractable
     {
         _isReading = true;
 
-        if (noteTextTMP != null)
+        if (englishTextTMP != null)
         {
-            noteTextTMP.text = noteText;
+            englishTextTMP.text = noteTextEnglish;
+            englishTextTMP.gameObject.SetActive(!useArabic);
+        }
+
+        if (arabicTextTMP != null)
+        {
+            arabicTextTMP.text = noteTextArabic;
+            arabicTextTMP.gameObject.SetActive(useArabic);
         }
 
         if (noteUI != null)
