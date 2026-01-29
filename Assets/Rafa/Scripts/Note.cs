@@ -47,13 +47,11 @@ public class Note : MonoBehaviour, IInteractable
         if (englishTextTMP != null)
         {
             englishTextTMP.text = noteTextEnglish;
-            englishTextTMP.gameObject.SetActive(!useArabic);
         }
 
         if (arabicTextTMP != null)
         {
             arabicTextTMP.text = noteTextArabic;
-            arabicTextTMP.gameObject.SetActive(useArabic);
         }
 
         if (noteUI != null)
