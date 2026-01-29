@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e39c56a3e58a1a4c8370b293bebd856, type: 3}
+  m_Name: TruthOrEscape
+  m_EditorClassIdentifier: Assembly-CSharp::Subtitles.SubtitleTrack
+  trackId: TruthOrEscape
+  entries:
+  - startTime: 0
+    endTime: 3.34
+    englishText: Your arrival now, after all these attempts
+    arabicText: "\u062A\uFEFB\u0648\uFE8E\uFEA4\uFEE4\uFEDF\u0627 \u0647\uFEAC\uFEEB
+      \uFEDE\uFEDB \uFEAA\uFECC\uFE91 \u060C\u0646\uFEF5\u0627 \uFEDA\uFEDF\uFEEE\uFEBB\u0648"
+  - startTime: 3.34
+    endTime: 6.6
+    englishText: means the experiment has succeeded
+    arabicText: "\uFE96\uFEA4\uFEA0\uFEE7 \uFE94\uFE91\uFEAE\uFEA0\uFE98\uFEDF\u0627
+      \u0646\u0623 \uFEF2\uFEE8\uFECC\uFEF3"
+  - startTime: 7
+    endTime: 10.6
+    englishText: Go to the door of the rabbit if you choose escape
+    arabicText: "\u0628\u0648\uFEAE\uFEEC\uFEDF\u0627 \u062A\u062F\u0631\u0623 \u0646\u0625
+      \uFE90\uFEE7\u0631\uFEF7\u0627 \u0628\uFE8E\uFE91 \uFBFD\uFEDF\u0625 \uFE90\uFEEB\u0630\u0625"
+  - startTime: 11
+    endTime: 13
+    englishText: and to the door of the wolf...
+    arabicText: "...\uFE90\uFE8B\uFEAC\uFEDF\u0627 \u0628\uFE8E\uFE91 \uFBFD\uFEDF\u0625\u0648"
+  - startTime: 13.16
+    endTime: 15
+    englishText: if you seek the truth
+    arabicText: "\uFE94\uFED8\uFEF4\uFED8\uFEA4\uFEDF\u0627 \u062A\u062F\u0631\u0623
+      \u0646\u0625"

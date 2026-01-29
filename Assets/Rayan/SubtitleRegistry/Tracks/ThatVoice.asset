@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e39c56a3e58a1a4c8370b293bebd856, type: 3}
+  m_Name: ThatVoice
+  m_EditorClassIdentifier: Assembly-CSharp::Subtitles.SubtitleTrack
+  trackId: ThatVoice
+  entries:
+  - startTime: 0.1
+    endTime: 1.6
+    englishText: "That voice\u2026"
+    arabicText: "...\u062A\uFEEE\uFEBC\uFEDF\u0627 \uFEDA\uFEDF\u0630"
+  - startTime: 1.6
+    endTime: 3.58
+    englishText: sounds familiar
+    arabicText: "\u064B\uFE8E\uFED3\uFEEE\uFEDF\uFE84\uFEE3 \u0648\uFEAA\uFE92\uFEF3"
+  - startTime: 3.58
+    endTime: 5
+    englishText: Too familiar
+    arabicText: "\u064B\u0627\uFEAA\uFE9F \u0641\uFEEE\uFEDF\uFE84\uFEE3"

@@ -41916,15 +41916,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1037464938789232893, guid: 23b2ec1e0b5a348bcbf0bb52c78059ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.549
+      value: 5.628
       objectReference: {fileID: 0}
     - target: {fileID: 1037464938789232893, guid: 23b2ec1e0b5a348bcbf0bb52c78059ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.119568
+      value: 2.135
       objectReference: {fileID: 0}
     - target: {fileID: 1037464938789232893, guid: 23b2ec1e0b5a348bcbf0bb52c78059ef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.195
+      value: 19.47
       objectReference: {fileID: 0}
     - target: {fileID: 1037464938789232893, guid: 23b2ec1e0b5a348bcbf0bb52c78059ef, type: 3}
       propertyPath: m_LocalRotation.w
@@ -41982,11 +41982,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ceeca521ae154a4c8bfd286a5712791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecordPlayer
-  audioClip: {fileID: 8300000, guid: 7dd23f0d78c9ab74dbeebb6d20824f7c, type: 3}
+  audioClip: {fileID: 8300000, guid: cd6cd9ea2c68347b79ed931784882d82, type: 3}
   playerReactionClip: {fileID: 0}
   cinemachineCamera: {fileID: 0}
   oneTimePlay: 0
-  Subtitle: First
+  Subtitle: TheLabEnding
   IsReactionFinished: 0
 --- !u!65 &1634222501
 BoxCollider:
@@ -48734,8 +48734,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 30
     m_Right: 30
-    m_Top: 10
-    m_Bottom: 10
+    m_Top: 30
+    m_Bottom: 20
   m_ChildAlignment: 4
   m_Spacing: 10
   m_ChildForceExpandWidth: 0
