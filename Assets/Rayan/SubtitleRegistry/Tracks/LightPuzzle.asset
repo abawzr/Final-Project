@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e39c56a3e58a1a4c8370b293bebd856, type: 3}
+  m_Name: LightPuzzle
+  m_EditorClassIdentifier: Assembly-CSharp::Subtitles.SubtitleTrack
+  trackId: LightPuzzle
+  entries:
+  - startTime: 0
+    endTime: 2
+    englishText: "Light does not vanish\u2026"
+    arabicText: "\u2026\uFEF2\uFED4\uFE98\uFEA8\uFEF3 \uFEFB \u0631\uFEEE\uFEE8\uFEDF\u0627"
+  - startTime: 2
+    endTime: 4.5
+    englishText: it changes its path
+    arabicText: "\u0647\u0631\uFE8E\uFEB4\uFEE3 \uFEAE\u0651\uFEF4\uFED0\uFEF3 \uFEDE\uFE91"
+  - startTime: 4.9
+    endTime: 7
+    englishText: What cannot be reached directly
+    arabicText: "\u0629\uFEAE\uFEB7\uFE8E\uFE92\uFEE3 \uFEEA\uFECF\uFEEE\uFEE0\uFE91
+      \uFEE6\uFEDC\uFEE4\uFEF3 \uFEFB \uFE8E\uFEE3\u0648"
+  - startTime: 7
+    endTime: 10
+    englishText: may only be seen through reflection
+    arabicText: "\u0633\uFE8E\uFEDC\uFECC\uFEE7\uFEFB\u0627 \uFEAE\uFE92\uFECB \uFEC2\uFED8\uFED3
+      \u0649\uFEAE\u064F\uFEF3 \uFEAA\uFED7"

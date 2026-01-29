@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e39c56a3e58a1a4c8370b293bebd856, type: 3}
+  m_Name: TheLabEnding
+  m_EditorClassIdentifier: Assembly-CSharp::Subtitles.SubtitleTrack
+  trackId: TheLabEnding
+  entries:
+  - startTime: 0
+    endTime: 2
+    englishText: "So this is where I\u2019ve been\u2026"
+    arabicText: "...\uFE96\uFED7\uFEEE\uFEDF\u0627 \u0627\uFEAC\uFEEB \u0644\u0627\uFEEE\uFEC3
+      \uFE96\uFEE8\uFEDB \uFE8E\uFEE8\uFEEB \u0627\u064B\u0630\u0625"
+  - startTime: 2.5
+    endTime: 4
+    englishText: all this time
+    arabicText: "\uFE96\uFED7\uFEEE\uFEDF\u0627 \u0644\u0627\uFEEE\uFEC3"
+  - startTime: 4.23
+    endTime: 5.6
+    englishText: I never left
+    arabicText: "\u0627\u064B\uFEAA\uFE91\u0623 \u0631\u062F\uFE8E\uFECF\u0623 \uFEE2\uFEDF"
+  - startTime: 6.35
+    endTime: 10.7
+    englishText: "The rooms, the doors, the chase \u2014 none of it was real"
+    arabicText: "\u064B\uFE8E\uFEF4\uFED8\uFEF4\uFED8\uFEA3 \uFEDA\uFEDF\u0630 \uFEE6\uFEE3
+      \u064C\u0651\u064A\u0623 \uFEE6\uFEDC\uFEF3 \uFEE2\uFEDF \u2014 \u0629\u062F\u0631\uFE8E\uFEC4\uFEE4\uFEDF\u0627
+      \u060C\u0628\u0627\uFEEE\uFE91\uFEF7\u0627 \u060C\u0641\uFEAE\uFED0\uFEDF\u0627"
+  - startTime: 10.9
+    endTime: 12.6
+    englishText: It was a construct
+    arabicText: "\u064B\uFE8E\uFECC\uFEE8\uFEC4\uFEBC\uFEE3 \u064B\uFEFC\uFEDC\uFEF4\uFEEB
+      \u0646\uFE8E\uFEDB"
+  - startTime: 12.7
+    endTime: 16.74
+    englishText: a controlled space built to observe a single thing
+    arabicText: "\uFEAA\uFEA3\u0627\u0648 \u0621\uFEF2\uFEB7 \uFE94\uFE92\uFED7\u0627\uFEAE\uFEE4\uFEDF
+      \uFE96\u0650\uFEE4\uFEE4\uFC61\uFEBB \uFE94\uFEE4\u064E\uFEDC\uFEA4\u064F\uFEE3
+      \uFE94\uFEA3\uFE8E\uFEB4\uFEE3"
+  - startTime: 16.8
+    endTime: 18.8
+    englishText: my response
+    arabicText: "\uFEF2\uFEE0\uFECC\uFED3 \u0629\u0651\u062F\u0631"
+  - startTime: 18.8
+    endTime: 22.8
+    englishText: I wanted to know what it feels like to be judged without fairness
+    arabicText: "\uFE94\uFEDF\u0627\uFEAA\uFECB \u0646\u0648\u062F \u0646\u0627\uFEAA\u064F\uFEF3
+      \uFEE6\uFEE3 \uFEAE\uFECC\uFEB8\uFEF3 \uFED2\uFEF4\uFEDB \u0641\uFEAE\uFECB\u0623
+      \u0646\u0623 \u062A\u062F\u0631\u0623"
+  - startTime: 22.8
+    endTime: 24.7
+    englishText: To be pushed into fear
+    arabicText: "\u0641\uFEEE\uFEA8\uFEDF\u0627 \uFEEE\uFEA4\uFEE7 \uFECA\uFED3\u062F\u064F\u0623
+      \u0646\u0623"
+  - startTime: 24.7
+    endTime: 28
+    englishText: To be given choices that were never truly choices
+    arabicText: "\uFEE2\uFEEB\u0648 \u0649\uFEEE\uFEB3 \uFE8E\uFEEB\uFEAE\uFEEB\uFEEE\uFE9F
+      \uFEF2\uFED3 \uFEE6\uFEDC\uFE97 \uFEE2\uFEDF \u064D\u062A\u0627\u0631\uFE8E\uFEF4\uFEA7
+      \uFBFD\uFEC4\uFECB\u064F\u0623 \u0646\u0623"
+  - startTime: 28.5
+    endTime: 30.6
+    englishText: I designed the maze carefully
+    arabicText: "\uFE94\uFEF3\uFE8E\uFEE8\uFECC\uFE91 \uFE94\uFEEB\uFE8E\uFE98\uFEE4\uFEDF\u0627
+      \uFE96\uFEE4\u0651\uFEE4\uFEBB"
+  - startTime: 30.85
+    endTime: 34.6
+    englishText: I chose its age, its symbols, its cruelty
+    arabicText: "\uFEEA\uFE97\uFEEE\uFEB4\uFED7\u0648 \u060C\u0647\u0632\uFEEE\uFEE3\u0631\u0648
+      \u060C\u0647\uFEAE\u0652\uFEE4\u064F\uFECB \u064F\u062A\uFEAE\uFE98\uFEA7\u0627
+      \uFEAA\uFED7"
+  - startTime: 35
+    endTime: 37
+    englishText: "Not to punish anyone else\u2026"
+    arabicText: "\u2026\uFEAA\uFEA3\u0623 \uFE94\uFE92\uFED7\uFE8E\uFECC\uFEE4\uFEDF
+      \uFEB2\uFEF4\uFEDF"
+  - startTime: 37
+    endTime: 39.4
+    englishText: but to confront myself
+    arabicText: "\uFEF2\uFEB4\uFED4\uFEE7 \uFE94\uFEEC\uFE9F\u0627\uFEEE\uFEE4\uFEDF
+      \uFEDE\uFE91"
+  - startTime: 39.7
+    endTime: 42.175
+    englishText: Would I run when escape was offered?
+    arabicText: "\u061F\u0628\u0648\uFEAE\uFEEC\uFEDF\u0627 \uFEF2\uFEE0\uFECB \u0636\uFEAE\uFECC\uFC61\uFEF3
+      \uFE8E\uFEE3\uFEAA\uFEE8\uFECB \u0628\uFEAE\uFEEB\uFE84\uFEB3 \uFEDE\uFEEB"
+  - startTime: 42.4
+    endTime: 46
+    englishText: Or would I risk everything to face what was true?
+    arabicText: "\u061F\uFE94\uFED8\uFEF4\uFED8\uFEA4\uFEDF\u0627 \uFEEA\uFE9F\u0627\u0648\uFEF7
+      \u0621\uFEF2\uFEB7 \uFEDE\uFEDC\uFE91 \uFEAE\uFEC3\uFE8E\uFEA7\uFE84\uFEB3
+      \u0645\u0623"
+  - startTime: 46.5
+    endTime: 49.7
+    englishText: The experiment did not end when I entered the maze
+    arabicText: "\uFE94\uFEEB\uFE8E\uFE98\uFEE4\uFEDF\u0627 \uFE96\uFEE0\uFEA7\u062F
+      \uFE8E\uFEE3\uFEAA\uFEE8\uFECB \u0650\uFEEA\uFE98\uFEE8\uFE97 \uFEE2\uFEDF
+      \uFE94\uFE91\uFEAE\uFEA0\uFE98\uFEDF\u0627"
+  - startTime: 49.7
+    endTime: 52.6
+    englishText: It ended the moment I understood it
+    arabicText: "\uFE8E\uFEEC\uFE98\uFEE4\uFEEC\uFED3 \uFEF2\uFE98\uFEDF\u0627 \uFE94\uFEC8\uFEA4\uFEE0\uFEDF\u0627
+      \uFEF2\uFED3 \uFE96\uFEEC\uFE98\uFEE7\u0627"
+  - startTime: 52.8
+    endTime: 53.75
+    englishText: THIS BODY
+    arabicText: "\uFEAA\uFEB4\uFEA0\uFEDF\u0627 \u0627\uFEAC\uFEEB"
+  - startTime: 53.75
+    endTime: 55.27
+    englishText: THIS MIND
+    arabicText: "\uFEDE\uFED8\uFECC\uFEDF\u0627 \u0627\uFEAC\uFEEB"
+  - startTime: 55.4
+    endTime: 57
+    englishText: BOTH ARE MINE
+    arabicText: "\uFEF2\uFEDF \uFE8E\uFEE4\uFEEB\uFEFC\uFEDB"
+  - startTime: 57.3
+    endTime: 58.62
+    englishText: ONE observed
+    arabicText: "\uFE90\uFED7\u0627\u0631 \uFE8E\uFEE4\uFEEB\uFEAA\uFEA3\u0623"
+  - startTime: 58.62
+    endTime: 60.1
+    englishText: ONE endured
+    arabicText: "\uFEDE\u0651\uFEE4\uFEA4\uFE97 \uFEAE\uFEA7\uFEF5\u0627\u0648"
+  - startTime: 60.53
+    endTime: 63.87
+    englishText: The fourth door was never part of the design
+    arabicText: "\uFEE2\uFEF4\uFEE4\uFEBC\uFE98\uFEDF\u0627 \uFEE6\uFEE3 \u0627\u064B\u0621\uFEB0\uFE9F
+      \uFEE6\uFEDC\uFEF3 \uFEE2\uFEDF \uFECA\uFE91\u0627\uFEAE\uFEDF\u0627 \u0628\uFE8E\uFE92\uFEDF\u0627"
+  - startTime: 63.87
+    endTime: 67.35
+    englishText: 'It was the realization that I was the subject... '
+    arabicText: "...\uFE94\uFE91\uFEAE\uFEA0\uFE98\uFEDF\u0627 \uFECA\uFEBF\uFEEE\uFEE3
+      \uFE96\uFEE8\uFEDB \uFEF2\uFEE8\uFEE7\u0623 \u0643\u0627\u0631\u062F\uFEF9\u0627
+      \uFE94\uFEC8\uFEA4\uFEDF \uFE96\uFEE7\uFE8E\uFEDB"
+  - startTime: 67.35
+    endTime: 70
+    englishText: and the one who chose to continue
+    arabicText: ".\u0631\u0627\uFEAE\uFEE4\uFE98\uFEB3\uFEFB\u0627 \uFEF2\uFED3 \u0631\u0627\uFEAE\uFED8\uFEDF\u0627
+      \uFE90\uFEA3\uFE8E\uFEBB\u0648"

@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Subtitles.SubtitleRegistry
   tracks:
   - {fileID: 11400000, guid: 5028b45f3e3cbfb45bf62cecbe7a568e, type: 2}
+  - {fileID: 11400000, guid: 5c4a6132cef89154cb1d4dc4e7bd118c, type: 2}
+  - {fileID: 11400000, guid: 2e0d71db5f84cac4a8eb458808a2234d, type: 2}
+  - {fileID: 11400000, guid: 6503ecc9e65907b4f9222e055e570703, type: 2}
+  - {fileID: 11400000, guid: 92898e24d340a74469d7853b5b9e6a74, type: 2}
+  - {fileID: 11400000, guid: a591f38d114546d4eae4f95a38c26168, type: 2}
