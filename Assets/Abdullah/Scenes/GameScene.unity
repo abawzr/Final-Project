@@ -7564,6 +7564,7 @@ MonoBehaviour:
   playerReactionClip: {fileID: 0}
   cinemachineCamera: {fileID: 0}
   oneTimePlay: 0
+  Subtitle: 
   IsReactionFinished: 0
 --- !u!65 &573573639
 BoxCollider:
@@ -16523,6 +16524,7 @@ MonoBehaviour:
   playerReactionClip: {fileID: 0}
   cinemachineCamera: {fileID: 0}
   oneTimePlay: 0
+  Subtitle: 
   IsReactionFinished: 0
 --- !u!65 &1476893707
 BoxCollider:
@@ -24374,7 +24376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4046850728108903866, guid: 8c2f93c8a38b45c45af717a2f2008d1e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4157598360109968633, guid: 8c2f93c8a38b45c45af717a2f2008d1e, type: 3}
       propertyPath: interactionTMP
