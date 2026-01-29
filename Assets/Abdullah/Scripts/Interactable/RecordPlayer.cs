@@ -14,11 +14,13 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
     public bool CanInteract { get; set; }
     public bool IsReactionFinished;
+    public static bool IsListening;
 
     private void Awake()
     {
         IsReactionFinished = false;
         CanInteract = true;
+        IsListening = false;
     }
 
     private IEnumerator SoundSequence()
@@ -27,6 +29,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         {
             PlayerMovement.IsControlsEnabled = false;
             cinemachineCamera.Priority = 10;
+            IsListening = true;
         }
 
         if (AudioManager.Instance != null)
@@ -41,6 +44,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
         cinemachineCamera.Priority = 0;
         PlayerMovement.IsControlsEnabled = true;
+        IsListening = false;
 
         yield return new WaitForSeconds(1.5f);
 

@@ -12,7 +12,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject screenEffectsCanvas;
 
     [Header("Buttons")]
+    [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button backButton;
     [SerializeField] private Button quitButton;
 
     [Header("Audio Sliders")]
@@ -24,8 +27,11 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        // Add listener to restart and quit buttons
+        // Add listener to all buttons
+        resumeButton.onClick.RemoveAllListeners();
         restartButton.onClick.RemoveAllListeners();
+        settingsButton.onClick.RemoveAllListeners();
+        backButton.onClick.RemoveAllListeners();
         quitButton.onClick.RemoveAllListeners();
 
         if (GameManager.Instance != null)
@@ -33,6 +39,10 @@ public class UIManager : MonoBehaviour
             restartButton.onClick.AddListener(GameManager.Instance.Restart);
             quitButton.onClick.AddListener(GameManager.Instance.BackToMenu);
         }
+
+        resumeButton.onClick.AddListener(ContinueGame);
+        settingsButton.onClick.AddListener(OpenSettingeFromPause);
+        backButton.onClick.AddListener(BackFromSettings);
 
         if (AudioManager.Instance != null)
         {

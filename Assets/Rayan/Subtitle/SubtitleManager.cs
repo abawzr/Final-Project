@@ -120,7 +120,6 @@ namespace Subtitles
             }
 
             _instance = this;
-            DontDestroyOnLoad(gameObject);
 
             // Validate references
             ValidateReferences();

@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public event Action<GameState> OnGameStateChanged;
 
+    public GameState CurrentState;
+
     public static GameManager Instance;
 
     public enum GameState
@@ -19,6 +21,9 @@ public class GameManager : MonoBehaviour
         Pause,
         Gameplay,
         Puzzle,
+        Reading,
+        ListeningOneTime,
+        Listening,
         FirstDeath,
         Choice,
         Cutscene,
@@ -70,6 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState newState)
     {
+        CurrentState = newState;
         OnGameStateChanged?.Invoke(newState);
         switch (newState)
         {
@@ -116,6 +122,14 @@ public class GameManager : MonoBehaviour
             case GameState.Puzzle:
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Confined;
+                PlayerMovement.IsControlsEnabled = false;
+                UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
+                break;
+
+            case GameState.Reading:
+                Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.Locked;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
                 InventoryCall.CanOpen = false;

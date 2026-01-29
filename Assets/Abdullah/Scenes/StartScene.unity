@@ -396,8 +396,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -517,8 +517,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -801,8 +801,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1256,8 +1256,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1590,8 +1590,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4259,8 +4259,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -5428,7 +5428,10 @@ MonoBehaviour:
   PausePanel: {fileID: 764450573}
   gameplayCanvas: {fileID: 540048441}
   screenEffectsCanvas: {fileID: 2742619024585668437}
+  resumeButton: {fileID: 1195088486}
   restartButton: {fileID: 1072335662}
+  settingsButton: {fileID: 786400980}
+  backButton: {fileID: 1597831730}
   quitButton: {fileID: 930167034}
   masterSlider: {fileID: 1664822678}
   musicSlider: {fileID: 149998048}
@@ -6279,8 +6282,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -7914,8 +7917,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     m_PressedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_SelectedColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -8215,7 +8218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453762316452133872, guid: 7a073840ab3bb7249b5d81770333a3fc, type: 3}
       propertyPath: m_Colors.m_DisabledColor.a
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4453762316452133872, guid: 7a073840ab3bb7249b5d81770333a3fc, type: 3}
       propertyPath: m_Colors.m_DisabledColor.b
@@ -8231,15 +8234,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453762316452133872, guid: 7a073840ab3bb7249b5d81770333a3fc, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
-      value: 0.47058824
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4453762316452133872, guid: 7a073840ab3bb7249b5d81770333a3fc, type: 3}
       propertyPath: m_Colors.m_SelectedColor.g
-      value: 0.47058824
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4453762316452133872, guid: 7a073840ab3bb7249b5d81770333a3fc, type: 3}
       propertyPath: m_Colors.m_SelectedColor.r
-      value: 0.47058824
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4453762316452133872, guid: 7a073840ab3bb7249b5d81770333a3fc, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b

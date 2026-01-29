@@ -12,6 +12,10 @@ public class MainMenu : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] private Button startButton;
+    [SerializeField] private Button controlsButton;
+    [SerializeField] private Button backControlsButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button backSettingsButton;
     [SerializeField] private Button quitButton;
 
     [Header("Audio Sliders")]
@@ -21,6 +25,17 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
+        controlsButton.onClick.RemoveAllListeners();
+        settingsButton.onClick.RemoveAllListeners();
+        backControlsButton.onClick.RemoveAllListeners();
+        settingsButton.onClick.RemoveAllListeners();
+        backSettingsButton.onClick.RemoveAllListeners();
+
+        controlsButton.onClick.AddListener(ControlsUI);
+        backControlsButton.onClick.AddListener(BackFromControls);
+        settingsButton.onClick.AddListener(OpenSettingeFromMenu);
+        backSettingsButton.onClick.AddListener(BackFromSettings);
+
         if (GameManager.Instance != null)
         {
             startButton.onClick.RemoveAllListeners();
@@ -76,13 +91,13 @@ public class MainMenu : MonoBehaviour
         ShowMainMenu();
     }
     //3- Instructions Panel
-    public void InstructionsUI()
+    public void ControlsUI()
     {
         if (MainMenuPanel) MainMenuPanel.SetActive(false);
         if (SettingsPanel) SettingsPanel.SetActive(false);
         if (InstructionsPanel) InstructionsPanel.SetActive(true);
     }
-    public void BackFromInstructions()
+    public void BackFromControls()
     {
         ShowMainMenu();
     }
