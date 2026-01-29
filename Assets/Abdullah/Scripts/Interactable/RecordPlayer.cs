@@ -1,3 +1,4 @@
+using Subtitles;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip playerReactionClip;
     [SerializeField] private CinemachineCamera cinemachineCamera;
     [SerializeField] private bool oneTimePlay;
+    [SerializeField] private string Subtitle;
 
     public bool CanInteract { get; set; }
     public bool IsReactionFinished;
@@ -29,6 +31,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.Play3DSFX(audioClip, transform.position);
+            SubtitleManager.Instance.Play(Subtitle);
         }
 
         if (playerReactionClip == null) yield break;
