@@ -17,7 +17,7 @@ public class Note : MonoBehaviour, IInteractable
     [SerializeField] private TMP_Text arabicTextTMP;
 
     bool _isReading = false;
-    [SerializeField] private bool useArabic = false;
+
     private void Awake()
     {
         CanInteract = true;
@@ -47,13 +47,11 @@ public class Note : MonoBehaviour, IInteractable
         if (englishTextTMP != null)
         {
             englishTextTMP.text = noteTextEnglish;
-            englishTextTMP.gameObject.SetActive(!useArabic);
         }
 
         if (arabicTextTMP != null)
         {
             arabicTextTMP.text = noteTextArabic;
-            arabicTextTMP.gameObject.SetActive(useArabic);
         }
 
         if (noteUI != null)
@@ -61,8 +59,6 @@ public class Note : MonoBehaviour, IInteractable
             noteUI.SetActive(true);
         }
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
     private void CloseNote()
     {
@@ -72,7 +68,6 @@ public class Note : MonoBehaviour, IInteractable
         {
             noteUI.SetActive(false);
         }
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
     }
 }

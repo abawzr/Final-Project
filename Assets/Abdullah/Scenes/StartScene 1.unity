@@ -990,8 +990,8 @@ PrefabInstance:
       objectReference: {fileID: 1987603876}
     - target: {fileID: 2591108141792660480, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextArabic
-      value: "\u201C\u0627\u0644\u0648\u0635\u0648\u0644 \u0644\u064A\u0633 \u0645\u0635\u0627\u062F\u0641\u0629\u060C\r\n\u0628\u0644
-        \u0646\u062A\u064A\u062C\u0629.\u201D"
+      value: "\r\u060C\uFE94\uFED3\u062F\uFE8E\uFEBC\uFEE3 \uFEB2\uFEF4\uFEDF \u0644\uFEEE\uFEBB\uFEEE\uFEDF\u0627\n.\uFE94\uFEA0\uFEF4\uFE98\uFEE7
+        \uFEDE\uFE91"
       objectReference: {fileID: 0}
     - target: {fileID: 2591108141792660480, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextEnglish
@@ -1037,8 +1037,8 @@ PrefabInstance:
       objectReference: {fileID: 1987603876}
     - target: {fileID: 4223576705822866400, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextArabic
-      value: "\u201C\u0647\u0646\u0627\u0643 \u0645\u0646 \u064A\u0639\u0628\u0631\u2026\r\n\u0648\u0647\u0646\u0627\u0643
-        \u0645\u0646 \u064A\u0628\u0642\u0649.\u201D"
+      value: "\r\u2026\uFEAE\uFE92\uFECC\uFEF3 \uFEE6\uFEE3 \u0643\uFE8E\uFEE8\uFEEB\n.\uFBFD\uFED8\uFE92\uFEF3
+        \uFEE6\uFEE3 \u0643\uFE8E\uFEE8\uFEEB\u0648"
       objectReference: {fileID: 0}
     - target: {fileID: 4223576705822866400, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextEnglish
@@ -1066,8 +1066,8 @@ PrefabInstance:
       objectReference: {fileID: 1987603876}
     - target: {fileID: 5694180074706126346, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextArabic
-      value: "\u201C\u0644\u064A\u0633 \u0643\u0644 \u0645\u0627 \u0627\u0646\u062A\u0647\u0649\u060C\r\n\u0627\u0646\u062A\u0647\u0649
-        \u0641\u0639\u0644\u064B\u0627.\u201D"
+      value: "\r\u060C\uFBFD\uFEEC\uFE98\uFEE7\u0627 \uFE8E\uFEE3 \uFEDE\uFEDB \uFEB2\uFEF4\uFEDF\n.\u064B\uFEFC\uFECC\uFED3
+        \uFBFD\uFEEC\uFE98\uFEE7\u0627"
       objectReference: {fileID: 0}
     - target: {fileID: 5694180074706126346, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextEnglish
@@ -1253,9 +1253,9 @@ PrefabInstance:
       objectReference: {fileID: 1987603876}
     - target: {fileID: 8276803998219631168, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextArabic
-      value: "\u201C\u0627\u0644\u0646\u0633\u064A\u0627\u0646 \u0642\u0631\u0627\u0631\u060C\r\n\u0644\u0643\u0646
-        \u0627\u0644\u0630\u0627\u0643\u0631\u0629 \u0644\u0627 \u062A\u0648\u0627\u0641\u0642
-        \u062F\u0627\u0626\u0645\u064B\u0627.\u201D"
+      value: "\r\u060C\u0631\u0627\uFEAE\uFED7 \u0646\uFE8E\uFEF4\uFEB4\uFEE8\uFEDF\u0627\n.\uFE8E\u064B\uFEE4\uFE8B\u0627\u062F
+        \uFED6\uFED3\u0627\uFEEE\uFE97 \uFEFB \u0629\uFEAE\uFEDB\u0627\uFEAC\uFEDF\u0627
+        \uFEE6\uFEDC\uFEDF"
       objectReference: {fileID: 0}
     - target: {fileID: 8276803998219631168, guid: 0acefded9e3daab4f95338a48bfbf6bb, type: 3}
       propertyPath: noteTextEnglish
@@ -3784,8 +3784,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 3
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -5143,7 +5143,10 @@ MonoBehaviour:
   PausePanel: {fileID: 22161950}
   gameplayCanvas: {fileID: 0}
   screenEffectsCanvas: {fileID: 0}
+  resumeButton: {fileID: 0}
   restartButton: {fileID: 1397454550}
+  settingsButton: {fileID: 0}
+  backButton: {fileID: 0}
   quitButton: {fileID: 160749258}
   masterSlider: {fileID: 1654656997}
   musicSlider: {fileID: 394790271}
@@ -6994,6 +6997,14 @@ PrefabInstance:
     - target: {fileID: 3196416658502591735, guid: 9ee661b20a2d6114aa54b8fe69a0ad51, type: 3}
       propertyPath: m_fontSizeBase
       value: 62
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196416658502591735, guid: 9ee661b20a2d6114aa54b8fe69a0ad51, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196416658502591735, guid: 9ee661b20a2d6114aa54b8fe69a0ad51, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4551830143880030184, guid: 9ee661b20a2d6114aa54b8fe69a0ad51, type: 3}
       propertyPath: m_Name
