@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
                 break;
 
             case GameState.Pause:
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
                 break;
 
             case GameState.Gameplay:
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 PlayerMovement.IsControlsEnabled = true;
                 UIManager.CanPause = true;
+                InventoryCall.CanOpen = true;
                 break;
 
             case GameState.FirstDeath:
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
                 break;
 
             case GameState.Choice:
@@ -106,6 +110,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
                 break;
 
             case GameState.Puzzle:
@@ -113,6 +118,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
                 break;
 
             case GameState.Cutscene:
@@ -120,6 +126,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
                 break;
 
             case GameState.Credits:
@@ -127,6 +134,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 PlayerMovement.IsControlsEnabled = false;
                 UIManager.CanPause = false;
+                InventoryCall.CanOpen = false;
                 break;
 
             default:
