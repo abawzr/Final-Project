@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Cinemachine;
 using TMPro;
+using Subtitles;
 
 public class PuzzlePerspective : MonoBehaviour, IInteractable
 {
@@ -20,6 +21,7 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
     [SerializeField] private GameObject paintingSpawn1;
     [SerializeField] private GameObject paintingSpawn2;
     [SerializeField] private GameObject paintingSpawn3;
+    [SerializeField] private string subtitle;
 
     public bool CanInteract { get; set; }
 
@@ -70,6 +72,7 @@ public class PuzzlePerspective : MonoBehaviour, IInteractable
                 if (AudioManager.Instance != null)
                 {
                     AudioManager.Instance.Play2DSFX(noPaintingsClip);
+                    SubtitleManager.Instance.Play(subtitle);
                 }
 
                 return;

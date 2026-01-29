@@ -10,6 +10,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
     [SerializeField] private CinemachineCamera cinemachineCamera;
     [SerializeField] private bool oneTimePlay;
     [SerializeField] private string Subtitle;
+    [SerializeField] private string reactionSubtitle;
 
     public bool CanInteract { get; set; }
     public bool IsReactionFinished;
@@ -46,6 +47,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.Play2DSFX(playerReactionClip);
+            SubtitleManager.Instance.Play(reactionSubtitle);
         }
 
         yield return new WaitForSeconds(playerReactionClip.length + 0.5f);
