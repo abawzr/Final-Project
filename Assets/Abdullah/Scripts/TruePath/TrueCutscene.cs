@@ -1,4 +1,5 @@
 using System.Collections;
+using Subtitles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,7 @@ public class TrueCutscene : MonoBehaviour
     [SerializeField] private GameObject playerCharacter;
     [SerializeField] private AudioClip playerVoiceClip;
     [SerializeField] private Animator credits;
+    [SerializeField] private string subtitle;
 
     private IEnumerator CreditsSequence()
     {
@@ -27,6 +29,7 @@ public class TrueCutscene : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.Play2DSFX(playerVoiceClip);
+            SubtitleManager.Instance.Play(subtitle);
         }
     }
 

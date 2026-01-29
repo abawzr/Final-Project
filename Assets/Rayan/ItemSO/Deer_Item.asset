@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03214da78aa16449085a88a9bb7825, type: 3}
   m_Name: Deer_Item
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemName: Deer
-  itemIcon: {fileID: 0}
+  itemName: Deer Statue
+  itemIcon: {fileID: 21300000, guid: f4faf841a0882104c8ad5b5e85d9082f, type: 3}
   itemPrefab: {fileID: 7556001726240875756, guid: b3da63ed88f21134ca46e2b334f17870, type: 3}

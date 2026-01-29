@@ -1,3 +1,4 @@
+using Subtitles;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -8,14 +9,18 @@ public class RecordPlayer : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip playerReactionClip;
     [SerializeField] private CinemachineCamera cinemachineCamera;
     [SerializeField] private bool oneTimePlay;
+    [SerializeField] private string Subtitle;
+    [SerializeField] private string reactionSubtitle;
 
     public bool CanInteract { get; set; }
     public bool IsReactionFinished;
+    public static bool IsListening;
 
     private void Awake()
     {
         IsReactionFinished = false;
         CanInteract = true;
+        IsListening = false;
     }
 
     private IEnumerator SoundSequence()
@@ -24,11 +29,13 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         {
             PlayerMovement.IsControlsEnabled = false;
             cinemachineCamera.Priority = 10;
+            IsListening = true;
         }
 
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.Play3DSFX(audioClip, transform.position);
+            SubtitleManager.Instance.Play(Subtitle);
         }
 
         if (playerReactionClip == null) yield break;
@@ -37,12 +44,14 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
         cinemachineCamera.Priority = 0;
         PlayerMovement.IsControlsEnabled = true;
+        IsListening = false;
 
         yield return new WaitForSeconds(1.5f);
 
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.Play2DSFX(playerReactionClip);
+            SubtitleManager.Instance.Play(reactionSubtitle);
         }
 
         yield return new WaitForSeconds(playerReactionClip.length + 0.5f);

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e39c56a3e58a1a4c8370b293bebd856, type: 3}
+  m_Name: StatuePuzzle
+  m_EditorClassIdentifier: Assembly-CSharp::Subtitles.SubtitleTrack
+  trackId: StatuePuzzle
+  entries:
+  - startTime: 0
+    endTime: 1.5
+    englishText: In every chase
+    arabicText: "\u0629\u062F\u0631\uFE8E\uFEC4\uFEE3 \uFEDE\uFEDB \uFEF2\uFED3"
+  - startTime: 1.6
+    endTime: 3
+    englishText: there is one who hunts
+    arabicText: "\u062F\u0631\uFE8E\uFEC4\uFEF3 \uFEE6\uFEE3 \u0643\uFE8E\uFEE8\uFEEB"
+  - startTime: 3.5
+    endTime: 6
+    englishText: and one who runs in search of an escape
+    arabicText: "\u062C\uFEAE\uFEA8\uFEE3 \uFEE6\uFECB \u064B\uFE8E\uFE9C\uFEA3\uFE8E\uFE91
+      \u0628\uFEAE\uFEEC\uFEF3 \uFEE6\uFEE3 \u0643\uFE8E\uFEE8\uFEEB\u0648"
+  - startTime: 6.55
+    endTime: 10.2
+    englishText: until it reaches a confrontation that cannot be avoided
+    arabicText: "\uFE8E\uFEEB\u0632\u0648\uFE8E\uFEA0\uFE97 \uFEE6\uFEDC\uFEE4\uFEF3
+      \uFEFB \uFE94\uFEEC\uFE9F\u0627\uFEEE\uFEE3 \uFBFD\uFEDF\u0625 \uFEDE\uFEBC\uFEF3
+      \uFBFD\uFE98\uFEA3"
+  - startTime: 11.25
+    endTime: 14.5
+    englishText: There, a person stands before himself
+    arabicText: "\uFEEA\uFEB4\uFED4\uFEE7 \u0645\uFE8E\uFEE3\u0623 \uFEBA\uFEA8\uFEB7
+      \uFED2\uFED8\uFEF3 \u060C\u0643\uFE8E\uFEE8\uFEEB"
+  - startTime: 15
+    endTime: 17.5
+    englishText: while being watched in silence
+    arabicText: "\uFE96\uFEE4\uFEBC\uFE91 \uFE90\u064E\uFED7\u0627\uFEAE\u064F\uFEF3
+      \uFE8E\uFEE4\uFEE8\uFEF4\uFE91"

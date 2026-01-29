@@ -13,6 +13,7 @@ public class CloseDoorTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (_isTriggered) return;
 
+        _isTriggered = true;
         doorAnimator.SetTrigger("Close");
 
         if (AudioManager.Instance != null)
