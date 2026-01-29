@@ -354,7 +354,7 @@ namespace Subtitles
                 }
 
                 yield return null;
-                timer += Time.deltaTime;
+                timer += Time.unscaledDeltaTime;
             }
 
             // Playback complete

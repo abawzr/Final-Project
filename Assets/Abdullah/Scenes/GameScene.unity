@@ -16920,7 +16920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryCall
   animator: {fileID: 1067748006}
-  claoseAnimationTime: 10
+  claoseAnimationTime: 15
 --- !u!1 &1509645722
 GameObject:
   m_ObjectHideFlags: 0

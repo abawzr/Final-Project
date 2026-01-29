@@ -36,6 +36,7 @@ public class InventoryCall : MonoBehaviour
     }
     public void Open()
     {
+        CanOpen = false;
         if (animator != null) animator.SetBool("isOpen", true);
 
         _closeCoroutine = StartCoroutine(DisableAfterClose());
@@ -43,6 +44,7 @@ public class InventoryCall : MonoBehaviour
     }
     private void Close()
     {
+        CanOpen = true;
         if (animator != null) animator.SetBool("isOpen", false);
         if (_closeCoroutine != null)
         {

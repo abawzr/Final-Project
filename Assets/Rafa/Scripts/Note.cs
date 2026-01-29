@@ -42,6 +42,11 @@ public class Note : MonoBehaviour, IInteractable
     }
     private void OpenNote()
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetGameState(GameManager.GameState.Reading);
+        }
+
         _isReading = true;
 
         if (englishTextTMP != null)
@@ -62,6 +67,11 @@ public class Note : MonoBehaviour, IInteractable
     }
     private void CloseNote()
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetGameState(GameManager.GameState.Gameplay);
+        }
+
         _isReading = false;
 
         if (noteUI != null)
