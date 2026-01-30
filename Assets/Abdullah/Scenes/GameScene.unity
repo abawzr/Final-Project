@@ -119,6 +119,32 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &2602167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 71517193990088367, guid: bcb79b25dff32ce46942b6d76a0ba6cd, type: 3}
+  m_PrefabInstance: {fileID: 8580307538495346880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2602168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2602167}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.8967946, y: 3.0451367, z: 0.9218395}
+  m_Center: {x: -0.02091062, y: 1.4874371, z: -0.039080262}
 --- !u!1 &6371110
 GameObject:
   m_ObjectHideFlags: 0
@@ -5122,6 +5148,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.213
       objectReference: {fileID: 0}
+    - target: {fileID: 8227534142815567591, guid: 9ebb6f119af8c4b4a9a7aee700859c14, type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.3493895
+      objectReference: {fileID: 0}
     - target: {fileID: 8384268304494291630, guid: 9ebb6f119af8c4b4a9a7aee700859c14, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.213
@@ -5130,7 +5160,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.213
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3108023008536845797, guid: 9ebb6f119af8c4b4a9a7aee700859c14, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7885003598482664823, guid: 9ebb6f119af8c4b4a9a7aee700859c14, type: 3}
     m_AddedGameObjects:
@@ -7063,13 +7094,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: 51f3bafa8c52bb94dbac3bf5ba1ebc0c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 542571293}
   m_SourcePrefab: {fileID: 100100000, guid: 51f3bafa8c52bb94dbac3bf5ba1ebc0c, type: 3}
 --- !u!4 &542571291 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 51f3bafa8c52bb94dbac3bf5ba1ebc0c, type: 3}
   m_PrefabInstance: {fileID: 542571290}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &542571292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: 51f3bafa8c52bb94dbac3bf5ba1ebc0c, type: 3}
+  m_PrefabInstance: {fileID: 542571290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &542571293
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542571292}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.8967946, y: 3.0451367, z: 0.9218395}
+  m_Center: {x: -0.02091062, y: 1.4874371, z: -0.039080262}
 --- !u!1 &544669744
 GameObject:
   m_ObjectHideFlags: 0
@@ -24231,7 +24291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8298368986143785774, guid: 15b29e707da089f48838852a4abc8cbd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -24828,6 +24888,9 @@ PrefabInstance:
     - {fileID: 8121202748564560128, guid: bcb79b25dff32ce46942b6d76a0ba6cd, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 71517193990088367, guid: bcb79b25dff32ce46942b6d76a0ba6cd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2602168}
     - targetCorrespondingSourceObject: {fileID: 6920286221349732587, guid: bcb79b25dff32ce46942b6d76a0ba6cd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8580307538495346886}

@@ -26,10 +26,6 @@ public class StatueRotationPuzzle : MonoBehaviour
     [Tooltip("Reference to PuzzlePerspective to disable interaction after puzzle is solved")]
     [SerializeField] private PuzzlePerspective puzzlePerspective;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip puzzleSolvedSound;
-
     [Header("Spawn Settings")]
     [SerializeField] private float delayBetweenSpawns = 0.5f;
     [SerializeField] private float initialSpawnDelay = 0.3f;
@@ -361,12 +357,6 @@ public class StatueRotationPuzzle : MonoBehaviour
         if (objectToShow != null)
         {
             objectToShow.SetActive(true);
-        }
-
-        // Play sound
-        if (audioSource != null && puzzleSolvedSound != null)
-        {
-            audioSource.PlayOneShot(puzzleSolvedSound);
         }
 
         // Disable interaction on all statues
